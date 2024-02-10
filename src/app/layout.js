@@ -1,7 +1,7 @@
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import { ThemeProvider } from "@mui/material/styles";
 import { Inter } from "next/font/google";
-import theme from "../theme/theme.js";
+import {theme} from "../theme/theme.js";
 import "./globals.css";
 import { CssBaseline } from '@mui/material';
 
