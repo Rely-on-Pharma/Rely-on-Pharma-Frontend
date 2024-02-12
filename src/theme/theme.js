@@ -39,8 +39,7 @@ const themeMaster = createTheme({
         borderRadius: "16px",
         "&.Mui-focused": {
           backgroundColor: "transparent",
-          boxShadow: `
-          `,
+          boxShadow: ``,
           borderColor: colors.secondary,
         },
       },
