@@ -1,7 +1,9 @@
-import {  Typography } from "@mui/material";
+import { MemoizedSwiper } from '@/pages/Home/Hero.jsx';
+import {data} from '../constants/CarousalData.js'
 const Home = () => {
   return <>
-  <Typography variant="h1" >Hello World!</Typography>
+  
+    <MemoizedSwiper data={data} slidesPerView={1} spaceBetween={30} loop={true} delay={2500} id="hero-carousal"/>
   </>;
 };
 
