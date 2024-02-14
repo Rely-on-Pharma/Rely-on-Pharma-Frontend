@@ -1,13 +1,8 @@
 "use client";
 import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { Roboto } from "next/font/google";
 import { colors } from "@/constants/colors.js";
-const roboto = Roboto({
-  weight: ["300", "400", "500", "700"],
-  subsets: ["latin"],
-  display: "swap",
-});
+
 const fontFamilyInfo = `'Poppins', sans-serif `;
 
 const themeMaster = createTheme({
@@ -19,22 +14,16 @@ const themeMaster = createTheme({
     },
   },
   typography: {
-    fontFamily: roboto.style.fontFamily,
+    fontFamily: `${fontFamilyInfo} !important`,
   },
   components: {
     MuiPaper: {
-      defaultProps: {
-        style: {
-          fontFamily: `${fontFamilyInfo} !important`,
-        },
-      },
     },
     MuiInput: {
       defaultProps: {
         disableUnderline: true,
       },
       styleOverrides: {
-        fontFamily: `${fontFamilyInfo} !important`,
         fontSize: { md: "24px", sm: "12px" },
         borderRadius: "16px",
         "&.Mui-focused": {
@@ -56,7 +45,6 @@ const themeMaster = createTheme({
       },
       styleOverrides: {
         root: {
-          fontFamily: `${fontFamilyInfo} !important`,
           borderRadius: "82px",
           textTransform: "none",
           color: colors.white,
@@ -81,7 +69,6 @@ const themeMaster = createTheme({
       },
       styleOverrides: {
         root: {
-          fontFamily: `${fontFamilyInfo} !important`,
           minHeight: 48,
           "&.Mui-focused": {
             backgroundColor: "transparent",
@@ -97,7 +84,6 @@ const themeMaster = createTheme({
         MenuProps: {
           style: {
             maxHeight: 400,
-            fontFamily: `${fontFamilyInfo} !important`,
           },
         },
         IconComponent: KeyboardArrowDownIcon,
@@ -108,7 +94,6 @@ const themeMaster = createTheme({
       styleOverrides: {
         root: {
           borderRadius: 8,
-          fontFamily: `${fontFamilyInfo} !important`,
         },
       },
     },
@@ -117,32 +102,15 @@ const themeMaster = createTheme({
       styleOverrides: {
         paper: {
           backgroundColor: colors,
-          fontFamily: `${fontFamilyInfo} !important`,
-          borderRadius: "16px 16px 0px 0px",
         },
       },
     },
     MuiTooltip: {
       styleOverrides: {
         tooltip: {
-          fontFamily: `${fontFamilyInfo} !important`,
           background: "black",
           color: "white",
           margin: 16,
-        },
-      },
-    },
-    MuiList: {
-      styleOverrides: {
-        root: {
-          fontFamily: `${fontFamilyInfo} !important`,
-        },
-      },
-    },
-    MuiListItem: {
-      styleOverrides: {
-        root: {
-          fontFamily: `${fontFamilyInfo} !important`,
         },
       },
     },

@@ -1,11 +1,7 @@
 import ThemeRegistry from "@/theme/ThemeRegistry.js";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import DrawerAppBar from "@/common/layout/Navbar/Navbar";
-const inter = Inter({
-  subsets: ["latin"],
-});
-
+import Footer from '../common/layout/Footer/Footer.jsx'
 export const metadata = {
   title: "Next App",
   description: "Next.js starter app",
@@ -14,11 +10,17 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body >
         <ThemeRegistry>
-          <DrawerAppBar/>
+          <header>
+            <DrawerAppBar />
+          </header>
           {children}
-          </ThemeRegistry>
+          <footer>
+            <Footer />
+          
+          </footer>
+        </ThemeRegistry>
       </body>
     </html>
   );
