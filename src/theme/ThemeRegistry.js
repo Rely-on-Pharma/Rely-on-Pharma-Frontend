@@ -7,7 +7,6 @@ export default function ThemeRegistry(props) {
   const { children } = props;
   return (
     <AppRouterCacheProvider>
-      
       <ThemeProvider theme={theme}>
         <CssBaseline />
         {children}
