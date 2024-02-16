@@ -74,8 +74,8 @@ function DrawerAppBar(props) {
 
   
   return (
-    <Box sx={{ display: "flex", background: colors?.seaShellLight, marginBottom:"4rem" }}>
-      <AppBar component="nav" sx={{ background: colors?.seaShellLight }}>
+    <Box sx={{ display: "flex", background: 'rgba(255, 255, 255, 0.6)', marginBottom:"4rem" }}>
+      <AppBar component="nav" sx={{ background: 'rgba(255, 255, 255, 0.6' }}>
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
           <IconButton
             color="inherit"
