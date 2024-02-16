@@ -1,68 +1,91 @@
-"use client"
-import React from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
-
-import { Autoplay, Pagination, Navigation } from 'swiper/modules';
-import { Box, styled } from '@mui/material';
-import Image from 'next/image';
-const CustomHeroSwiper = styled(Box)(({theme})=>({
-    ".swiper" :{
-        width: "100%",
-        height: "100%",
-      },
-      
-      ".swiper-slide" :{
-        textAlign: "center",
-        fontSize: "18px",
-        background: "#fff",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      },
-      
-      ".swiper-slide img" :{
-        display: "block",
-        width: "100%",
-        height: "100%",
-        objectFit: "cover",
-      },
+"use client";
+import { data } from "@/constants/CarousalData";
+import { MemoizedSwiper } from "@/constants/SDK/CustomSwipper";
+import { Box, Grid, Typography, styled } from "@mui/material";
+import heroBg from "../../../public/hero-bg.png";
+import React from "react";
+import { colors } from "@/constants/colors";
+import { MemoizedButton } from "@/constants/SDK/CustomButton";
+const CustomHero = styled(Box)(({ theme }) => ({
+  ".grid-container": {
+    background: `url(${heroBg.src})`,
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+    padding: "24px 30px 24px 40px",
+  },
+  ".grid_item-text": {
+    display: "flex",
+    justifyContent: "center",
+    flexDirection:"column"
+  },
+  ".btn":{
+    display:"inline",
+    width:"max-content",
+    borderRadius:"8px",
+    boxShadow:"none",
+    background:colors.secondaryDark,
+    fontSize:"18px",
+    "&:hover":{
+      background:colors.seaShellLight
+    }
+  },
+  ".text": {
+    textAlign: "left",
+    fontSize: "42px",
+    fontWeight: "700",
+    letterSpacing: "1px",
+    span: {
+      color: colors?.primaryBase,
+    },
+  },
+  ".mobileSwiper": {
+    display: "none",
+  },
+  [theme.breakpoints.down("md")]: {
+    ".mobileSwiper": {
+      display: "block",
+    },
+    ".grid-container": {
+      display: "none",
+    },
+  },
 }));
+const Hero = () => {
+  return (
+    <CustomHero>
+      <Grid container className="grid-container">
+        <Grid item md={6} className="grid_item-text">
+          <Typography  variant="caption" className="text">
+            <Typography variant="span">F</Typography>EEL
+            <Typography variant="span"> B</Typography>ETTER <br />
+            <Typography variant="span">R</Typography>EJUVANATE <br />
+            <Typography variant="span">R</Typography>ECOVER
+          </Typography>
+          <MemoizedButton className={"btn"}  content="Shop Now"/>
+        </Grid>
+        <Grid item md={6} className="grid_item">
+          <MemoizedSwiper
+            data={data}
+            slidesPerView={1}
+            spaceBetween={30}
+            loop={true}
+            delay={2500}
+            id="hero-carousal"
+          />
+        </Grid>
+      </Grid>
+      <MemoizedSwiper
+        className="mobileSwiper"
+        data={data}
+        slidesPerView={1}
+        spaceBetween={30}
+        navigation={false}
+        loop={true}
+        delay={2500}
+        id="hero-carousal"
+      />
+    </CustomHero>
+  );
+};
 
-const Hero = ({slidesPerView=1, spaceBetween=30, loop=true, delay=2500, className, style, id, data=[]}) => {
-    return (
-      <CustomHeroSwiper>
-        <Swiper
-          slidesPerView={slidesPerView}
-          spaceBetween={spaceBetween}
-          loop={loop}
-          centeredSlides={true}
-          autoplay={{
-            delay: delay,
-            disableOnInteraction: false,
-          }}
-          pagination={{
-            clickable: true,
-          }}
-          navigation={true}
-          id={id}
-          style={style}
-          modules={[Autoplay, Pagination, Navigation]}
-          className={className}
-        >
-            {
-                data?.length>0 && data?.map((item)=>(
-                    <SwiperSlide key={item?.id} style={{width:"100%", height:"60vh"}}>
-                        <Image src={item?.image} alt='ok' width={80} height={60} style={{width:"100%", height:"100%", objectFit:"contain"}}/>
-                    </SwiperSlide>
-                ))
-            }
-
-        </Swiper>
-      </CustomHeroSwiper>
-    )
-}
-
-export const MemoizedSwiper = React.memo(Hero);
+export default Hero;

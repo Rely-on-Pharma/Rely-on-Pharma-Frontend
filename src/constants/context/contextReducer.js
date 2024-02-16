@@ -2,8 +2,24 @@ export const snackBaractionTypes = {
   SHOW_SNACKBAR: "SHOW_SNACKBAR",
   HIDE_SNACKBAR: "HIDE_SNACKBAR",
 };
+export const authactionTypes = {
+  LOGIN: "LOGIN",
+  LOGOUT: "LOGOUT",
+};
+export const leadactionTypes = {
+  ADD_LEAD: "ADD_LEAD",
+  REMOVE_LEAD: "REMOVE_LEAD",
+};
 
 export const initialState = {
+  //user
+  user: {
+    isAuthenticated: false,
+    data: null,
+  },
+  //lead
+  hasLead: false,
+
   // snackbarstate
   snackBar: {
     open: false,
@@ -26,11 +42,32 @@ const AppReducer = (state, action) => {
     case snackBaractionTypes.HIDE_SNACKBAR:
       return {
         ...state,
-        snackbar: {
+        snackBar: {
           ...state.snackbar,
           open: false,
         },
       };
+    case authactionTypes.LOGIN: {
+      const newUserState = {
+        isAuthenticated: true,
+        data: action.payload.user,
+      };
+      localStorage.setItem("user", JSON.stringify(newUserState));
+      return {
+        ...state,
+        user: newUserState,
+      };
+    }
+    case authactionTypes.LOGOUT: {
+      localStorage.removeItem("user");
+      return {
+        ...state,
+        user: {
+          isAuthenticated: false,
+          data: null,
+        },
+      };
+    }
     default:
       return state;
   }

@@ -1,11 +1,15 @@
+"use client"
 import { Alert, Snackbar } from "@mui/material";
 import React, { useContext } from "react";
 
 import AppContext from "../context/context";
 const SnackBar = () => {
   const state = useContext(AppContext);
-
-  const { hideSnackbar } = useContext(AppContext);
+ // Check if state or state.snackBar is undefined
+ if (!state || !state.snackBar) {
+  return null;
+}
+  const {snackBar, hideSnackbar} = state;
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -18,17 +22,17 @@ const SnackBar = () => {
       <Snackbar
         id="lead_created"
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-        open={state.snackBar.open}
+        open={snackBar.open}
         autoHideDuration={3000}
-        message={state.snackBar.message}
+        message={snackBar.message}
         onClose={handleClose}
       >
         <Alert
           onClose={handleClose}
-          severity={state.snackBar.severity}
+          severity={snackBar.severity}
           style={{ width: "100%" }}
         >
-          {state.snackBar.message}
+          {snackBar.message}
         </Alert>
       </Snackbar>
     </>
