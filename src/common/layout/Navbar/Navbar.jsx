@@ -33,7 +33,7 @@ function DrawerAppBar(props) {
   };
   
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center", p: 4 }}>
+    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center", p: 4,}}>
       <Image
         style={{
           marginInline: "8px",
@@ -74,8 +74,8 @@ function DrawerAppBar(props) {
 
   
   return (
-    <Box sx={{ display: "flex", background: colors?.background, marginBottom:"4rem" }}>
-      <AppBar component="nav" sx={{ background: colors?.background }}>
+    <Box sx={{ display: "flex", background: colors?.seaShellLight, marginBottom:"4rem" }}>
+      <AppBar component="nav" sx={{ background: colors?.seaShellLight }}>
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
           <IconButton
             color="inherit"
