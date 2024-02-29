@@ -16,6 +16,7 @@ const CustomCard = styled(Box)(({theme})=>({
       borderRadius:"2px",
       display:"block",
       width:"100%",
+      textAlign:"center",
       padding:"8px",
       background:colors?.MonochromeDark,
       "&:hover":{
@@ -30,10 +31,10 @@ const ProductCard = ({productData}) => {
 
         <Image src={productData?.mainImg} alt={productData?.name} width={360} height={300}/>
         <Stack className='details'>
-        <Link href="/dashboard" style={{fontWeight:"700"}}>{productData?.name}</Link>
+        <Link href={`/product/${productData?.name}`} style={{fontWeight:"700"}}>{productData?.name}</Link>
         <Typography variant='body'>{productData?.price}</Typography>
         </Stack>
-        <MemoizedButton content={"Add To Cart"} className={"addBtn"}/>
+        <MemoizedButton content={"Quick View"} href={`/product/${productData?.name}`} className={"addBtn"}/>
     </CustomCard>
   ) 
 }

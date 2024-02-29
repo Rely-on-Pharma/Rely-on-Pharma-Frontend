@@ -1,11 +1,12 @@
 "use client";
-import { Box, Grid, Typography, styled } from "@mui/material";
-import React from "react";
+import { Box, Drawer, Grid, Typography, styled } from "@mui/material";
+import React, { useState } from "react";
 import { productData } from "../../constants/data/productData.js";
 import { MemoizedButton } from "@/constants/SDK/CustomButton.js";
 import { colors } from "@/constants/colors.js";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import ProductCard from "@/pages/shop/products.jsx";
+import FilterDrawer from "@/pages/shop/FilterDrawer.jsx";
 const CustomShop = styled(Box)(({ theme }) => ({
   padding: "4rem",
   ".shop-head": {
@@ -21,8 +22,16 @@ const CustomShop = styled(Box)(({ theme }) => ({
     outline: "none",
     padding: "8px",
   },
+
+  [theme.breakpoints.down("md")]:{
+    padding: "1rem",
+  }
 }));
-const page = () => {
+const ShopPage = () => {
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const handleDrawerToggle = () => {
+    setMobileOpen((prevState) => !prevState);
+  };
   return (
     <CustomShop>
       <Box className="shop-head">
@@ -31,6 +40,7 @@ const page = () => {
           content={"Filters"}
           className={"filter-btn"}
           startIcon={<FilterListIcon />}
+          onClick={handleDrawerToggle}
         />
       </Box>
       <Grid container spacing={2}>
@@ -42,8 +52,9 @@ const page = () => {
           );
         })}
       </Grid>
+      <FilterDrawer drawerClose={handleDrawerToggle} mobileOpen={mobileOpen}/>
     </CustomShop>
   );
 };
 
-export default page;
+export default ShopPage;
