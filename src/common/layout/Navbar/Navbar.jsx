@@ -33,7 +33,7 @@ function DrawerAppBar(props) {
   };
   
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center", p: 4,}}>
+    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center", p: 4}}>
       <Image
         style={{
           marginInline: "8px",
