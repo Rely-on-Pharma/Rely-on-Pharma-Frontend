@@ -2,22 +2,22 @@
 import React, { useEffect, useReducer } from "react";
 import AppContext from "./context";
 import AppReducer, { initialState } from "./contextReducer";
+import { showSnackbar,
+  hideSnackbar,
+  loginUser,
+  logOutUser,
+  updateCart,
+  applyFilter,
+  resetFilters,} from "./contextFunctions";
+import { useAuthEffect, useLocalStorageEffect, useCartUpdatedEffect } from "./contextUseEffects";
 
 const AppContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
+   // Effects
+   useAuthEffect( state.user,dispatch);
+   useLocalStorageEffect(state.user, dispatch);
+   useCartUpdatedEffect(state.cartUpdated, dispatch);
 
-  //   useeffects to handle user auth
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      dispatch({ type: "LOGIN", payload: { user: JSON.parse(storedUser) } });
-    }
-  }, []);
-
-  // Update localStorage when the user state changes
-  useEffect(() => {
-    localStorage.setItem("user", JSON.stringify(state.user));
-  }, [state.user]);
   const value = {
     // snackbar state values
     snackBar: {
@@ -30,30 +30,22 @@ const AppContextProvider = ({ children }) => {
       isAuthenticated: state.user.isAuthenticated,
       data: state.user.data,
     },
+
+    //shop
+    cart:state.cart,
+    products:state.products,
+    filteredProducts:state.filteredProducts,
+    cartUpdated:state.cartUpdated,
+     
     // functions
     // snackbar functions
-    showSnackbar: (snackBarMessage, snackBarType) => {
-      dispatch({
-        type: "SHOW_SNACKBAR",
-        payload: { message: snackBarMessage, severity: snackBarType },
-      });
-    },
-    hideSnackbar: () => {
-      dispatch({ type: "HIDE_SNACKBAR" });
-    },
-
-    //auth functions
-    loginUser: (user) => {
-      dispatch({
-        type: "LOGIN",
-        payload: { user },
-      });
-    },
-    logOutUser: () => {
-      dispatch({
-        type: "LOGOUT",
-      });
-    },
+    showSnackbar: (message, severity) => showSnackbar(dispatch, message, severity),
+    hideSnackbar: () => hideSnackbar(dispatch),
+    loginUser: (user) => loginUser(dispatch, user),
+    logOutUser: () => logOutUser(dispatch),
+    updateCart: (newCart) => updateCart(dispatch, newCart),
+    applyFilter: (filters) => applyFilter(dispatch, filters),
+    resetFilters: () => resetFilters(dispatch),
   };
 
   return (
