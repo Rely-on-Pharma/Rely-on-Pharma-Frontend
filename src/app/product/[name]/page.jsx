@@ -6,6 +6,7 @@ import SimilarComponents from '@/pages/Product/SimilarComponents'
 import { productData } from '@/constants/data/productData.js'
 import { Box, Grid, Typography, styled } from '@mui/material'
 import React from 'react'
+import { useMobile } from '@/common/utils/finndViewSize'
 const ProductData = {
     "id": "65d477565b75282dda587003",
     "name": "Unbranded Concrete Mouse",
@@ -56,7 +57,7 @@ const ProductData = {
     }
   }))
 const SingleProduct = () => {
-
+  const isMobile = useMobile()
   return (
     <CustomSingleProduct>
       <Grid className='productContainer' container spacing={2}>
@@ -71,7 +72,7 @@ const SingleProduct = () => {
       {/* related */}
 
       <Typography variant='h3'>Similar Products</Typography>
-      <SimilarComponents slidesPerView={3}
+      <SimilarComponents slidesPerView={isMobile ? 1 : 3}
   spaceBetween={30}
   loop = {true}
   delay = {2500}
