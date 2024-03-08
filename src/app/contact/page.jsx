@@ -268,7 +268,7 @@ const ContactUs = () => {
               fontSize: "0.6rem",
               fontStyle: "italic",
               color: colors?.black,
-              fontWeight: 100,
+              fontWeight: 600,
             }}
           >
             jatinthakkar1590@gmail.com
