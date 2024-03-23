@@ -1,7 +1,7 @@
 "use client";
 import { Box, Drawer, Grid, Typography, styled } from "@mui/material";
 import React, { useState } from "react";
-import { productData } from "../../constants/data/productData.js";
+import { productData } from "../../../constants/data/productData.js";
 import { MemoizedButton } from "@/constants/SDK/CustomButton.js";
 import { colors } from "@/constants/colors.js";
 import FilterListIcon from "@mui/icons-material/FilterList";
