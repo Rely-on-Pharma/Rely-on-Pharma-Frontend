@@ -1,7 +1,5 @@
 import ThemeRegistry from "@/theme/ThemeRegistry.js";
 import "./globals.css";
-import DrawerAppBar from "@/common/layout/Navbar/Navbar";
-import Footer from "../common/layout/Footer/Footer.jsx";
 import AppContextProvider from "@/constants/context/contextProvider";
 import { MemoizedSnackBar } from "@/constants/SDK/CustomSnackBar";
 export const metadata = {
@@ -16,13 +14,14 @@ export default function RootLayout({ children }) {
         <AppContextProvider>
           <MemoizedSnackBar/>
           <ThemeRegistry>
-            <header>
+            {/* <header>
               <DrawerAppBar />
             </header>
             {children}
             <footer>
               <Footer />
-            </footer>
+            </footer> */}
+            {children}
           </ThemeRegistry>
         </AppContextProvider>
       </body>

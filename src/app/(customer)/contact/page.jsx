@@ -8,7 +8,7 @@ import {
   Grid,
   Button,
 } from "@mui/material";
-import headerImg from "../../../public/contactus-image.png";
+import headerImg from "../../../../public/contactus-image.png";
 import React from "react";
 import { Email, LocalPhone } from "@mui/icons-material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -193,7 +193,7 @@ const ContactUs = () => {
         <MemoizedButton className="submit-button" content={"submit"} />
       </Box>
       <br />
-      <Box container className="contact-details">
+      <Box className="contact-details">
         <Box className="phone-details">
           <Box className="detail-header">
             <LocalPhone className="icon-decoration-1" />
