@@ -8,8 +8,10 @@ import { showSnackbar,
   logOutUser,
   updateCart,
   applyFilter,
-  resetFilters,} from "./contextFunctions";
+  resetFilters,
+  addToCart,} from "./contextFunctions";
 import { useAuthEffect, useLocalStorageEffect, useCartUpdatedEffect } from "./contextUseEffects";
+import { productData } from "../data/productData";
 
 const AppContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
@@ -46,6 +48,7 @@ const AppContextProvider = ({ children }) => {
     updateCart: (newCart) => updateCart(dispatch, newCart),
     applyFilter: (filters) => applyFilter(dispatch, filters),
     resetFilters: () => resetFilters(dispatch),
+    addToCart: (productData,qty)=> addToCart(dispatch, productData,qty)
   };
 
   return (

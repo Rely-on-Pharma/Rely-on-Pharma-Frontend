@@ -1,10 +1,11 @@
 "use client";
-import { Box, IconButton, Typography, styled } from "@mui/material";
-import React from "react";
+import { Box, FormControlLabel, IconButton, Radio, RadioGroup, Typography, styled } from "@mui/material";
+import React, { useContext, useState } from "react";
 import StarIcon from "@mui/icons-material/Star";
 import { MemoizedButton } from "@/constants/SDK/CustomButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { colors } from "@/constants/colors";
+import AppContext from "@/constants/context/context";
 const CustomPRodDetails = styled(Box)(({ theme }) => ({
   padding: "2rem",
   ".prodName": {
@@ -27,7 +28,11 @@ const CustomPRodDetails = styled(Box)(({ theme }) => ({
       background:colors?.secondaryMedium,
       color:colors?.white,
       width:"8%",
-      padding:"10px"
+      padding:"10px",
+      "&.active":{
+        background:colors?.secondaryDark,
+    color:colors?.white,
+      }
     },
     "&.checkBtn":{
       background:colors?.secondaryMedium,
@@ -48,6 +53,7 @@ const CustomPRodDetails = styled(Box)(({ theme }) => ({
       },
       "&.favBtn":{
         width:"16%",
+        
       },
       "&.checkBtn":{
         width:"100%",
@@ -56,8 +62,24 @@ const CustomPRodDetails = styled(Box)(({ theme }) => ({
   }
 }));
 const ProdDetails = ({ productData }) => {
+  const {addToCart} = useContext(AppContext)
+  const [selectedOption, setSelectedOption] = useState("quantity");
+  const [quantity, setQuantity] = useState(1); // Default quantity for the quantity option
+  const [selectedPack, setSelectedPack] = useState("2"); // Default selected pack option
+
+  const handleAddToCart = () => {
+    addToCart(productData, quantity);
+  };
+
   const calDisPrice = (price, discount) => {
     return parseInt((discount / 100) * price);
+  };
+  const decrementQuantity = () => {
+    setQuantity(prevQuantity => Math.max(prevQuantity - 1, 1)); // Ensure quantity doesn't go below 1
+  };
+
+  const incrementQuantity = () => {
+    setQuantity(prevQuantity => prevQuantity + 1);
   };
   return (
     <CustomPRodDetails>
@@ -84,8 +106,68 @@ const ProdDetails = ({ productData }) => {
         </Typography>
         Rs. {calDisPrice(productData?.price, productData?.discount)}
       </Typography>
+      <RadioGroup
+        aria-label="quantity-option"
+        name="quantity-option"
+        value={selectedOption}
+        onChange={(e) => {
+          setSelectedOption(e.target.value);
+          if (e.target.value === "pack") {
+            setQuantity(1); // Reset quantity to default if pack option is selected
+          }
+        }}
+        style={{ marginBlock: "16px" }}
+      >
+        <FormControlLabel value="quantity" control={<Radio />} label="Select by quantity" /> 
+        {selectedOption === "quantity" && (
+        <Box style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          {/* Quantity counter */}
+          <IconButton onClick={decrementQuantity} className="btn">
+            -
+          </IconButton>
+          <Typography>{quantity}</Typography>
+          <IconButton onClick={incrementQuantity} className="btn">
+            +
+          </IconButton>
+        </Box>
+      )}
+        <FormControlLabel value="pack" control={<Radio />} label="Select pack of" />
+        {selectedOption === "pack" && (
+        <Box style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          {/* Your pack options */}
+          <MemoizedButton
+            className={`btn favBtn ${selectedPack === "2" ? "active" : ""}`}
+            content={"2"}
+            handleClick={() => {
+              setQuantity(2);
+              setSelectedPack("2");
+            }}
+          />
+          <MemoizedButton
+            className={`btn favBtn ${selectedPack === "4" ? "active" : ""}`}
+            content={"4"}
+            handleClick={() => {
+              setQuantity(4);
+              setSelectedPack("4");
+            }}
+          />
+          <MemoizedButton
+            className={`btn favBtn ${selectedPack === "6" ? "active" : ""}`}
+            content={"6"}
+            handleClick={() => {
+              setQuantity(6);
+              setSelectedPack("6");
+            }}
+          />
+        </Box>
+      )}
+      </RadioGroup>
+
+      
+
+     
       <Box style={{ marginBlock: "16px", width:"100%", display:"flex",alignItems:"center", gap:"12px" }}>
-        <MemoizedButton className={"btn addToBtn"} content={"Add to Cart"} />
+        <MemoizedButton className={"btn addToBtn"} content={"Add to Cart"} handleClick={handleAddToCart}/>
         <IconButton className="btn favBtn"><FavoriteIcon  /></IconButton>
       </Box>
       <MemoizedButton className={"btn checkBtn"} content={"checkout"} />
