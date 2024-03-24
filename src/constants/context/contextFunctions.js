@@ -29,7 +29,9 @@ const showSnackbar = (dispatch, snackBarMessage, snackBarType) => {
   const resetFilters = (dispatch) => {
     dispatch({ type: 'RESET_FILTERS' });
   };
-  
+  const addToCart = (dispatch, productData, qty) => {
+    dispatch({ type: 'ADD_TO_CART', payload: {productData, qty} });
+  };
   export {
     showSnackbar,
     hideSnackbar,
@@ -38,5 +40,6 @@ const showSnackbar = (dispatch, snackBarMessage, snackBarType) => {
     updateCart,
     applyFilter,
     resetFilters,
+    addToCart
   };
   

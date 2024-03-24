@@ -1,4 +1,3 @@
-
 export const snackBaractionTypes = {
   SHOW_SNACKBAR: "SHOW_SNACKBAR",
   HIDE_SNACKBAR: "HIDE_SNACKBAR",
@@ -12,10 +11,17 @@ export const leadactionTypes = {
   REMOVE_LEAD: "REMOVE_LEAD",
 };
 export const shopActionTypes = {
-  APPLY_FILTER: 'APPLY_FILTER',
-  UPDATE_CART: 'UPDATE_CART',
-  RESET_FILTERS: 'RESET_FILTERS',
-  RESET_CART_UPDATED: 'RESET_CART_UPDATED',
+  APPLY_FILTER: "APPLY_FILTER",
+  UPDATE_CART: "UPDATE_CART",
+  RESET_FILTERS: "RESET_FILTERS",
+  RESET_CART_UPDATED: "RESET_CART_UPDATED",
+};
+
+export const cartActionTypes = {
+  ADD_TO_CART: "ADD_TO_CART",
+  REMOVE_FROM_CART: "REMOVE_FROM_CART",
+  INCREMENT_QYT: "INCREMENT_QTY",
+  DECREMENT_QYT: "DECREMENT_QTY",
 };
 export const initialState = {
   //user
@@ -34,10 +40,10 @@ export const initialState = {
   },
 
   //shop
-  products:[],
-  filteredProducts:[],
-  cart:[],
-  cartUpdated:false
+  products: [],
+  filteredProducts: [],
+  cart: [],
+  cartUpdated: false,
 };
 
 const AppReducer = (state, action) => {
@@ -80,51 +86,81 @@ const AppReducer = (state, action) => {
         },
       };
     }
-    case shopActionTypes.APPLY_FILTER:{
-      const {filters} = action.payload;
+    case shopActionTypes.APPLY_FILTER: {
+      const { filters } = action.payload;
       let filtered = [...state.products]; //get all products
       //apply filters
 
-      if(filters?.sortBy === 'highToLow'){
+      if (filters?.sortBy === "highToLow") {
         //sort high to low
-        filtered?.sort((item1, item2)=> item2.price - item1.price);
-      }
-      else{
-        filtered?.sort((item1, item2)=> item1.price - item2.price);
+        filtered?.sort((item1, item2) => item2.price - item1.price);
+      } else {
+        filtered?.sort((item1, item2) => item1.price - item2.price);
       }
 
       //filter based on company
-      if(filters?.companyName){
-        filtered = filtered?.filter((item)=>  item?.company === filters?.companyName)
+      if (filters?.companyName) {
+        filtered = filtered?.filter(
+          (item) => item?.company === filters?.companyName
+        );
       }
 
       //filter based on category
-      if( filters?.category ){
-        filtered = filtered?.filter((item)=> item?.category === filters?.category);
+      if (filters?.category) {
+        filtered = filtered?.filter(
+          (item) => item?.category === filters?.category
+        );
       }
 
-      return  {
-         ...state,
-         filteredProducts : filtered
-      }
+      return {
+        ...state,
+        filteredProducts: filtered,
+      };
     }
 
     case shopActionTypes.RESET_FILTERS: {
       return {
         ...state,
-        filteredProducts:state.products,
-      }
+        filteredProducts: state.products,
+      };
     }
     case shopActionTypes.UPDATE_CART: {
-      const {newCart} = action.payload;
+      const { newCart } = action.payload;
       return {
         ...state,
         cart: newCart,
-        cartUpdated:true
-      }
+        cartUpdated: true,
+      };
     }
     case shopActionTypes.RESET_CART_UPDATED:
       return { ...state, cartUpdated: false };
+
+      case cartActionTypes.ADD_TO_CART: {
+        const existingProductIndex = state.cart.findIndex(item => item.id === action.payload.productData?.id);
+        if (existingProductIndex !== -1) {
+          // Product already exists in the cart, update the quantity
+          const updatedCart = [...state.cart];
+          updatedCart[existingProductIndex].qty = action.payload.qty;
+          return {
+            ...state,
+            cart: updatedCart
+          };
+        } else {
+          // Product not in cart, add it
+          return {
+            ...state,
+            cart: [...state.cart, { ...action.payload.productData, qty: action.payload.qty }]
+          };
+        }
+      }
+      
+
+    case cartActionTypes.REMOVE_FROM_CART: {
+      return {
+        ...state,
+        cart: state.cart?.filter((c) => c?.id != action.payload.id),
+      };
+    }
     default:
       return state;
   }
