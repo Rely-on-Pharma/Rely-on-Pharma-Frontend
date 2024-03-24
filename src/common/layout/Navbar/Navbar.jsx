@@ -2,6 +2,7 @@
 
 import { mobileNavLinks } from "@/constants/NavbarData";
 import { colors } from "@/constants/colors";
+import AppContext from "@/constants/context/context";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MenuIcon from "@mui/icons-material/Menu";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -18,7 +19,8 @@ import Toolbar from "@mui/material/Toolbar";
 import Image from "next/image";
 import Link from "next/link";
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import logo from '../../../../public/logo.svg'
 const drawerWidth = 300;
 
 function DrawerAppBar(props) {
@@ -26,7 +28,14 @@ function DrawerAppBar(props) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const container = window !== undefined ? () => window().document.body : undefined;
   // const router = useRouter();
+  const { cart } = useContext(AppContext); // Access the cart from your context
+  const [cartLength, setCartLength] = useState(cart.length);
 
+  useEffect(() => {
+    // Update cart length when cart updates
+    setCartLength(cart.length);
+    console.log("yash", cart)
+  }, [cart]);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -43,7 +52,7 @@ function DrawerAppBar(props) {
         }}
         width={72}
         height={16}
-        src="https://logos-world.net/wp-content/uploads/2020/03/Coca-Cola-Logo.png"
+        src={logo}
         alt="logo"
         />
       <Divider />
@@ -95,7 +104,7 @@ function DrawerAppBar(props) {
             }}
             width={50}
             height={40}
-            src="https://logos-world.net/wp-content/uploads/2020/03/Coca-Cola-Logo.png"
+            src={logo}
             alt="logo"
           />
           <Box
@@ -129,7 +138,7 @@ function DrawerAppBar(props) {
               aria-label="show 17 new notifications"
               color={colors?.primaryDark}
             >
-              <Badge badgeContent={17} color="success">
+              <Badge badgeContent={cartLength} color="success">
                 <ShoppingCartIcon style={{ color: `${colors?.primaryDark}` }} />
               </Badge>
             </IconButton>
