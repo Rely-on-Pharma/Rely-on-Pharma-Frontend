@@ -38,7 +38,7 @@ export const colors={
     lightYellowBg: "#FEF8E6",
     lightWhiteBg: "#F7F8FA",
   
-    warning: "#FFB636",
+    warning: "#FF0000",
     white: "#FFFFFF",
   
     darkGreen: " #2D804C",
