@@ -1,3 +1,5 @@
+import { cartActionTypes } from "./contextReducer";
+
 // contextFunctions.js
 const showSnackbar = (dispatch, snackBarMessage, snackBarType) => {
     dispatch({
@@ -30,8 +32,18 @@ const showSnackbar = (dispatch, snackBarMessage, snackBarType) => {
     dispatch({ type: 'RESET_FILTERS' });
   };
   const addToCart = (dispatch, productData, qty) => {
-    dispatch({ type: 'ADD_TO_CART', payload: {productData, qty} });
+    dispatch({ type: cartActionTypes?.ADD_TO_CART, payload: {productData, qty} });
   };
+
+  const incrementQty = (dispatch, productId) =>{
+    dispatch({type: cartActionTypes?.INCREMENT_QYT, payload:{itemId: productId}});
+  }
+  const decrementQty = (dispatch, productId) =>{
+    dispatch({type: cartActionTypes?.DECREMENT_QYT, payload:{itemId: productId}});
+  }
+  const removeItem = (dispatch, productId) =>{
+    dispatch({type: cartActionTypes?.REMOVE_FROM_CART, payload:{itemId: productId}});
+  }
   export {
     showSnackbar,
     hideSnackbar,
@@ -40,6 +52,9 @@ const showSnackbar = (dispatch, snackBarMessage, snackBarType) => {
     updateCart,
     applyFilter,
     resetFilters,
-    addToCart
+    addToCart,
+    incrementQty,
+    decrementQty,
+    removeItem
   };
   
