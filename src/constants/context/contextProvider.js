@@ -9,7 +9,10 @@ import { showSnackbar,
   updateCart,
   applyFilter,
   resetFilters,
-  addToCart,} from "./contextFunctions";
+  addToCart,
+  incrementQty,
+  decrementQty,
+  removeItem,} from "./contextFunctions";
 import { useAuthEffect, useLocalStorageEffect, useCartUpdatedEffect } from "./contextUseEffects";
 import { productData } from "../data/productData";
 
@@ -48,7 +51,10 @@ const AppContextProvider = ({ children }) => {
     updateCart: (newCart) => updateCart(dispatch, newCart),
     applyFilter: (filters) => applyFilter(dispatch, filters),
     resetFilters: () => resetFilters(dispatch),
-    addToCart: (productData,qty)=> addToCart(dispatch, productData,qty)
+    addToCart: (productData,qty)=> addToCart(dispatch, productData,qty),
+    incrementQty: (productId)=> incrementQty(dispatch, productId),
+    decrementQty: (productId)=> decrementQty(dispatch, productId),
+    removeItem: (productId)=> removeItem(dispatch, productId)
   };
 
   return (

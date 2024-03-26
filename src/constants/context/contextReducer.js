@@ -42,7 +42,11 @@ export const initialState = {
   //shop
   products: [],
   filteredProducts: [],
-  cart: [],
+  cart: [
+    { id: 1, name: "Product 1", image: "https://loremflickr.com/640/480?lock=6586178289532928", price: 10, qty: 2 },
+    { id: 2, name: "Product 2", image: "https://loremflickr.com/640/480?lock=6586178289532928", price: 20, qty: 1 },
+    { id: 3, name: "Product 3", image: "https://loremflickr.com/640/480?lock=6586178289532928", price: 15, qty: 3 }
+  ],
   cartUpdated: false,
 };
 
@@ -153,14 +157,52 @@ const AppReducer = (state, action) => {
           };
         }
       }
-      
-
     case cartActionTypes.REMOVE_FROM_CART: {
       return {
         ...state,
-        cart: state.cart?.filter((c) => c?.id != action.payload.id),
+        cart: state.cart?.filter((c) => c?.id !== action.payload.itemId),
       };
     }
+    case cartActionTypes.INCREMENT_QYT: {
+      const { itemId } = action.payload;
+      const index = state.cart?.findIndex(item => item.id === itemId);
+      if (index !== -1) {
+        const updatedCartItems = [...state.cart];
+        updatedCartItems[index] = {
+          ...updatedCartItems[index],
+          qty: updatedCartItems[index].qty + 1
+        };
+        return {
+          ...state,
+          cart: updatedCartItems
+        };
+      }
+      // If item not found, return state as is
+      return state;
+    }
+    
+    case cartActionTypes.DECREMENT_QYT:{
+      const {itemId} = action.payload;
+      const index = state.cart?.findIndex(item => item.id === itemId);
+      if (index !== -1) {
+        const updatedCartItems = [...state.cart];
+        if(updatedCartItems[index]?.qty === 1){
+          updatedCartItems?.splice(index,1);
+        }
+        else{
+          updatedCartItems[index] = {
+            ...updatedCartItems[index],
+            qty: updatedCartItems[index].qty - 1
+          };
+        }
+        return {
+          ...state, 
+          cart: updatedCartItems
+        }
+      }
+      return state;
+    }
+
     default:
       return state;
   }
