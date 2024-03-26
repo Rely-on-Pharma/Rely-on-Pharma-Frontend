@@ -1,8 +1,13 @@
 "use client";
 import { MemoizedButton } from "@/constants/SDK/CustomButton";
+import { MemoizedIconButton } from "@/constants/SDK/CustomIconButton";
 import { colors } from "@/constants/colors";
 import { Box, Typography, styled } from "@mui/material";
 import Image from "next/image";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import DeleteIcon from "@mui/icons-material/Delete";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import React from "react";
 const CustomProductRow = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -22,11 +27,11 @@ const CustomProductRow = styled(Box)(({ theme }) => ({
     justifyContent: "space-between",
     alignItems: "center",
     margin: "0.4rem 0",
-    ">p":{
-        fontSize:"1.02rem",
-        fontWeight:"700",
-        letterSpacing:"1px"
-    }
+    ">p": {
+      fontSize: "1.02rem",
+      fontWeight: "700",
+      letterSpacing: "1px",
+    },
   },
   ".btn": {
     background: "none",
@@ -43,6 +48,30 @@ const CustomProductRow = styled(Box)(({ theme }) => ({
       boxShadow: "none",
       border: "none",
       color: colors?.primaryDark,
+    },
+  },
+  [theme.breakpoints.down("md")]: {
+    padding: "1rem",
+    gap: "0.8rem",
+    ".img-box": {
+      width: "5rem",
+      height: "100%",
+      objectFit: "contain",
+    },
+    ".btn": {
+      padding: "6px 0",
+      fontSize: "10px",
+    },
+    ".productDetail": {
+      display: "flex",
+      justifyContent: "space-between",
+
+      ">p": {
+        fontSize: "0.1rem",
+        display: "block",
+        fontWeight: "600",
+        letterSpacing: "1px",
+      },
     },
   },
 }));
@@ -81,25 +110,30 @@ const ProductRow = ({ item, onIncrement, onDecrement, onRemove }) => {
               marginRight: "1rem",
             }}
           >
-            <MemoizedButton
-              className="btn"
+            <MemoizedIconButton
+              className={"btn"}
               handleClick={onDecrement}
-              content={"-"}
+              icon={RemoveIcon}
             />
             <Typography>{item?.qty}</Typography>
-            <MemoizedButton
-              className="btn"
+            <MemoizedIconButton
+              className={"btn"}
               handleClick={onIncrement}
-              content={"+"}
+              icon={AddIcon}
             />
           </Box>
-          <MemoizedButton
-            className="btn"
+
+          <MemoizedIconButton
+            className={"btn"}
             handleClick={onRemove}
-            content={"Remove"}
+            icon={DeleteIcon}
             style={{ color: colors?.warning }}
           />
-          <MemoizedButton className="btn" content={"Move to Wishlist"} />
+          <MemoizedIconButton
+            className={"btn"}
+            handleClick={onIncrement}
+            icon={FavoriteIcon}
+          />
         </Box>
       </Box>
     </CustomProductRow>

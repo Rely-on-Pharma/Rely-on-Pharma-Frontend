@@ -18,6 +18,13 @@ const CustomCartMain = styled(Box)(({ theme }) => ({
     ".grid_container":{
         display:"flex",
         justifyContent:"space-between",
+    },
+    [theme.breakpoints.down("md")]:{
+      padding:"1rem",
+      ".heading":{
+        fontSize:"1.5rem",
+        margin:"0.8rem 0",
+      }
     }
 }));
 const CartMain = () => {
@@ -30,7 +37,7 @@ const CartMain = () => {
     <CustomCartMain>
       <Typography className="heading">Order Overview</Typography>
       <Grid container spacing={2} className="grid_container">
-        <Grid item xs={12} md={8} className="grid-item" style={{display:"flex", flexDirection:"column", }}>
+        <Grid item xs={12} sm={6} md={8} className="grid-item" style={{display:"flex", flexDirection:"column", }}>
           {cart?.length > 0 ? (
             cart?.map((item) => (
               <ProductRow
@@ -45,7 +52,7 @@ const CartMain = () => {
             <Typography>Cart is Empty</Typography>
           )}
         </Grid>
-        <Grid item xs={12} md={4} className="grid-item" >
+        <Grid item xs={12} sm={6} md={4} className="grid-item" >
           <CartSummary cart={cart} totalPrice={totalPrice} />
         </Grid>
       </Grid>
