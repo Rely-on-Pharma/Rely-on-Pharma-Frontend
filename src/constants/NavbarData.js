@@ -20,3 +20,26 @@ export const mobileNavLinks = [
     name: "ABOUT US",
   },
 ];
+
+export const adminNavLinks = [
+  {
+    id: 1,
+    href: "/admin/dashboard",
+    name: "DASHBOARD",
+  },
+  {
+    id: 2,
+    href: "/admin/listing",
+    name: "LISTING",
+  },
+  {
+    id: 3,
+    href: "/admin/inventory",
+    name: "INVENTORY",
+  },
+  {
+    id: 4,
+    href: "/admin/order",
+    name: "ORDERS",
+  },
+];
