@@ -91,7 +91,7 @@ const ProdDetails = ({ productData }) => {
           marginBlock: "8px",
         }}
       >
-        Company name:-{productData?.company}
+        Company name:-{productData?.brand}
       </Typography>
       <Typography style={{ display: "flex", alignItems: "center", gap: "4px" }}>
         <StarIcon /> 4.5
