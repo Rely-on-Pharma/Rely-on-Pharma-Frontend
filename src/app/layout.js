@@ -14,13 +14,6 @@ export default function RootLayout({ children }) {
         <AppContextProvider>
           <MemoizedSnackBar/>
           <ThemeRegistry>
-            {/* <header>
-              <DrawerAppBar />
-            </header>
-            {children}
-            <footer>
-              <Footer />
-            </footer> */}
             {children}
           </ThemeRegistry>
         </AppContextProvider>
