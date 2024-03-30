@@ -16,18 +16,18 @@ const CustomHero = styled(Box)(({ theme }) => ({
   ".grid_item-text": {
     display: "flex",
     justifyContent: "center",
-    flexDirection:"column"
+    flexDirection: "column",
   },
-  ".btn":{
-    display:"inline",
-    width:"max-content",
-    borderRadius:"8px",
-    boxShadow:"none",
-    background:colors.secondaryDark,
-    fontSize:"18px",
-    "&:hover":{
-      background:colors.seaShellLight
-    }
+  ".btn": {
+    display: "inline",
+    width: "max-content",
+    borderRadius: "8px",
+    boxShadow: "none",
+    background: colors.secondaryDark,
+    fontSize: "18px",
+    "&:hover": {
+      background: colors.seaShellLight,
+    },
   },
   ".text": {
     textAlign: "left",
@@ -55,13 +55,13 @@ const Hero = () => {
     <CustomHero>
       <Grid container className="grid-container">
         <Grid item md={6} className="grid_item-text">
-          <Typography  variant="caption" className="text">
+          <Typography variant="caption" className="text">
             <Typography variant="span">F</Typography>EEL
             <Typography variant="span"> B</Typography>ETTER <br />
             <Typography variant="span">R</Typography>EJUVANATE <br />
             <Typography variant="span">R</Typography>ECOVER
           </Typography>
-          <MemoizedButton className={"btn"}  content="Shop Now"/>
+          <MemoizedButton className={"btn"} content="Shop Now" />
         </Grid>
         <Grid item md={6} className="grid_item">
           <MemoizedSwiper
