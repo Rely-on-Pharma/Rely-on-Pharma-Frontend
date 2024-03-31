@@ -33,10 +33,10 @@ const ProductCard = ({productData}) => {
       {/*<Image src={productData?.image_url} alt={productData?.name} width={360} height={300}/> */}
         <Image src={imageUrl} alt={productData?.name} width={360} height={300}/>
         <Stack className='details'>
-        <Link href={`/product/${productData?.name}`} style={{fontWeight:"700"}}>{productData?.name}</Link>
+        <Link href={`/product/${productData?.id}`} style={{fontWeight:"700"}}>{productData?.name}</Link>
         <Typography variant='body'> Rs. {productData?.price}</Typography>
         </Stack>
-        <MemoizedButton content={"Quick View"} href={`/product/${productData?.name}`} className={"addBtn"}/>
+        <MemoizedButton content={"Quick View"} href={`/product/${productData?.id}`} className={"addBtn"}/>
     </CustomCard>
   ) 
 }

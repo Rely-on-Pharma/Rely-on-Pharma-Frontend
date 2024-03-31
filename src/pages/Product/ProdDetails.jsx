@@ -81,6 +81,11 @@ const ProdDetails = ({ productData }) => {
   const incrementQuantity = () => {
     setQuantity(prevQuantity => prevQuantity + 1);
   };
+   //understand the changes required to the products table.
+   //Understand the discount mechanism. When should the discount appear?
+   //Understand the rating feature. Add a field for rating.
+   //Add description, how to use, and ingredients string
+       
   return (
     <CustomPRodDetails>
       <Typography className="prodName">{productData?.name}</Typography>
@@ -91,17 +96,20 @@ const ProdDetails = ({ productData }) => {
           marginBlock: "8px",
         }}
       >
-        Company name:-{productData?.brand}
+      by {productData?.brand}
       </Typography>
-      <Typography style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+      {
+          /* <Typography style={{ display: "flex", alignItems: "center", gap: "4px" }}>
         <StarIcon /> 4.5
-      </Typography>
+       </Typography>
+        */
+      }
       <Typography style={{ marginBlock: "8px", fontSize:"20px",color:colors?.primaryDark, fontWeight:"700"}}>
         <Typography
           variant="span"
           style={{ textDecorationLine: "line-through", marginRight: "12px", color:colors?.MonochromeMedium, fontWeight:"600", fontSize:"16px"}}
         >
-          
+         
           Rs. {productData?.price}
         </Typography>
         Rs. {calDisPrice(productData?.price, productData?.discount)}

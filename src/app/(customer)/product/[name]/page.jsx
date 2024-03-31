@@ -5,8 +5,9 @@ import ProdDetails from '@/pages/Product/ProdDetails'
 import SimilarComponents from '@/pages/Product/SimilarComponents'
 import { productData } from '@/constants/data/productData.js'
 import { Box, Grid, Typography, styled } from '@mui/material'
-import React from 'react'
+import React, {useEffect,useState} from 'react'
 import { useMobile } from '@/common/utils/finndViewSize'
+import { useRouter , useSearchParams, usePathname } from 'next/navigation';
 const ProductData = {
     "id": "65d477565b75282dda587003",
     "name": "Unbranded Concrete Mouse",
@@ -56,19 +57,69 @@ const ProductData = {
       }
     }
   }))
+const getId = (pathname) => {
+    const regex = /\/product\/([^/]+)/;
+    const match = pathname.match(regex);
+
+    if (match && match.length > 1) {
+      const idValue = match[1];
+      return idValue
+    } else {
+        return ""
+    }
+}
 const SingleProduct = () => {
   const isMobile = useMobile()
+  const pathname = usePathname()
+  const id  = getId(pathname)
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [productData, setProductData] = useState([])
+
+  useEffect(() => {
+    // Function to fetch data from the API
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://localhost:8000/products/${id}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
+        const jsonData = await response.json();
+        setProductData(jsonData);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    // Call the fetchData function when the component mounts
+    fetchData();
+
+    // Cleanup function (optional)
+    return () => {
+      // Cleanup code, if needed
+    };
+  }, [id]); // Empty dependency array means this effect runs only once, similar to componentDidMount
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
   return (
     <CustomSingleProduct>
       <Grid className='productContainer' container spacing={2}>
       {/* Gallery */}
       <Grid item xs={12} style={{padding:"0"}}  md={6}><Gallery  imageGallery={ProductData?.imgs}/></Grid>
-      <Grid item xs={12} style={{padding:"0"}} md={6}><ProdDetails productData={ProductData}/></Grid>
+      <Grid item xs={12} style={{padding:"0"}} md={6}><ProdDetails productData={productData}/></Grid>
       {/* Pricing */}
         
       </Grid>
       {/* details */}
-      <DescriptionTab desc={ProductData?.desc} howToUse={ProductData?.use} ingredients={ProductData?.ingredients}/>
+      <DescriptionTab desc={productData?.description} howToUse={productData?.how_to_use} ingredients={"sample ingredient list"}/>
       {/* related */}
 
       <Typography variant='h3'>Similar Products</Typography>
