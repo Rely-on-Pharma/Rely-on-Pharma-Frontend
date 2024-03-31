@@ -66,6 +66,7 @@ const ProdDetails = ({ productData }) => {
   const [selectedOption, setSelectedOption] = useState("quantity");
   const [quantity, setQuantity] = useState(1); // Default quantity for the quantity option
   const [selectedPack, setSelectedPack] = useState("2"); // Default selected pack option
+  const [discount, setDiscount] = useState(0); // Default selected pack option
 
   const handleAddToCart = () => {
     addToCart(productData, quantity);
@@ -81,10 +82,34 @@ const ProdDetails = ({ productData }) => {
   const incrementQuantity = () => {
     setQuantity(prevQuantity => prevQuantity + 1);
   };
-   //understand the changes required to the products table.
-   //Understand the discount mechanism. When should the discount appear?
-   //Understand the rating feature. Add a field for rating.
-   //Add description, how to use, and ingredients string
+  const returnPriceComponent = (price,discount) => {
+
+      if(discount){
+
+          return (
+      <Typography style={{ marginBlock: "8px", fontSize:"20px",color:colors?.primaryDark, fontWeight:"700"}}>
+        <Typography
+          variant="span"
+          style={{ textDecorationLine: discount && "line-through", marginRight: "12px", color:colors?.MonochromeMedium, fontWeight:"600", fontSize:"16px"}}
+        >
+         
+          Rs. {price}
+        </Typography>
+        Rs. {calDisPrice(productData?.price,discount)}
+      </Typography>
+        )
+
+    }
+    else{
+    return (
+        <Typography style={{ marginBlock: "8px", fontSize:"20px",color:colors?.primaryDark, fontWeight:"700"}}>
+          Rs. {price}
+      </Typography>
+    )
+
+    }
+}
+
        
   return (
     <CustomPRodDetails>
@@ -104,17 +129,9 @@ const ProdDetails = ({ productData }) => {
        </Typography>
         */
       }
-      <Typography style={{ marginBlock: "8px", fontSize:"20px",color:colors?.primaryDark, fontWeight:"700"}}>
-        <Typography
-          variant="span"
-          style={{ textDecorationLine: "line-through", marginRight: "12px", color:colors?.MonochromeMedium, fontWeight:"600", fontSize:"16px"}}
-        >
-         
-          Rs. {productData?.price}
-        </Typography>
-        Rs. {calDisPrice(productData?.price, productData?.discount)}
-      </Typography>
-      <RadioGroup
+
+      {returnPriceComponent(productData?.price,discount)}
+    <RadioGroup
         aria-label="quantity-option"
         name="quantity-option"
         value={selectedOption}
