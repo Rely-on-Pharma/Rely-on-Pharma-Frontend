@@ -1,6 +1,6 @@
 "use client";
 import { Box, FormControlLabel, IconButton, Radio, RadioGroup, Typography, styled } from "@mui/material";
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import StarIcon from "@mui/icons-material/Star";
 import { MemoizedButton } from "@/constants/SDK/CustomButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -61,19 +61,49 @@ const CustomPRodDetails = styled(Box)(({ theme }) => ({
     },
   }
 }));
-const ProdDetails = ({ productData }) => {
+const ProdDetails = ({ productData , productId}) => {
   const {addToCart} = useContext(AppContext)
   const [selectedOption, setSelectedOption] = useState("quantity");
   const [quantity, setQuantity] = useState(1); // Default quantity for the quantity option
   const [selectedPack, setSelectedPack] = useState("2"); // Default selected pack option
   const [discount, setDiscount] = useState(0); // Default selected pack option
+  const [variants, setVariants] = useState([]); // Default selected pack option
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
+  useEffect(() => {
+    // Function to fetch data from the API
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://localhost:8000/variants/${productId}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
+        const jsonData = await response.json();
+        setVariants(jsonData);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    // Call the fetchData function when the component mounts
+    fetchData();
+
+    // Cleanup function (optional)
+    return () => {
+      // Cleanup code, if needed
+    };
+  }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
+
+  
   const handleAddToCart = () => {
     addToCart(productData, quantity);
   };
 
   const calDisPrice = (price, discount) => {
-    return parseInt((discount / 100) * price);
+    return (price - ((price*discount)/100))
   };
   const decrementQuantity = () => {
     setQuantity(prevQuantity => Math.max(prevQuantity - 1, 1)); // Ensure quantity doesn't go below 1
@@ -110,7 +140,13 @@ const ProdDetails = ({ productData }) => {
     }
 }
 
-       
+ if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }      
   return (
     <CustomPRodDetails>
       <Typography className="prodName">{productData?.name}</Typography>
@@ -140,6 +176,11 @@ const ProdDetails = ({ productData }) => {
           if (e.target.value === "pack") {
             setQuantity(1); // Reset quantity to default if pack option is selected
           }
+          else if(e.target.value == "quantity"){
+
+              setDiscount(0);
+              setQuantity(0);
+          }
         }}
         style={{ marginBlock: "16px" }}
       >
@@ -159,31 +200,23 @@ const ProdDetails = ({ productData }) => {
         <FormControlLabel value="pack" control={<Radio />} label="Select pack of" />
         {selectedOption === "pack" && (
         <Box style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+            {console.log(variants)}
           {/* Your pack options */}
-          <MemoizedButton
+           { variants.map((variant) => {
+               return <MemoizedButton
+            key = {variant.variant_id}
             className={`btn favBtn ${selectedPack === "2" ? "active" : ""}`}
-            content={"2"}
+            content={variant.quantity}
             handleClick={() => {
-              setQuantity(2);
-              setSelectedPack("2");
+              setQuantity(variant.quantity);
+              setSelectedPack(variant.quantity.toString());
+              setDiscount(variant.discount_percentage);
             }}
           />
-          <MemoizedButton
-            className={`btn favBtn ${selectedPack === "4" ? "active" : ""}`}
-            content={"4"}
-            handleClick={() => {
-              setQuantity(4);
-              setSelectedPack("4");
-            }}
-          />
-          <MemoizedButton
-            className={`btn favBtn ${selectedPack === "6" ? "active" : ""}`}
-            content={"6"}
-            handleClick={() => {
-              setQuantity(6);
-              setSelectedPack("6");
-            }}
-          />
+
+            })
+           }
+          
         </Box>
       )}
       </RadioGroup>

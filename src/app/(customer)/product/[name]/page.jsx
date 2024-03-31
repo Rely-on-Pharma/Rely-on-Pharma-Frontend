@@ -114,7 +114,7 @@ const SingleProduct = () => {
       <Grid className='productContainer' container spacing={2}>
       {/* Gallery */}
       <Grid item xs={12} style={{padding:"0"}}  md={6}><Gallery  imageGallery={ProductData?.imgs}/></Grid>
-      <Grid item xs={12} style={{padding:"0"}} md={6}><ProdDetails productData={productData}/></Grid>
+      <Grid item xs={12} style={{padding:"0"}} md={6}><ProdDetails productId = {id} productData={productData}/></Grid>
       {/* Pricing */}
         
       </Grid>
