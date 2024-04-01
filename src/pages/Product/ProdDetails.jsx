@@ -14,6 +14,7 @@ import { MemoizedButton } from "@/constants/SDK/CustomButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { colors } from "@/constants/colors";
 import AppContext from "@/constants/context/context";
+
 const CustomPRodDetails = styled(Box)(({ theme }) => ({
   padding: "2rem",
   ".prodName": {
@@ -68,8 +69,10 @@ const CustomPRodDetails = styled(Box)(({ theme }) => ({
     },
   },
 }));
+
 const ProdDetails = ({ productData, productId }) => {
   const { addToCart } = useContext(AppContext);
+
   const [selectedOption, setSelectedOption] = useState("quantity");
   const [quantity, setQuantity] = useState(1); // Default quantity for the quantity option
   const [selectedPack, setSelectedPack] = useState("2"); // Default selected pack option

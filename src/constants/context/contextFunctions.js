@@ -1,4 +1,4 @@
-import { cartActionTypes } from "./contextReducer";
+import { authactionTypes, cartActionTypes } from "./contextReducer";
 
 // contextFunctions.js
 const showSnackbar = (dispatch, snackBarMessage, snackBarType) => {
@@ -13,15 +13,13 @@ const showSnackbar = (dispatch, snackBarMessage, snackBarType) => {
   };
   
   const loginUser = (dispatch, user) => {
-    dispatch({ type: 'LOGIN', payload: { user } });
+    console.log("Dispatch received:", dispatch);
+    console.log("User received:", user);
+    dispatch({ type: authactionTypes.LOGIN, payload: { user } });
   };
   
   const logOutUser = (dispatch) => {
-    dispatch({ type: 'LOGOUT' });
-  };
-  
-  const updateCart = (dispatch, newCart) => {
-    dispatch({ type: 'UPDATE_CART', payload: { newCart } });
+    dispatch({ type: authactionTypes.LOGOUT });
   };
   
   const applyFilter = (dispatch, filters) => {
@@ -49,7 +47,6 @@ const showSnackbar = (dispatch, snackBarMessage, snackBarType) => {
     hideSnackbar,
     loginUser,
     logOutUser,
-    updateCart,
     applyFilter,
     resetFilters,
     addToCart,

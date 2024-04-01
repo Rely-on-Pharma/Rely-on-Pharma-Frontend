@@ -1,27 +1,27 @@
 "use client";
 import React, { useEffect, useReducer } from "react";
 import AppContext from "./context";
-import AppReducer, { initialState } from "./contextReducer";
+import AppReducer, { authactionTypes, initialState } from "./contextReducer";
 import { showSnackbar,
   hideSnackbar,
   loginUser,
   logOutUser,
-  updateCart,
   applyFilter,
   resetFilters,
   addToCart,
   incrementQty,
   decrementQty,
   removeItem,} from "./contextFunctions";
-import { useAuthEffect, useLocalStorageEffect, useCartUpdatedEffect } from "./contextUseEffects";
-import { productData } from "../data/productData";
 
 const AppContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
    // Effects
-   useAuthEffect( state.user,dispatch);
-   useLocalStorageEffect(state.user, dispatch);
-   useCartUpdatedEffect(state.cartUpdated, dispatch);
+   useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      dispatch({ type: authactionTypes.LOGIN, payload: { user: JSON.parse(storedUser) } });
+    }
+  }, []);
 
   const value = {
     // snackbar state values
@@ -31,16 +31,12 @@ const AppContextProvider = ({ children }) => {
       severity: state.snackBar.severity,
     },
     //auth user
-    user: {
-      isAuthenticated: state.user.isAuthenticated,
-      data: state.user.data,
-    },
+    user: state.user,
 
     //shop
     cart:state.cart,
     products:state.products,
     filteredProducts:state.filteredProducts,
-    cartUpdated:state.cartUpdated,
      
     // functions
     // snackbar functions
@@ -48,7 +44,7 @@ const AppContextProvider = ({ children }) => {
     hideSnackbar: () => hideSnackbar(dispatch),
     loginUser: (user) => loginUser(dispatch, user),
     logOutUser: () => logOutUser(dispatch),
-    updateCart: (newCart) => updateCart(dispatch, newCart),
+
     applyFilter: (filters) => applyFilter(dispatch, filters),
     resetFilters: () => resetFilters(dispatch),
     addToCart: (productData,qty)=> addToCart(dispatch, productData,qty),
