@@ -2,11 +2,19 @@
 import { data } from "@/constants/CarousalData";
 import { trendingProducts } from "@/constants/data/trendingData";
 import { MemoizedSwiper } from "@/constants/SDK/CustomSwipper";
-import { Box, Grid, Typography, styled, Avatar } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Typography,
+  styled,
+  Avatar,
+  Divider,
+  Rating,
+} from "@mui/material";
 import heroBg from "../../../public/hero-bg.png";
 import shopNowBg from "../../../public/shop-now-bg.png";
 import aboutBg from "../../../public/mission-vision-bg.png";
-import { FavoriteOutlined } from "@mui/icons-material";
+import { FavoriteOutlined, Star } from "@mui/icons-material";
 import React from "react";
 import { colors } from "@/constants/colors";
 import { MemoizedButton } from "@/constants/SDK/CustomButton";
@@ -34,6 +42,19 @@ const CustomHero = styled(Box)(({ theme }) => ({
     "&:hover": {
       background: colors.secondaryDark,
     },
+  },
+  ".explore-more": {
+    display: "inline",
+    width: "max-content",
+    borderRadius: "8px",
+    boxShadow: "none",
+    background: colors.champagneDark,
+    fontSize: "18px",
+    "&:hover": {
+      background: colors.secondaryDark,
+      color: colors?.white,
+    },
+    fontSize: "2.7vw",
   },
   ".text": {
     textAlign: "left",
@@ -77,17 +98,29 @@ const CustomHero = styled(Box)(({ theme }) => ({
     // Add margin top for spacing
   },
   ".about-us": {
-    justifyContent: "center",
+    justifyContent: "top",
     display: "flex",
-    flexDirection: "center",
+    flexDirection: "column",
+    //alignItems: "center",
     backgroundImage: `url(${aboutBg.src})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
-    minHeight: "1300px",
+    minHeight: "auto",
+    ".mission-text": {
+      color: "white",
+      fontSize: "6vw",
+      fontWeight: "bold",
+    },
+    ".vission-text": {
+      textAlign: "right",
+      color: "white",
+      fontSize: "6vw",
+      fontWeight: "bold",
+    },
   },
   ".avatar": {
-    width: "200px",
-    height: "200px",
+    width: "12vw",
+    height: "12vw",
     [theme.breakpoints.down("sm")]: {
       width: "80px",
       height: "80px",
@@ -95,6 +128,18 @@ const CustomHero = styled(Box)(({ theme }) => ({
     [theme.breakpoints.down("xs")]: {
       width: "60px",
       height: "60px",
+    },
+  },
+  ".cust-avatar": {
+    width: "18vw",
+    height: "18vw",
+    [theme.breakpoints.down("sm")]: {
+      width: "120px",
+      height: "120px",
+    },
+    [theme.breakpoints.down("xs")]: {
+      width: "120px",
+      height: "120px",
     },
   },
   [theme.breakpoints.down("md")]: {
@@ -115,19 +160,31 @@ const CustomHero = styled(Box)(({ theme }) => ({
     },
   },
   ".about-us-text": {
-    justifyContent: "center",
+    justifyContent: "top",
+    textAlign: "center",
     whiteSpace: "nowrap",
     color: "rgba(256, 256, 256, 0.6)",
     fontSize: "20em",
     [theme.breakpoints.down("sm")]: {
-      fontSize: "5em",
+      fontSize: "7vw",
     },
     [theme.breakpoints.down("md")]: {
-      fontSize: "10em",
+      fontSize: "9vw",
     },
     [theme.breakpoints.down("xs")]: {
-      fontSize: "5em",
+      fontSize: "7vw",
     },
+    [theme.breakpoints.down("lg")]: {
+      fontSize: "15vw",
+    },
+  },
+  ".cust-review-text": {
+    fontWeight: "bold",
+    fontSize: "8vh",
+  },
+  ".rating": {
+    marginY: 4,
+    fontSize: "9vh",
   },
 }));
 const Hero = () => {
@@ -221,14 +278,20 @@ const Hero = () => {
             borderRadius: "10px",
             padding: "20px 40px",
           }}
-          md={8}
         >
           <Grid item md={6}>
             <Typography className="shop-now-text" mt={1} mb={1}>
               SIGN UP & REQUEST FOR A PRODUCT SAMPLE NOW !!
             </Typography>
           </Grid>
-          <Grid item md={6} sm={12} xs={12} justifyContent={"center"}>
+          <Grid
+            item
+            md={6}
+            sm={12}
+            xs={12}
+            justifyContent={"center"}
+            alignItems={"center"}
+          >
             <Avatar
               alt="User Avatar"
               src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHNuZWFrZXJ8ZW58MHx8MHx8fDA%3D"
@@ -256,18 +319,112 @@ const Hero = () => {
         <Typography variant="h1" className="about-us-text" mt={2} mb={2}>
           ABOUT US
         </Typography>
-        <Box justifyContent="flex-start">
-          <Typography
-            variant="h3"
-            mt={2}
-            mb={2}
-            component="div"
-            justifyContent="flex-start"
-          >
-            OUR MISSION
-          </Typography>
-        </Box>
+        <Typography mt={2} mb={2} className="mission-text" ml={3}>
+          OUR MISSION
+        </Typography>
+        <Typography ml={3} fontSize={"2.7vw"} color={colors?.white} mb={2}>
+          To offer integrated, best quality pharmaceutical & cosmeceutical
+          products, enabling us to seat among Top rank companies, and to be a
+          reliable partner in our sphere of work through valued, compelling
+          relationships. 
+        </Typography>
+        <Typography mt={2} mb={2} className="vission-text" mr={2}>
+          OUR VISION
+        </Typography>
+        <Typography
+          mr={3}
+          fontSize={"2.7vw"}
+          color={colors?.white}
+          mb={2}
+          textAlign={"right"}
+        >
+          We believe to grow beyond its horizon of goals and put our dedicated
+          efforts continuously, in order to become a hallmark of a dynamic
+          organization, responding to its market needs.
+        </Typography>
+        <Grid
+          item
+          xs={12}
+          md={12}
+          justifyContent={"center"}
+          sx={{ margin: "7vh" }}
+        >
+          <MemoizedButton className="explore-more" content="EXPLORE MORE" />
+        </Grid>
       </Box>
+      <Typography className="cust-review-text" m={3}>
+        CUSTOMER REVIEWS
+      </Typography>
+      <Grid
+        spacing={1}
+        container
+        style={{
+          padding: "20px 40px",
+        }}
+        alignItems={"center"}
+        justifyContent={"center"}
+      >
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          md={5}
+          lg={5}
+          display="flex"
+          flexDirection={"column"}
+          justifyContent={{ xs: "center", sm: "center", md: "flex-start" }} // Adjust as needed
+          alignItems={{ xs: "center", sm: "center", md: "flex-start" }}
+        >
+          <Avatar
+            alt="User Avatar"
+            src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHNuZWFrZXJ8ZW58MHx8MHx8fDA%3D"
+            className="cust-avatar"
+          />
+          <Rating
+            size="large"
+            name="rating"
+            value={4.5}
+            readOnly
+            precision={0.5} // Adjust as needed
+            className="rating"
+            sx={{
+              marginY: 6,
+            }}
+          />
+        </Grid>
+        <Grid item xs={12} sm={12} md={5} lg={5}>
+          <Box
+            display="flex"
+            flexDirection={"column"}
+            alignItems={"center"}
+            justifyContent={"center"}
+          >
+            <Divider
+              sx={{
+                my: 6,
+                borderColor: colors?.MonochromeDark,
+                borderWidth: 2,
+                width: "60%",
+              }}
+            ></Divider>
+            <Typography fontSize={"5vh"} textAlign={"center"} mt={2} mb={2}>
+              I used the E-ACNE Soap. It showed results in just 2 weeks. Really
+              effective products !!
+            </Typography>
+            <Typography fontSize={"3vh"} textAlign={"center"} mt={2} mb={2}>
+              - Riya Shah
+            </Typography>
+            <Divider
+              sx={{
+                my: 6,
+                borderColor: colors?.MonochromeDark,
+                borderWidth: 2,
+                width: "60%",
+              }}
+            ></Divider>
+          </Box>
+        </Grid>
+      </Grid>
     </CustomHero>
   );
 };
