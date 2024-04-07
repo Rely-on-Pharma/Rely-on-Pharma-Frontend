@@ -18,6 +18,8 @@ import { MemoizedNameField } from "@/constants/SDK/CustomTextField";
 import { checkError } from "@/common/utils/validateHelpers";
 import useSignupForm from "@/common/Hooks/signupForm";
 import { MemoizedButton } from "@/constants/SDK/CustomButton";
+import { useRouter } from 'next/navigation';
+
 import Link from "next/link";
 import logo from "../../../../public/logo.svg";
 const CustomSignUp = styled(Box)(({ theme }) => ({
@@ -115,8 +117,47 @@ const CustomSignUp = styled(Box)(({ theme }) => ({
 }));
 
 const SignUp = () => {
+  const router = useRouter()
+  const handleSubmit = (values) =>{
+    const registerData = {
+      first_name: values.firstName,
+      last_name: values.lastName,
+      email: values.email,
+      password: values.password,
+    };
+
+    fetch('http://localhost:8000/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(registerData)
+    })
+    .then(response => {
+      if (!response.ok) {
+          if(response.status === 404){
+              throw new Error("unknown user"); //TODO: What UI element to add here? popup?
+          }
+
+        throw new Error('Failed to login');
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log('Received JWT:', data.token);
+      localStorage.setItem('token', data.token); // Assuming response contains the token
+       router.push("/")
+
+      // Store the token securely (e.g., in localStorage)
+    })
+    .catch(error => {
+      console.error('Error logging in:', error);
+    });
+
+
+  }
   const [showPassword, setShowPassword] = useState(false);
-  const { form } = useSignupForm();
+  const { form } = useSignupForm(handleSubmit);
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -232,22 +273,7 @@ const SignUp = () => {
                 value={form.values.email}
                 onChange={(e) => form.handleChange(e)}
               />
-              <MemoizedNameField
-    
-                className="input-box"
-                InputProps={{ disableUnderline: false }}
-                margin="dense"
-                required={true}
-                variant="standard"
-                label="Mobile Number"
-                name="phoneNumber"
-                error={!!checkError("phoneNumber", form)}
-                helperText={form?.errors?.phoneNumber}
-                placeholder="Enter Phone Number"
-                value={form.values.phoneNumber}
-                onChange={(e) => form.handleChange(e)}
-              />
-              <MemoizedNameField
+            <MemoizedNameField
     
                 className="input-box"
                 margin="dense"
