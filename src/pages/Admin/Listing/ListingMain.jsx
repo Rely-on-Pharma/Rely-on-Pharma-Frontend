@@ -5,7 +5,9 @@ import { Box, styled } from "@mui/material";
 import Capsule from "./Capsule";
 import { listingPageColumns } from "@/constants/data/AdminColumnData";
 import ListingTable from "./GenericTable";
-
+import { MemoizedButton } from "@/constants/SDK/CustomButton";
+import { colors } from "@/constants/colors";
+import { useRouter } from 'next/navigation'
 const data = [
   { name: "All Inventory", sub: "34" },
   { name: "Stocks", sub: "54" },
@@ -37,12 +39,20 @@ const rows = [
 ];
 const CustomListingMain = styled(Box)(({ theme }) => ({
   padding: "2rem",
+  ".btn":{
+    borderRadius:"8px",
+    margin:"0.5rem",
+    background:colors?.MonochromeDark,
+    boxShadow:"2px 2px 2px 2px grey"
+  }
 }));
 const ListingMain = () => {
+  const router = useRouter();
   return (
     <CustomListingMain>
       <Heading title="LISTING" />
       <Capsule data={data} />
+      <MemoizedButton handleClick={()=> router.push("/admin/listing/add-new")} className={"btn"} content={"Add New Product"}/>
       <ListingTable columns={listingPageColumns} rows={rows} />
     </CustomListingMain>
   );
