@@ -4,7 +4,7 @@ import React from 'react'
 const CustomCapsule = styled(Box)(({theme})=>({
     background:colors?.MonochromeLight,
     color:colors?.black,
-    padding:"l 1rem",
+    padding:" 1rem",
     display:"flex",
     justifyContent:"center",
     alignItems:"center",
