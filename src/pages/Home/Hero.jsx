@@ -49,7 +49,6 @@ const CustomHero = styled(Box)(({ theme }) => ({
     borderRadius: "8px",
     boxShadow: "none",
     background: colors.champagneDark,
-    fontSize: "18px",
     "&:hover": {
       background: colors.secondaryDark,
       color: colors?.white,
@@ -326,7 +325,7 @@ const Hero = () => {
           To offer integrated, best quality pharmaceutical & cosmeceutical
           products, enabling us to seat among Top rank companies, and to be a
           reliable partner in our sphere of work through valued, compelling
-          relationships. 
+          relationships.
         </Typography>
         <Typography mt={2} mb={2} className="vission-text" mr={2}>
           OUR VISION
