@@ -25,22 +25,14 @@ const useSignupForm = (handleSubmit) => {
         if(!values?.email){
           errors.email = "Email Required"
         }
-        if (!values?.phoneNumber?.toString()) {
-          errors.phoneNumber = "Mobile Number is Mandatory";
-        }
-        if (values?.phoneNumber?.toString()?.length !== 10) {
-          errors.phoneNumber = "Enter a valid 10 digit Mobile Number";
-        }
-        if (values?.phoneNumber && values?.phoneNumber[0] < 5) {
-          errors.agentMobileNo = "Enter Valid Mobile Number";
-        }
         if(!values?.password){
             errors.password = "Password is mandatory"
         }
         if(!values?.confirmPassword){
           errors.confirmPassword = "Please enter valid confirm password!"
         }
-        if((values?.confirmPassword && values?.password)  && values?.confirmPassword === values?.password){
+        if(!((values?.confirmPassword && values?.password)  && values?.confirmPassword === values?.password)){
+          console.log(values.password, values.confirmPassword)
           errors.confirmPassword = "Password not matching"
         }
         return errors;
