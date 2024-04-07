@@ -1,6 +1,6 @@
 "use client";
 import { createTheme, responsiveFontSizes } from "@mui/material/styles";
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { colors } from "@/constants/colors.js";
 
 const fontFamilyInfo = `'Poppins', sans-serif `;
@@ -17,8 +17,7 @@ const themeMaster = createTheme({
     fontFamily: `${fontFamilyInfo} !important`,
   },
   components: {
-    MuiPaper: {
-    },
+    MuiPaper: {},
     MuiInput: {
       defaultProps: {
         disableUnderline: true,
