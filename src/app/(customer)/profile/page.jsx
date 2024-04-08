@@ -1,0 +1,332 @@
+"use client";
+import { styled, Box, Avatar, Grid, Typography, Button } from "@mui/material";
+import { colors } from "@/constants/colors";
+import Logout from "@mui/icons-material/LogoutOutlined";
+import CustomDropSection from "../../../constants/SDK/CustomDropSection";
+import AddressBox from "../../../pages/Profile/AddressComponent";
+import { useState } from "react";
+
+const CustomProfile = styled(Box)(({ theme }) => ({
+  ".user-avatar": {
+    height: { xs: "5rem", sm: "6rem", md: "7rem", lg: "8rem" }, // Adjust the height for different screen sizes
+    width: { xs: "5rem", sm: "6rem", md: "7rem", lg: "8rem" },
+    border: `4px solid ${colors.primaryLight}`,
+    backgroundColor: colors.primaryDark,
+  },
+
+  ".logout-btn": {
+    display: "flex",
+    borderRadius: "8px",
+    boxShadow: "none",
+    fontSize: { xs: "2rem", sm: "3rem", md: "4rem", lg: "5rem" },
+    backgroundColor: colors.primaryDark,
+    colors: colors?.white,
+    margin: "1.5rem",
+    "&:hover": {
+      background: colors.secondaryDark,
+    },
+  },
+
+  ".change-pass-btn": {
+    borderRadius: "8px",
+    boxShadow: "none",
+    backgroundColor: colors.primaryMedium,
+    //colors: colors?.black,
+  },
+
+  ".info-type-head": {
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "6vw",
+    },
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "6vw",
+    },
+    [theme.breakpoints.down("md")]: {
+      fontSize: "6vw",
+    },
+    [theme.breakpoints.down("lg")]: {
+      fontSize: "6vw",
+    },
+    color: "rgba(77, 32, 38, 0.4)",
+  },
+
+  ".info-type-body": {
+    fontSize: "2vw",
+    color: colors?.primaryDark,
+  },
+}));
+
+const Profile = () => {
+  const user = {
+    name: "John Doe",
+    email: "john.doe@example.com",
+    phone: "+1 123 456 7890",
+    dob: "25/07/2002",
+  };
+
+  const [products, setProducts] = useState([
+    {
+      imageUrl: "https://via.placeholder.com/150",
+      productName: "Product 1",
+      productPrice: "100",
+    },
+    {
+      imageUrl: "https://via.placeholder.com/150",
+      productName: "Product 2",
+      productPrice: "200",
+    },
+    {
+      imageUrl: "https://via.placeholder.com/150",
+      productName: "Product 3",
+      productPrice: "300",
+    },
+  ]);
+
+  const handleLogout = () => {
+    // Handle logout functionality here
+  };
+
+  return (
+    <CustomProfile>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          marginX: "3rem",
+          paddingTop: { xs: "0.5rem", sm: "1rem", md: "2rem" },
+          justifyContent: "space-between",
+        }}
+      >
+        <Box
+          sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
+        >
+          <Avatar
+            sx={{
+              height: { xs: "3.5rem", sm: "6rem", md: "7rem", lg: "8rem" }, // Adjust the height for different screen sizes
+              width: { xs: "3.5rem", sm: "6rem", md: "7rem", lg: "8rem" },
+              border: `4px solid ${colors.primaryLight}`,
+              backgroundColor: colors.primaryDark,
+              fontSize: { xs: "2rem", sm: "3rem", md: "4rem", lg: "5rem" },
+            }}
+          >
+            {user.name.charAt(0).toUpperCase()}
+          </Avatar>
+
+          <Typography
+            sx={{
+              fontSize: {
+                xs: "1rem",
+                sm: "3rem",
+                md: "4rem",
+                lg: "5rem",
+              },
+              marginLeft: {
+                xs: "1vw",
+                sm: "2vw",
+                md: "4vw",
+                lg: "2vw",
+              },
+              textAlign: "left",
+            }}
+          >
+            {user.name}
+          </Typography>
+        </Box>
+        <Box>
+          <Button
+            className={"logout-btn"}
+            variant="outlined"
+            startIcon={<Logout height="0.5rem" width="0.5rem" />}
+            sx={{
+              margin: "1rem",
+              height: "fit-content",
+              ".MuiTypography-root": {
+                display: {
+                  xs: "none",
+                  sm: "none",
+                  md: "block",
+                  lg: "block",
+                },
+              },
+            }}
+            onClick={handleLogout}
+          >
+            <Typography variant="h4">Logout</Typography>
+          </Button>
+        </Box>
+      </Box>
+      <Box
+        marginX={"3rem"}
+        marginY={{ xs: "0.2rem", sm: "0.2rem", md: "2rem", lg: "1rem" }}
+      >
+        <CustomDropSection
+          heading="Personal Information"
+          custPadding={"1rem"}
+          childMargin={{ xs: "1rem", sm: "1rem", md: "2rem", lg: "2rem" }}
+          backgroundColor="#EEE2DF"
+          childPadding={{ xs: "0.5rem", sm: "0.5rem", md: "2rem", lg: "2rem" }}
+        >
+          <Box display="flex" flexDirection="row">
+            <Typography
+              color="rgba(77,32,38,0.4)"
+              mr={1}
+              fontSize={{ xs: "4vw", sm: "4vw", md: "1.5vw", lg: "1.5vw" }}
+            >
+              Email:
+            </Typography>
+            <Typography
+              fontSize={{ xs: "4vw", sm: "4vw", md: "1.5vw", lg: "1.5vw" }}
+              color={colors?.primaryDark}
+              ml={1}
+            >
+              {user.email}
+            </Typography>
+          </Box>
+          <Box display="flex" flexDirection="row">
+            <Typography
+              color="rgba(77,32,38,0.4)"
+              mr={1}
+              fontSize={{ xs: "4vw", sm: "4vw", md: "1.5vw", lg: "1.5vw" }}
+            >
+              Phone:
+            </Typography>
+            <Typography
+              fontSize={{ xs: "4vw", sm: "4vw", md: "1.5vw", lg: "1.5vw" }}
+              color={colors?.primaryDark}
+              ml={1}
+            >
+              {user.phone}
+            </Typography>
+          </Box>
+          <Box display="flex" flexDirection="row" mb={2}>
+            <Typography
+              color="rgba(77,32,38,0.4)"
+              mr={1}
+              fontSize={{ xs: "4vw", sm: "4vw", md: "1.5vw", lg: "1.5vw" }}
+            >
+              Date of Birth:
+            </Typography>
+            <Typography
+              fontSize={{ xs: "4vw", sm: "4vw", md: "1.5vw", lg: "1.5vw" }}
+              color={colors?.primaryDark}
+              ml={1}
+            >
+              {user.dob}
+            </Typography>
+          </Box>
+          <Box display="flex" flexDirection="row" gap={2}>
+            <Button
+              className={"change-pass-btn"}
+              variant="outlined"
+              sx={{
+                display: "inline-block",
+                height: "fit-content",
+                width: "fit-content",
+              }}
+            >
+              <Typography
+                color={colors?.black}
+                fontWeight="bold"
+                fontSize={{ xs: "2vw", sm: "2vw", md: "4vw", lg: "1vw" }}
+              >
+                Change Password
+              </Typography>
+            </Button>
+            <Button
+              className={"change-pass-btn"}
+              variant="outlined"
+              sx={{
+                height: "fit-content",
+                width: "fit-content",
+              }}
+            >
+              <Typography
+                color={colors?.black}
+                fontWeight="bold"
+                fontSize={{ xs: "2vw", sm: "2vw", md: "4vw", lg: "1vw" }}
+              >
+                Edit
+              </Typography>
+            </Button>
+          </Box>
+        </CustomDropSection>
+      </Box>
+      <Box
+        marginX={"3rem"}
+        marginY={{ xs: "0.2rem", sm: "0.2rem", md: "2rem", lg: "1rem" }}
+      >
+        <CustomDropSection
+          heading="Address"
+          custPadding={"1rem"}
+          childMargin={{ xs: "1rem", sm: "1rem", md: "2rem", lg: "2rem" }}
+          backgroundColor="#EEE2DF"
+          childPadding={{ xs: "0.5rem", sm: "0.5rem", md: "2rem", lg: "2rem" }}
+        >
+          <AddressBox></AddressBox>
+        </CustomDropSection>
+        <CustomDropSection
+          heading="Favourites"
+          custPadding={"1rem"}
+          childMargin={{ xs: "1rem", sm: "1rem", md: "2rem", lg: "2rem" }}
+          backgroundColor="#EEE2DF"
+          childPadding={{ xs: "0.5rem", sm: "0.5rem", md: "2rem", lg: "2rem" }}
+        >
+          <Grid container>
+            {products.map((product, index) => (
+              <Grid item xs={12} sm={6} md={2} lg={2} key={index}>
+                <Box
+                  sx={{
+                    marginY: "1rem",
+                    borderRadius: 5,
+                    border: 1,
+                    borderColor: "black",
+                    padding: 2,
+                    display: "flex",
+                    flexDirection: "column",
+                    height: "fit-content",
+                  }}
+                >
+                  <Box
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Box
+                      component="img"
+                      src={product.imageUrl}
+                      width="100%"
+                      height="auto"
+                    />
+                  </Box>
+                  <Typography variant="body1" mt={2}>
+                    {product.productName}
+                  </Typography>
+                  <Typography variant="body1" mt={2}>
+                    ${product.productPrice}
+                  </Typography>
+                  <Box
+                    display="flex"
+                    justifyContent="flex-end"
+                    alignItems="center"
+                  >
+                    <Button
+                      variant="outlined"
+                      sx={{
+                        width: "100%",
+                      }}
+                    >
+                      Remove
+                    </Button>
+                  </Box>
+                </Box>
+              </Grid>
+            ))}
+          </Grid>
+        </CustomDropSection>
+      </Box>
+    </CustomProfile>
+  );
+};
+
+export default Profile;
