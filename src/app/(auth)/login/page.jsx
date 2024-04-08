@@ -11,13 +11,14 @@ import {
   IconButton,
   InputAdornment,
   Typography,
-  styled
+  styled,
 } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import cartImage from "../../../../public/login-cart.png";
 import logo from "../../../../public/logo.svg";
+import { useRouter } from 'next/navigation';
 
 const CustomLogin = styled(Box)(({ theme }) => ({
   width: "100vw",
@@ -106,9 +107,47 @@ const CustomLogin = styled(Box)(({ theme }) => ({
   },
 }));
 
+
 const Login = () => {
+  
+    const router = useRouter()
+    const handleSubmit = (values) => {
+    const loginData = {
+      email: values.email,
+      password: values.password,
+    };
+
+    fetch('http://localhost:8000/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(loginData)
+    })
+    .then(response => {
+      if (!response.ok) {
+          if(response.status === 404){
+              throw new Error("unknown user"); //TODO: What UI element to add here?
+          }
+
+        throw new Error('Failed to login');
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log('Received JWT:', data.token);
+      localStorage.setItem('token', data.token); // Assuming response contains the token
+       router.push("/")
+
+      // Store the token securely (e.g., in localStorage)
+    })
+    .catch(error => {
+      console.error('Error logging in:', error);
+    });
+
+}
   const [showPassword, setShowPassword] = useState(false);
-  const { form } = useLoginForm();
+  const { form } = useLoginForm(handleSubmit);
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -166,65 +205,83 @@ const Login = () => {
           style={{ background: colors.secondaryLight }}
         >
           <form onSubmit={form?.handleSubmit}>
-          <Typography
-            variant="h1"
-            className="heading-sub"
-            style={{ color: colors?.black }}
-          >
-            Log in
-          </Typography>
-          <Typography
-            variant="body1"
-            style={{ color: colors?.black, fontSize: "10px" }}
-          >
-            Please Fill You Information Below
-          </Typography>
-          <MemoizedNameField
-            className="input-box"
-            InputProps={{ disableUnderline: false }}
-            margin="dense"
-            required={true}
-            variant="standard"
-            label="Email"
-            name="email"
-            error={!!checkError("email", form)}
-            helperText={form?.errors?.email}
-            placeholder="Enter Email"
-            value={form.values.email}
-            onChange={(e) => form.handleChange(e)}
-          />
-          <MemoizedNameField
-            className="input-box"
-            margin="dense"
-            required={true}
-            variant="standard"
-            label="Password"
-            name="password"
-            error={!!checkError("password", form)}
-            helperText={form?.errors?.password}
-            placeholder="Enter Password"
-            value={form.values.password}
-            type={showPassword ? "text" : "password"}
-            onChange={(e) => form.handleChange(e)}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={handleClickShowPassword} edge="end">
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-              disableUnderline: false,
-            }}
-          />
-          <MemoizedButton
-            className={"btn"}
-            content={"Log In"}
-            handleClick={(e) => form.handleSubmit(e)}
-          />
-        <Link href={`/signup`} style={{fontWeight:"700", textAlign:"center", display:"block"}}>Don&lsquo;t have an account? SignUp</Link>
-        <Link href={`/`} style={{fontWeight:"700", textAlign:"center", display:"block"}}>Back Home</Link>
-        </form>
+            <Typography
+              variant="h1"
+              className="heading-sub"
+              style={{ color: colors?.black }}
+            >
+              Log in
+            </Typography>
+            <Typography
+              variant="body1"
+              style={{ color: colors?.black, fontSize: "10px" }}
+            >
+              Please Fill You Information Below
+            </Typography>
+            <MemoizedNameField
+              className="input-box"
+              InputProps={{ disableUnderline: false }}
+              margin="dense"
+              required={true}
+              variant="standard"
+              label="Email"
+              name="email"
+              error={!!checkError("email", form)}
+              helperText={form?.errors?.email}
+              placeholder="Enter Email"
+              value={form.values.email}
+              onChange={(e) => form.handleChange(e)}
+            />
+            <MemoizedNameField
+              className="input-box"
+              margin="dense"
+              required={true}
+              variant="standard"
+              label="Password"
+              name="password"
+              error={!!checkError("password", form)}
+              helperText={form?.errors?.password}
+              placeholder="Enter Password"
+              value={form.values.password}
+              type={showPassword ? "text" : "password"}
+              onChange={(e) => form.handleChange(e)}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={handleClickShowPassword} edge="end">
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+                disableUnderline: false,
+              }}
+            />
+            <MemoizedButton
+              className={"btn"}
+              content={"Log In"}
+              handleClick={(e) => form.handleSubmit(e)}
+            />
+            <Link
+              href={`/signup`}
+              style={{
+                fontWeight: "700",
+                textAlign: "center",
+                display: "block",
+              }}
+            >
+              Don&lsquo;t have an account? SignUp
+            </Link>
+            <Link
+              href={`/`}
+              style={{
+                fontWeight: "700",
+                textAlign: "center",
+                display: "block",
+              }}
+            >
+              Back Home
+            </Link>
+          </form>
         </Grid>
       </Grid>
     </CustomLogin>
