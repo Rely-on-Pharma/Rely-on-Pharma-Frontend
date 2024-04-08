@@ -82,7 +82,8 @@ export const listingPageColumns = [
       ],
       totalPrice: 250, // Total price of the order
       orderDate: '2024-04-07', // Date of the order
-      customerAddress: '123 Main Street, City, Country' // Customer address
+      customerAddress: '123 Main Street, City, Country', // Customer address
+      trackingId:1234,
     },
     {
       orderId: 'ORD002',
@@ -92,7 +93,8 @@ export const listingPageColumns = [
       ],
       totalPrice: 150,
       orderDate: '2024-04-06',
-      customerAddress: '456 Elm Street, City, Country'
+      customerAddress: '456 Elm Street, City, Country',
+      trackingId:1254,
     },
     {
       orderId: 'ORD003',
