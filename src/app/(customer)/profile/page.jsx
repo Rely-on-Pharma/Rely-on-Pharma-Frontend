@@ -4,7 +4,7 @@ import { colors } from "@/constants/colors";
 import Logout from "@mui/icons-material/LogoutOutlined";
 import CustomDropSection from "../../../constants/SDK/CustomDropSection";
 import AddressBox from "../../../pages/Profile/AddressComponent";
-import { useContext, useState } from "react";
+import { useEffect,useContext, useState } from "react";
 import AppContext from "@/constants/context/context";
 import { useRouter } from "next/navigation";
 
@@ -60,31 +60,74 @@ const CustomProfile = styled(Box)(({ theme }) => ({
 
 const Profile = () => {
   const router = useRouter()
-  const user = {
-    name: "John Doe",
-    email: "john.doe@example.com",
-    phone: "+1 123 456 7890",
-    dob: "25/07/2002",
-  };
-
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [user,setUser] = useState(null)
   const {logOutUser} = useContext(AppContext)
-  const [products, setProducts] = useState([
-    {
-      imageUrl: "https://via.placeholder.com/150",
-      productName: "Product 1",
-      productPrice: "100",
-    },
-    {
-      imageUrl: "https://via.placeholder.com/150",
-      productName: "Product 2",
-      productPrice: "200",
-    },
-    {
-      imageUrl: "https://via.placeholder.com/150",
-      productName: "Product 3",
-      productPrice: "300",
-    },
-  ]);
+
+  useEffect(() => {
+    // Function to fetch data from the API
+    const token = localStorage.getItem('token').slice(1,-1) // the token string is "token". Hence stripping the "
+    console.log(token)
+    const headers = {
+      'Content-Type': 'application/json', // Example content type
+      'Authorization': `Bearer ${token}` // Example authorization header
+    };
+
+    // Define the options for the fetch request
+    const requestOptions = {
+      method: 'GET', // Specify the request type (GET, POST, etc.)
+      headers: headers // Pass the headers object
+    };
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:8000/users',requestOptions);
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
+        const jsonData = await response.json();
+        setUser(jsonData);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    // Call the fetchData function when the component mounts
+    fetchData();
+
+    // Cleanup function (optional)
+    return () => {
+      // Cleanup code, if needed
+    };
+  }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  // const [products, setProducts] = useState([
+  //   {
+  //     imageUrl: "https://via.placeholder.com/150",
+  //     productName: "Product 1",
+  //     productPrice: "100",
+  //   },
+  //   {
+  //     imageUrl: "https://via.placeholder.com/150",
+  //     productName: "Product 2",
+  //     productPrice: "200",
+  //   },
+  //   {
+  //     imageUrl: "https://via.placeholder.com/150",
+  //     productName: "Product 3",
+  //     productPrice: "300",
+  //   },
+  // ]);
 
   const handleLogout = () => {
     // Handle logout functionality here
@@ -116,7 +159,6 @@ const Profile = () => {
               fontSize: { xs: "2rem", sm: "3rem", md: "4rem", lg: "5rem" },
             }}
           >
-            {user.name.charAt(0).toUpperCase()}
           </Avatar>
 
           <Typography
@@ -136,7 +178,7 @@ const Profile = () => {
               textAlign: "left",
             }}
           >
-            {user.name}
+            {user.first_name + " " + user.last_name}
           </Typography>
         </Box>
         <Box>
@@ -189,38 +231,39 @@ const Profile = () => {
               {user.email}
             </Typography>
           </Box>
-          <Box display="flex" flexDirection="row">
-            <Typography
-              color="rgba(77,32,38,0.4)"
-              mr={1}
-              fontSize={{ xs: "4vw", sm: "4vw", md: "1.5vw", lg: "1.5vw" }}
-            >
-              Phone:
-            </Typography>
-            <Typography
-              fontSize={{ xs: "4vw", sm: "4vw", md: "1.5vw", lg: "1.5vw" }}
-              color={colors?.primaryDark}
-              ml={1}
-            >
-              {user.phone}
-            </Typography>
-          </Box>
-          <Box display="flex" flexDirection="row" mb={2}>
-            <Typography
-              color="rgba(77,32,38,0.4)"
-              mr={1}
-              fontSize={{ xs: "4vw", sm: "4vw", md: "1.5vw", lg: "1.5vw" }}
-            >
-              Date of Birth:
-            </Typography>
-            <Typography
-              fontSize={{ xs: "4vw", sm: "4vw", md: "1.5vw", lg: "1.5vw" }}
-              color={colors?.primaryDark}
-              ml={1}
-            >
-              {user.dob}
-            </Typography>
-          </Box>
+      {// <Box display="flex" flexDirection="row">
+          //   <Typography
+          //     color="rgba(77,32,38,0.4)"
+          //     mr={1}
+          //     fontSize={{ xs: "4vw", sm: "4vw", md: "1.5vw", lg: "1.5vw" }}
+          //   >
+          //     Phone:
+          //   </Typography>
+          //   <Typography
+          //     fontSize={{ xs: "4vw", sm: "4vw", md: "1.5vw", lg: "1.5vw" }}
+          //     color={colors?.primaryDark}
+          //     ml={1}
+          //   >
+          //     {user.phone}
+          //   </Typography>
+          // </Box>
+          // <Box display="flex" flexDirection="row" mb={2}>
+          //   <Typography
+          //     color="rgba(77,32,38,0.4)"
+          //     mr={1}
+          //     fontSize={{ xs: "4vw", sm: "4vw", md: "1.5vw", lg: "1.5vw" }}
+          //   >
+          //     Date of Birth:
+          //   </Typography>
+          //   <Typography
+          //     fontSize={{ xs: "4vw", sm: "4vw", md: "1.5vw", lg: "1.5vw" }}
+          //     color={colors?.primaryDark}
+          //     ml={1}
+          //   >
+          //     {user.dob}
+          //   </Typography>
+          // </Box> 
+      }
           <Box display="flex" flexDirection="row" gap={2}>
             <Button
               className={"change-pass-btn"}
@@ -278,57 +321,58 @@ const Profile = () => {
           backgroundColor="#EEE2DF"
           childPadding={{ xs: "0.5rem", sm: "0.5rem", md: "2rem", lg: "2rem" }}
         >
-          <Grid container>
-            {products.map((product, index) => (
-              <Grid item xs={12} sm={6} md={2} lg={2} key={index}>
-                <Box
-                  sx={{
-                    marginY: "1rem",
-                    borderRadius: 5,
-                    border: 1,
-                    borderColor: "black",
-                    padding: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                    height: "fit-content",
-                  }}
-                >
-                  <Box
-                    display="flex"
-                    justifyContent="space-between"
-                    alignItems="center"
-                  >
-                    <Box
-                      component="img"
-                      src={product.imageUrl}
-                      width="100%"
-                      height="auto"
-                    />
-                  </Box>
-                  <Typography variant="body1" mt={2}>
-                    {product.productName}
-                  </Typography>
-                  <Typography variant="body1" mt={2}>
-                    ${product.productPrice}
-                  </Typography>
-                  <Box
-                    display="flex"
-                    justifyContent="flex-end"
-                    alignItems="center"
-                  >
-                    <Button
-                      variant="outlined"
-                      sx={{
-                        width: "100%",
-                      }}
-                    >
-                      Remove
-                    </Button>
-                  </Box>
-                </Box>
-              </Grid>
-            ))}
-          </Grid>
+          {// <Grid container>
+          //   {products.map((product, index) => (
+          //     <Grid item xs={12} sm={6} md={2} lg={2} key={index}>
+          //       <Box
+          //         sx={{
+          //           marginY: "1rem",
+          //           borderRadius: 5,
+          //           border: 1,
+          //           borderColor: "black",
+          //           padding: 2,
+          //           display: "flex",
+          //           flexDirection: "column",
+          //           height: "fit-content",
+          //         }}
+          //       >
+          //         <Box
+          //           display="flex"
+          //           justifyContent="space-between"
+          //           alignItems="center"
+          //         >
+          //           <Box
+          //             component="img"
+          //             src={product.imageUrl}
+          //             width="100%"
+          //             height="auto"
+          //           />
+          //         </Box>
+          //         <Typography variant="body1" mt={2}>
+          //           {product.productName}
+          //         </Typography>
+          //         <Typography variant="body1" mt={2}>
+          //           ${product.productPrice}
+          //         </Typography>
+          //         <Box
+          //           display="flex"
+          //           justifyContent="flex-end"
+          //           alignItems="center"
+          //         >
+          //           <Button
+          //             variant="outlined"
+          //             sx={{
+          //               width: "100%",
+          //             }}
+          //           >
+          //             Remove
+          //           </Button>
+          //         </Box>
+          //       </Box>
+          //     </Grid>
+          //   ))}
+          // </Grid>
+        }
         </CustomDropSection>
       </Box>
     </CustomProfile>
