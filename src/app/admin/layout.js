@@ -8,13 +8,12 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body style={{background:colors?.white}}>
+    <>
         <header>
           <AdminNavbar />
         </header>
         {children}
-      </body>
-    </html>
+    </>
+
   );
 }

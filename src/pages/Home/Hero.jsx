@@ -16,10 +16,13 @@ import shopNowBg from "../../../public/shop-now-bg.png";
 import aboutBg from "../../../public/mission-vision-bg.png";
 import { FavoriteOutlined, Star } from "@mui/icons-material";
 import React from "react";
+import Image from "next/image"
 import { colors } from "@/constants/colors";
 import { MemoizedButton } from "@/constants/SDK/CustomButton";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import { useRouter } from "next/navigation";
+import Link from "next/link"
 const CustomHero = styled(Box)(({ theme }) => ({
   ".grid-container": {
     background: `url(${heroBg.src})`,
@@ -187,6 +190,7 @@ const CustomHero = styled(Box)(({ theme }) => ({
   },
 }));
 const Hero = () => {
+  const router = useRouter();
   const responsive = {
     superLargeDesktop: {
       breakpoint: { max: 4000, min: 3000 },
@@ -216,7 +220,7 @@ const Hero = () => {
             <Typography variant="span">R</Typography>EJUVANATE <br />
             <Typography variant="span">R</Typography>ECOVER
           </Typography>
-          <MemoizedButton className={"btn"} content="Shop Now" />
+          <MemoizedButton className={"btn"} content="Shop Now" handleClick={()=> router.push("/shop")}/>
         </Grid>
         <Grid item md={6} className="grid_item">
           <MemoizedSwiper
@@ -246,7 +250,9 @@ const Hero = () => {
       <Carousel className="caraousel" responsive={responsive}>
         {trendingProducts.map((product) => (
           <Box key={product.id} textAlign="center" p={2} className="card">
-            <img
+            <Image
+            width={300}
+            height={300}
               src={product.image}
               alt={product.name}
               className="product--image"
@@ -293,7 +299,7 @@ const Hero = () => {
           >
             <Avatar
               alt="User Avatar"
-              src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHNuZWFrZXJ8ZW58MHx8MHx8fDA%3D"
+              src="https://loremflickr.com/640/480?lock=2391645746102272"
               className="avatar"
             />
           </Grid>
@@ -301,6 +307,7 @@ const Hero = () => {
             <MemoizedButton
               className="btn"
               content="SIGN UP NOW"
+              handleClick={()=> router.push("/signup")}
               style={{
                 marginTop: "10px",
                 backgroundColor: colors?.secondaryDark,
@@ -348,7 +355,10 @@ const Hero = () => {
           justifyContent={"center"}
           sx={{ margin: "7vh" }}
         >
+          <Link href="/aboutus">
+
           <MemoizedButton className="explore-more" content="EXPLORE MORE" />
+          </Link>
         </Grid>
       </Box>
       <Typography className="cust-review-text" m={3}>
@@ -376,7 +386,7 @@ const Hero = () => {
         >
           <Avatar
             alt="User Avatar"
-            src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHNuZWFrZXJ8ZW58MHx8MHx8fDA%3D"
+            src="https://loremflickr.com/640/480?lock=2391645746102272"
             className="cust-avatar"
           />
           <Rating

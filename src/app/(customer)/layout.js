@@ -8,8 +8,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body>
+    <>
+    
         <header>
           <DrawerAppBar />
         </header>
@@ -17,7 +17,7 @@ export default function RootLayout({ children }) {
         <footer>
           <Footer />
         </footer>
-      </body>
-    </html>
+    </>
+
   );
 }

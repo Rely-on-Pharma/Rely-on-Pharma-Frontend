@@ -18,8 +18,9 @@ const AppContextProvider = ({ children }) => {
    // Effects
    useEffect(() => {
     const storedUser = localStorage.getItem('user');
+    const token = localStorage?.getItem('token');
     if (storedUser) {
-      dispatch({ type: authactionTypes.LOGIN, payload: { user: JSON.parse(storedUser) } });
+      dispatch({ type: authactionTypes.LOGIN, payload: { user: JSON.parse(storedUser), token: JSON.parse(token) } });
     }
   }, []);
 
@@ -32,7 +33,7 @@ const AppContextProvider = ({ children }) => {
     },
     //auth user
     user: state.user,
-
+    token: state.token,
     //shop
     cart:state.cart,
     products:state.products,
@@ -42,7 +43,7 @@ const AppContextProvider = ({ children }) => {
     // snackbar functions
     showSnackbar: (message, severity) => showSnackbar(dispatch, message, severity),
     hideSnackbar: () => hideSnackbar(dispatch),
-    loginUser: (user) => loginUser(dispatch, user),
+    loginUser: (token) => loginUser(dispatch, token),
     logOutUser: () => logOutUser(dispatch),
 
     applyFilter: (filters) => applyFilter(dispatch, filters),

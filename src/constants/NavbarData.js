@@ -11,7 +11,7 @@ export const mobileNavLinks = [
   },
   {
     id: 3,
-    href: "/contactus",
+    href: "/contact",
     name: "CONTACT US",
   },
   {

@@ -3,11 +3,12 @@ import DescriptionTab from "@/pages/Product/DescriptionTab";
 import Gallery from "@/pages/Product/Gallery";
 import ProdDetails from "@/pages/Product/ProdDetails";
 import SimilarComponents from "@/pages/Product/SimilarComponents";
-import { productData } from "@/constants/data/productData.js";
 import { Box, Grid, Typography, styled } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useMobile } from "@/common/utils/finndViewSize";
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 const ProductData = {
   id: "65d477565b75282dda587003",
   name: "Unbranded Concrete Mouse",
@@ -104,7 +105,13 @@ const SingleProduct = () => {
   }, [id]); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Backdrop
+    sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+    open={loading}
+   
+  >
+    <CircularProgress color="inherit" />
+  </Backdrop>;
   }
 
   if (error) {
@@ -112,6 +119,7 @@ const SingleProduct = () => {
   }
   return (
     <CustomSingleProduct>
+      
       <Grid className="productContainer" container spacing={2}>
         {/* Gallery */}
         <Grid item xs={12} style={{ padding: "0" }} md={6}>
