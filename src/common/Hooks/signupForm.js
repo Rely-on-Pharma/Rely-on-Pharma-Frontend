@@ -1,8 +1,46 @@
+import AppContext from "@/constants/context/context";
 import { useFormik } from "formik";
-import * as Yup from "yup";
-import { validateEmail } from "../utils/validateHelpers";
+import { useContext } from "react";
 
-const useSignupForm = (handleSubmit) => {
+const useSignupForm = (router) => {
+  const {showSnackbar, hideSnackbar} = useContext(AppContext)
+  const handleSubmit = async (values, { setSubmitting }) =>{
+    const registerData = {
+      first_name: values.firstName,
+      last_name: values.lastName,
+      email: values.email,
+      password: values.password,
+    };
+
+    fetch('http://localhost:8000/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(registerData)
+    })
+    .then(response => {
+      if (!response.ok) {
+          if(response.status === 404){
+              throw new Error("unknown user"); //TODO: What UI element to add here? popup?
+          }
+
+        throw new Error('Failed to login');
+      }
+      return response.json();
+    })
+    .then(data => {
+      showSnackbar("Account Created Successfully", "success")
+      localStorage.setItem('token', data.token); // Assuming response contains the token
+       router.push("/")
+
+      // Store the token securely (e.g., in localStorage)
+    })
+    .catch(error => {
+      showSnackbar("Failed to create an account", "error")
+      console.error('Error logging in:', error);
+    });
+  }
   const form = useFormik({
     validateOnChange: false,
     validateOnBlur: true,
@@ -37,9 +75,7 @@ const useSignupForm = (handleSubmit) => {
         }
         return errors;
       },
-    onSubmit: (values) => {
-      handleSubmit(values);
-    },
+    onSubmit: handleSubmit,
   });
 
   return {

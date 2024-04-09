@@ -8,6 +8,8 @@ import {
   Typography,
   styled,
 } from "@mui/material";
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 import React, { useContext, useState, useEffect } from "react";
 import StarIcon from "@mui/icons-material/Star";
 import { MemoizedButton } from "@/constants/SDK/CustomButton";
@@ -166,7 +168,12 @@ const ProdDetails = ({ productData, productId }) => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Backdrop
+    sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+    open={loading}
+  >
+    <CircularProgress color="inherit" />
+  </Backdrop>;
   }
 
   if (error) {
@@ -184,10 +191,10 @@ const ProdDetails = ({ productData, productId }) => {
       >
         by {productData?.brand}
       </Typography>
-      {/* <Typography style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+      <Typography style={{ display: "flex", alignItems: "center", gap: "4px" }}>
         <StarIcon /> 4.5
        </Typography>
-        */}
+       
 
       {returnPriceComponent(productData?.price, discount)}
       <RadioGroup
@@ -261,9 +268,16 @@ const ProdDetails = ({ productData, productId }) => {
         <MemoizedButton
           className={"btn addToBtn"}
           content={"Add to Cart"}
+          style={{
+            marginBlock: "16px",
+            width: "60%",
+            display: "flex",
+            alignItems: "center",
+            gap: "12px",
+          }}
           handleClick={handleAddToCart}
         />
-        <IconButton className="btn favBtn">
+        <IconButton  className="btn favBtn">
           <FavoriteIcon />
         </IconButton>
       </Box>

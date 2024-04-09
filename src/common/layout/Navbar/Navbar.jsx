@@ -21,14 +21,17 @@ import Link from "next/link";
 import PropTypes from "prop-types";
 import { useContext, useEffect, useState } from "react";
 import logo from '../../../../public/logo.svg'
+import { MemoizedButton } from "@/constants/SDK/CustomButton";
+import { useRouter } from "next/navigation";
 const drawerWidth = 300;
 
 function DrawerAppBar(props) {
   const { window } = props;
+  const router = useRouter()
   const [mobileOpen, setMobileOpen] = useState(false);
   const container = window !== undefined ? () => window().document.body : undefined;
   // const router = useRouter();
-  const { cart, user } = useContext(AppContext); // Access the cart from your context
+  const { cart, user, token } = useContext(AppContext); // Access the cart from your context
   const [cartLength, setCartLength] = useState(cart.length);
 
   useEffect(() => {
@@ -134,15 +137,18 @@ function DrawerAppBar(props) {
               </Link>
             ))}
           </Box>
-          <Box sx={{ display: { xs: "flex" } }}>
+          {
+            token ? (<Box sx={{ display: { xs: "flex" } }}>
             <IconButton
               size="large"
               aria-label="show 17 new notifications"
               color={colors?.primaryDark}
             >
+              <Link href={"/cart"}>
               <Badge badgeContent={cartLength} color="success">
                 <ShoppingCartIcon style={{ color: `${colors?.primaryDark}` }} />
               </Badge>
+              </Link>
             </IconButton>
             <IconButton
               size="large"
@@ -151,9 +157,16 @@ function DrawerAppBar(props) {
               aria-haspopup="true"
               color={colors?.primaryDark}
             >
+              <Link href={"/profile"}>
               <AccountCircle style={{ color: `${colors?.primaryDark}` }} />
+              </Link>
             </IconButton>
-          </Box>
+          </Box>):(
+            <>
+              <MemoizedButton content={"Login"} style={{background:"none",boxShadow:"none", borderRadius:"2px", outline:"none", color:colors?.primaryDark}} handleClick={()=> router.push("/login")}/>
+            </>
+          )
+          }
         </Toolbar>
       </AppBar>
       <nav>

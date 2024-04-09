@@ -118,46 +118,9 @@ const CustomSignUp = styled(Box)(({ theme }) => ({
 
 const SignUp = () => {
   const router = useRouter()
-  const handleSubmit = (values) =>{
-    const registerData = {
-      first_name: values.firstName,
-      last_name: values.lastName,
-      email: values.email,
-      password: values.password,
-    };
-
-    fetch('http://localhost:8000/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(registerData)
-    })
-    .then(response => {
-      if (!response.ok) {
-          if(response.status === 404){
-              throw new Error("unknown user"); //TODO: What UI element to add here? popup?
-          }
-
-        throw new Error('Failed to login');
-      }
-      return response.json();
-    })
-    .then(data => {
-      console.log('Received JWT:', data.token);
-      localStorage.setItem('token', data.token); // Assuming response contains the token
-       router.push("/")
-
-      // Store the token securely (e.g., in localStorage)
-    })
-    .catch(error => {
-      console.error('Error logging in:', error);
-    });
-
-
-  }
+  
   const [showPassword, setShowPassword] = useState(false);
-  const { form } = useSignupForm(handleSubmit);
+  const { form } = useSignupForm(router);
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };

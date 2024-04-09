@@ -25,8 +25,8 @@ export const cartActionTypes = {
 };
 export const initialState = {
   //user
-  user: {},
-
+  user: null,
+  token:null,
   // snackbarstate
   snackBar: {
     open: false,
@@ -64,16 +64,20 @@ const AppReducer = (state, action) => {
           open: false,
         },
       };
-      case authactionTypes.LOGIN: {
+    case authactionTypes.LOGIN: {
         const newUserState = action.payload.user || {}; // Ensure user object is not undefined
+        const newUserToken = action.payload?.token || {}; // Ensure user object is not undefined
         localStorage.setItem("user", JSON.stringify(newUserState));
+        localStorage.setItem("token", JSON.stringify(newUserToken));
         return {
           ...state,
           user: newUserState,
+          token: newUserToken
         };
       }
     case authactionTypes.LOGOUT: {
       localStorage.removeItem("user");
+      localStorage.removeItem("token");
       return {
         ...state,
         user: null,

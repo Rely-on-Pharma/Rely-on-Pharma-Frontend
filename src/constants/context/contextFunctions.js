@@ -1,21 +1,19 @@
-import { authactionTypes, cartActionTypes } from "./contextReducer";
+import { authactionTypes, cartActionTypes, snackBaractionTypes } from "./contextReducer";
 
 // contextFunctions.js
 const showSnackbar = (dispatch, snackBarMessage, snackBarType) => {
     dispatch({
-      type: 'SHOW_SNACKBAR',
+      type: snackBaractionTypes?.SHOW_SNACKBAR,
       payload: { message: snackBarMessage, severity: snackBarType },
     });
   };
   
   const hideSnackbar = (dispatch) => {
-    dispatch({ type: 'HIDE_SNACKBAR' });
+    dispatch({ type: snackBaractionTypes?.HIDE_SNACKBAR });
   };
   
-  const loginUser = (dispatch, user) => {
-    console.log("Dispatch received:", dispatch);
-    console.log("User received:", user);
-    dispatch({ type: authactionTypes.LOGIN, payload: { user } });
+  const loginUser = (dispatch, token) => {
+    dispatch({ type: authactionTypes.LOGIN, payload: {  token } });
   };
   
   const logOutUser = (dispatch) => {

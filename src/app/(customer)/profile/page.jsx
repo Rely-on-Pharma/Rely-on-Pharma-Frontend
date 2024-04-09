@@ -4,7 +4,9 @@ import { colors } from "@/constants/colors";
 import Logout from "@mui/icons-material/LogoutOutlined";
 import CustomDropSection from "../../../constants/SDK/CustomDropSection";
 import AddressBox from "../../../pages/Profile/AddressComponent";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import AppContext from "@/constants/context/context";
+import { useRouter } from "next/navigation";
 
 const CustomProfile = styled(Box)(({ theme }) => ({
   ".user-avatar": {
@@ -57,6 +59,7 @@ const CustomProfile = styled(Box)(({ theme }) => ({
 }));
 
 const Profile = () => {
+  const router = useRouter()
   const user = {
     name: "John Doe",
     email: "john.doe@example.com",
@@ -64,6 +67,7 @@ const Profile = () => {
     dob: "25/07/2002",
   };
 
+  const {logOutUser} = useContext(AppContext)
   const [products, setProducts] = useState([
     {
       imageUrl: "https://via.placeholder.com/150",
@@ -84,6 +88,8 @@ const Profile = () => {
 
   const handleLogout = () => {
     // Handle logout functionality here
+    logOutUser()
+    router.push("/")
   };
 
   return (
