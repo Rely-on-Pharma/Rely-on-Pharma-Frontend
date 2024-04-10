@@ -69,7 +69,7 @@ export default function OrdersTable({ columns, rows }) {
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
-                <TableCell align="center" colSpan={5}>
+                <TableCell align="center" colSpan={6}>
                   Country
                 </TableCell>
               </TableRow>

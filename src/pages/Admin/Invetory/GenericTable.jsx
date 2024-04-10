@@ -62,7 +62,7 @@ export default function InventoryTable({ columns, rows }) {
                       if (column.id === "name") {
                         return (
                           <TableCell key={column.id} align={column.align}>
-                            <CustomProductROw name={row?.name} image={row?.image}/>
+                            <CustomProductROw name={row?.name} image={"https://loremflickr.com/640/480?lock=6586178289532928"}/>
                           </TableCell>
                         );
                       } if (column.id === "action") {
@@ -70,8 +70,6 @@ export default function InventoryTable({ columns, rows }) {
                         return (
                           <TableCell key={column.id} align={column.align}>
                             <MemoizedIconButton icon={EditIcon}/>
-                            <MemoizedIconButton icon={DeleteIcon}/>
-                            
                           </TableCell>
                         );
                       } else {
