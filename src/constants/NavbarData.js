@@ -19,6 +19,7 @@ export const mobileNavLinks = [
     href: "/aboutus",
     name: "ABOUT US",
   },
+ 
 ];
 
 export const adminNavLinks = [

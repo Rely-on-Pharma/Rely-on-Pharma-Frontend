@@ -19,25 +19,25 @@ export const listingPageColumns = [
       id: "action",
       label: "Action",
       minWidth: 170,
-      align: "right",
+      align: "center",
     },
   ];
 
   export const inventoryPageColumns = [
-    { id: "name", label: "Product Information", minWidth: 200 },
-    { id: "stock", label: "Current Stock", minWidth: 150 },
+    { id: "name", label: "Product Information", minWidth: 200 ,align: "center",},
+    { id: "quantity", label: "Current Stock", minWidth: 150 ,align: "center",},
     {
-      id: "rate",
+      id: "sales_count",
       label: "Sale rate/ Month",
       minWidth: 170,
-      align: "right",
+      align: "center",
       format: (value) => value.toLocaleString("en-US"),
     },
     {
         id: "action",
         label: "Action",
-        minWidth: 170,
-        align: "right",
+        minWidth: 100,
+        align: "center",
       },
   ];
 

@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import { useContext } from "react";
 
 const useSignupForm = (router, isAdmin) => {
-  const {showSnackbar, hideSnackbar} = useContext(AppContext)
+  const {showSnackbar, hideSnackbar,loginUser} = useContext(AppContext)
   const handleSubmit = async (values, { setSubmitting }) =>{
     const registerData = {
       first_name: values.firstName,
@@ -31,8 +31,9 @@ const useSignupForm = (router, isAdmin) => {
     })
     .then(data => {
       showSnackbar("Account Created Successfully", "success")
-      localStorage.setItem('token', data.token); // Assuming response contains the token
-       router.push("/")
+      localStorage.setItem('token', data.token);
+      loginUser(data?.token) // Assuming response contains the token
+      router.push(isAdmin ? "/admin/dashboard" : "/");
 
       // Store the token securely (e.g., in localStorage)
     })

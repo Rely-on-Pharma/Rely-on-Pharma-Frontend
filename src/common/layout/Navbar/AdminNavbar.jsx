@@ -11,12 +11,14 @@ import Toolbar from "@mui/material/Toolbar";
 import Image from "next/image";
 import Link from "next/link";
 import PropTypes from "prop-types";
-import { useContext } from "react";
+import React, { useContext, useState } from "react";
 import logo from '../../../../public/logo.svg';
-
+import { Menu } from "@mui/icons-material";
+import MenuItem from '@mui/material/MenuItem';
 function AdminNavbar(props) {
   const { window } = props;
   const {  user } = useContext(AppContext); 
+ 
   return (
     <Box sx={{ display: "flex", background: colors?.MonochromeLight, marginBottom:"4rem" }}>
       <AppBar component="nav" sx={{ background: colors?.MonochromeLight }}>
@@ -68,6 +70,7 @@ function AdminNavbar(props) {
             >
               <AccountCircle style={{ color: `${colors?.primaryDark}` }} />
             </IconButton>
+            
           </Box>
         </Toolbar>
       </AppBar>

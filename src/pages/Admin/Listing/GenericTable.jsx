@@ -10,10 +10,9 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { MemoizedIconButton } from "@/constants/SDK/CustomIconButton";
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
+import Link from "next/link"
 import CustomProductROw from "./CustomProductROw";
-
+import { Visibility } from "@mui/icons-material";
 export default function ListingTable({ columns, rows }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -62,16 +61,17 @@ export default function ListingTable({ columns, rows }) {
                       if (column.id === "name") {
                         return (
                           <TableCell key={column.id} align={column.align}>
-                            <CustomProductROw name={row?.name} image={row?.image}/>
+                            <CustomProductROw name={row?.name} image={"https://loremflickr.com/640/480?lock=6586178289532928"}/>
                           </TableCell>
                         );
                       } if (column.id === "action") {
                         // Render buttons for the "action" column
                         return (
                           <TableCell key={column.id} align={column.align}>
-                            <MemoizedIconButton icon={EditIcon}/>
-                            <MemoizedIconButton icon={DeleteIcon}/>
-                            
+                            <Link href={`/admin/product/${row?.id}`}>
+
+                            <MemoizedIconButton icon={Visibility}/>                            
+                            </Link>
                           </TableCell>
                         );
                       } else {

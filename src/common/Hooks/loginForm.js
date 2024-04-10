@@ -29,7 +29,7 @@ const useLoginForm = (router, isAdmin) => {
         const data = await response.json();
         localStorage.setItem("token", data.token);
         loginUser(data?.token)
-        router.push("/");
+        router.push(isAdmin ? "/admin/dashboard" : "/");
         showSnackbar("Logged in successfully", "success");
       } catch (error) {
         console.error("Error logging in:", error?.message);
