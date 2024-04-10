@@ -15,10 +15,11 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from 'next/navigation';
-import { useState } from "react";
+import { useContext, useState } from "react";
 import cartImage from "../../../../public/login-cart.png";
 import logo from "../../../../public/logo.svg";
+import { useRouter } from 'next/navigation';
+import AppContext from "@/constants/context/context";
 
 const CustomLogin = styled(Box)(({ theme }) => ({
   width: "100vw",
@@ -108,12 +109,12 @@ const CustomLogin = styled(Box)(({ theme }) => ({
 }));
 
 
-const Login = () => {
+const AdminLogin = () => {
   
     const router = useRouter()
     
   const [showPassword, setShowPassword] = useState(false);
-  const { form } = useLoginForm(router, false);
+  const { form } = useLoginForm(router, true);
   
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -149,8 +150,7 @@ const Login = () => {
               WELCOME BACK !
             </Typography>
             <Typography variant="body1" className="subText">
-              Get ready to indulge in luxurious skincare with our premium
-              products
+             Admin Login
             </Typography>
             <Image
               style={{
@@ -177,7 +177,7 @@ const Login = () => {
               className="heading-sub"
               style={{ color: colors?.black }}
             >
-              Log in
+             Admin Log in
             </Typography>
             <Typography
               variant="body1"
@@ -255,4 +255,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default AdminLogin;
