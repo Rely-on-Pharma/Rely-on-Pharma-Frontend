@@ -1,24 +1,22 @@
 "use client";
-import { colors } from "@/constants/colors";
-import {
-  Box,
-  Typography,
-  styled,
-  Grid,
-  Button,
-  IconButton,
-  InputAdornment,
-} from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import cartImage from "../../../../public/login-cart.png";
-import React from "react";
-import { useState } from "react";
-import Image from "next/image";
-import { MemoizedNameField } from "@/constants/SDK/CustomTextField";
-import { checkError } from "@/common/utils/validateHelpers";
 import useSignupForm from "@/common/Hooks/signupForm";
+import { checkError } from "@/common/utils/validateHelpers";
 import { MemoizedButton } from "@/constants/SDK/CustomButton";
+import { MemoizedNameField } from "@/constants/SDK/CustomTextField";
+import { colors } from "@/constants/colors";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import {
+    Box,
+    Grid,
+    IconButton,
+    InputAdornment,
+    Typography,
+    styled
+} from "@mui/material";
+import Image from "next/image";
 import { useRouter } from 'next/navigation';
+import { useState } from "react";
+import cartImage from "../../../../public/login-cart.png";
 
 import Link from "next/link";
 import logo from "../../../../public/logo.svg";
@@ -116,11 +114,11 @@ const CustomSignUp = styled(Box)(({ theme }) => ({
   }
 }));
 
-const SignUp = () => {
+const AdminSignUp = () => {
   const router = useRouter()
   
   const [showPassword, setShowPassword] = useState(false);
-  const { form } = useSignupForm(router,false);
+  const { form } = useSignupForm(router, true);
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -295,4 +293,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default AdminSignUp;

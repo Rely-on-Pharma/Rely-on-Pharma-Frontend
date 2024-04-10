@@ -81,6 +81,7 @@ const AppReducer = (state, action) => {
       return {
         ...state,
         user: null,
+        token: null
       };
     }
     case shopActionTypes.APPLY_FILTER: {

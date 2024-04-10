@@ -2,7 +2,7 @@ import AppContext from "@/constants/context/context";
 import { useFormik } from "formik";
 import { useContext } from "react";
 
-const useSignupForm = (router) => {
+const useSignupForm = (router, isAdmin) => {
   const {showSnackbar, hideSnackbar} = useContext(AppContext)
   const handleSubmit = async (values, { setSubmitting }) =>{
     const registerData = {
@@ -11,8 +11,8 @@ const useSignupForm = (router) => {
       email: values.email,
       password: values.password,
     };
-
-    fetch('http://localhost:8000/register', {
+    let apiEndPoint = isAdmin ? "http://localhost:8000/admin/register" : "http://localhost:8000/register";
+    fetch(apiEndPoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

@@ -2,7 +2,7 @@ import AppContext from "@/constants/context/context";
 import { useFormik } from "formik";
 import { useContext } from "react";
 
-const useLoginForm = (router) => {
+const useLoginForm = (router, isAdmin) => {
   const {showSnackbar,  loginUser} = useContext(AppContext)
     const handleSubmit = async (values) => {
       try {
@@ -10,8 +10,8 @@ const useLoginForm = (router) => {
           email: values.email,
           password: values.password,
         };
-  
-        const response = await fetch("http://localhost:8000/login", {
+        let apiEndPoint = isAdmin ? "http://localhost:8000/admin/login" : "http://localhost:8000/login";
+        const response = await fetch(apiEndPoint, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -21,8 +21,7 @@ const useLoginForm = (router) => {
   
         if (!response.ok) {
           if (response.status === 404) {
-            showSnackbar("Unknown user", "error");
-            throw new Error("Unknown user");
+            throw new Error("Unknown User");
           }
           throw new Error("Failed to login");
         }
@@ -34,7 +33,8 @@ const useLoginForm = (router) => {
         showSnackbar("Logged in successfully", "success");
       } catch (error) {
         console.error("Error logging in:", error?.message);
-        showSnackbar("Failed to login", "error");
+        const errorMessage = error?.message || "Failed to login";
+        showSnackbar(errorMessage, "error");
       }
     };
   const form = useFormik({
