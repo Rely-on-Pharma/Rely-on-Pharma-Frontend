@@ -80,15 +80,11 @@ const FilterDrawer = (props) => {
   };
 
   const handleApplyFilters = () => {
-    console.log("yash", filters)
-    // onApplyFilters(filters);
     drawerClose();
   };
 
   const handleReset = () => {
     setFilters(initialFilters);
-    console.log("yash", filters)
-    // onResetFilters();
   };
 
   return (

@@ -42,23 +42,23 @@ export const listingPageColumns = [
   ];
 
   export const orderPageColumns = [
-    { id: "orderId", label: "Order ID", minWidth: 170 },
-    { id: "totalPrice", label: "Price", minWidth: 100, format: (value) => value.toLocaleString("en-US"), align:"right" },
+    { id: "id", label: "Order ID", minWidth: 170 },
+    { id: "final_amount", label: "Price", minWidth: 100, format: (value) => value.toLocaleString("en-US"), align:"right" },
     {
-      id: "product",
+      id: "products",
       label: "Products",
       minWidth: 170,
       align: "right",
     },
     {
-      id: "orderDate",
+      id: "date",
       label: "Order Date",
       minWidth: 170,
       align: "right",
       format: (value) => value.toLocaleString("en-US"),
     },
     {
-      id: "customerAddress",
+      id: "address",
       label: "Customer Address",
       minWidth: 170,
       align: "right",

@@ -89,34 +89,37 @@ const AdminProductDetails = ({ productData, productId }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    // Function to fetch data from the API
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:8000/variants/${productId}`
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
-        }
-        const jsonData = await response.json();
-        setVariants(jsonData);
-        console.log("yash", jsonData);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
 
+  // Function to fetch data from the API
+  const fetchData = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8000/variants/${productId}`
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+      const jsonData = await response.json();
+      setVariants(jsonData);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
     // Call the fetchData function when the component mounts
     fetchData();
-
     // Cleanup function (optional)
     return () => {
       // Cleanup code, if needed
     };
-  }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
+  }, []); 
+
+  const handleVariantUpdate = () => {
+    // Fetch variants again after update
+    fetchData();
+};
   const handleOpenDialog = (item=null) => {
     setvariantId(item?.variant_id);
     setOpenDialog(true);
@@ -213,6 +216,7 @@ const AdminProductDetails = ({ productData, productId }) => {
         handleClose={handleCloseDialog}
         productId={productId}
         variantId={variantId}
+        onVariantUpdate={handleVariantUpdate}
       />
     </CustomAdminProductDetails>
   );

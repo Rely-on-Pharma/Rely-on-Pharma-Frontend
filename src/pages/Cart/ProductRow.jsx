@@ -27,6 +27,7 @@ const CustomProductRow = styled(Box)(({ theme }) => ({
     justifyContent: "space-between",
     alignItems: "center",
     margin: "0.4rem 0",
+    gap:"8px",
     ">p": {
       fontSize: "1.02rem",
       fontWeight: "700",
@@ -81,7 +82,7 @@ const ProductRow = ({ item, onIncrement, onDecrement, onRemove }) => {
       <Box>
         <Image
           className="img-box"
-          src={item.image}
+          src={item.image || "https://loremflickr.com/640/480?lock=6586178289532928"}
           alt={item.name}
           width={40}
           height={40}
@@ -97,8 +98,8 @@ const ProductRow = ({ item, onIncrement, onDecrement, onRemove }) => {
         }}
       >
         <Box className="prodDetail">
-          <Typography variant="body1">{item?.name}</Typography>
-          <Typography variant="body1">Rs. {item?.price}/-</Typography>
+          <Typography variant="body1">{item?.name} </Typography>
+          <Typography variant="body1">Rs. {item?.selling_price}/-</Typography>
         </Box>
         <Box style={{ display: "flex", justifyContent: "space-between" }}>
           <Box

@@ -23,11 +23,11 @@ export const mobileNavLinks = [
 ];
 
 export const adminNavLinks = [
-  {
-    id: 1,
-    href: "/admin/dashboard",
-    name: "DASHBOARD",
-  },
+  // {
+  //   id: 1,
+  //   href: "/admin/dashboard",
+  //   name: "DASHBOARD",
+  // },
   {
     id: 2,
     href: "/admin/listing",

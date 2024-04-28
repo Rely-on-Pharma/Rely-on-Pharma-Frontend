@@ -37,11 +37,7 @@ export const initialState = {
   //shop
   products: [],
   filteredProducts: [],
-  cart: [
-    { id: 1, name: "Product 1", image: "https://loremflickr.com/640/480?lock=6586178289532928", price: 10, qty: 2 },
-    { id: 2, name: "Product 2", image: "https://loremflickr.com/640/480?lock=6586178289532928", price: 20, qty: 1 },
-    { id: 3, name: "Product 3", image: "https://loremflickr.com/640/480?lock=6586178289532928", price: 15, qty: 3 }
-  ],
+  cart: [],
   cartUpdated: false,
 };
 
@@ -134,7 +130,7 @@ const AppReducer = (state, action) => {
       return { ...state, cartUpdated: false };
 
       case cartActionTypes.ADD_TO_CART: {
-        const existingProductIndex = state.cart.findIndex(item => item.id === action.payload.productData?.id);
+        const existingProductIndex = state.cart.findIndex(item => item.product_id === action.payload.productData?.product_id);
         if (existingProductIndex !== -1) {
           // Product already exists in the cart, update the quantity
           const updatedCart = [...state.cart];
@@ -150,11 +146,13 @@ const AppReducer = (state, action) => {
             cart: [...state.cart, { ...action.payload.productData, qty: action.payload.qty }]
           };
         }
+
+        //here i want to call snackbar component after adding to cart
       }
     case cartActionTypes.REMOVE_FROM_CART: {
       return {
         ...state,
-        cart: state.cart?.filter((c) => c?.id !== action.payload.itemId),
+        cart: state.cart?.filter((c) => c?.product_id !== action.payload.itemId),
       };
     }
     case cartActionTypes.INCREMENT_QYT: {

@@ -40,7 +40,6 @@ function DrawerAppBar(props) {
   }, [cart]);
 
   useEffect(()=>{
-    console.log("yash", user)
   },[user])
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);

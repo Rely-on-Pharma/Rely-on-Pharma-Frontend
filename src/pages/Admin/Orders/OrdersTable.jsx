@@ -101,7 +101,7 @@ export default function OrdersTable({ columns, rows }) {
                       {columns.map((column) => {
                         const value = row[column.id];
                         // Render custom component for "name" column
-                        if (column.id === "product") {
+                        if (column.id === "products") {
                           return (
                             <TableCell key={column.id} align={column.align}>
                               <CustomOrderRow data={row?.products} />

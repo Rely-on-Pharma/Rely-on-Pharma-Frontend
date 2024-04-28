@@ -68,8 +68,7 @@ const Profile = () => {
 
   useEffect(() => {
     // Function to fetch data from the API
-    const token = localStorage.getItem("token").slice(1, -1); // the token string is "token". Hence stripping the "
-    console.log(token);
+    const token = localStorage.getItem('token').slice(1,-1) // the token string is "token". Hence stripping the 
     const headers = {
       "Content-Type": "application/json", // Example content type
       Authorization: `Bearer ${token}`, // Example authorization header
