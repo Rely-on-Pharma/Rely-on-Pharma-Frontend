@@ -38,12 +38,12 @@ const HomeAddressBox = () => {
     });
 
   }
-  const addNewAddress = (address) => {
+  const addNewAddress = async (address) => {
   const token = localStorage.getItem('token').slice(1,-1) // the token string is "token". Hence stripping the "
     const url = 'http://localhost:8000/address'
 
-     console.log(address)
-    fetch(url, {
+    try {
+    const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -51,36 +51,35 @@ const HomeAddressBox = () => {
       },
       body: JSON.stringify(address)
     })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
-    .then(data => {
-      console.log('POST request succeeded with JSON response:', data);
-    })
-    .catch(error => {
-      console.error('There was a problem with the POST request:', error);
-    });
-
+    if (!response.ok) {
+      throw new Error('Failed to fetch data');
+    }
+        const data = await response.json();
+        console.log(data);
+        return data;
+    }
+    catch (error) {
+    console.error('Error:', error.message);
+    }
+   
   }
   const handleAddAddressClick = () => {
     const newAddress = {pincode: 0, address_line: "",user_tag: "", isEditing: true}
     setAddresses([...addresses,newAddress]);
-    console.log(newAddress)
   };
 
   const handleEditClick = (index) => {
-    console.log(index)
     addresses[index].isEditing = true;
     const newAddresses = JSON.parse(JSON.stringify(addresses))
     setAddresses(newAddresses);
   };
 
-  const handleSaveClick = (index) => {
+  const handleSaveClick = async (index) => {
+    console.log(addresses[index])
     if(addresses[index].id === undefined ){
-        addNewAddress({user_tag: addresses[index].user_tag, address_line: addresses[index].address_line, pincode: addresses[index].pincode})
+        const id = await addNewAddress({user_tag: addresses[index].user_tag, address_line: addresses[index].address_line, pincode: addresses[index].pincode})
+        console.log(id)
+        addresses[index].id = id
     }
     else{
         modifyAddress({id: addresses[index].id,user_tag: addresses[index].user_tag, address_line: addresses[index].address_line, pincode: addresses[index].pincode})
@@ -92,7 +91,6 @@ const HomeAddressBox = () => {
   };
 
   const handleTitleChange = (event,index) => {
-    console.log(index)
     addresses[index].user_tag = event.target.value;
     const newAddresses = JSON.parse(JSON.stringify(addresses))
     setAddresses(newAddresses);
