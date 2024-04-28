@@ -6,7 +6,7 @@ import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle } from '
 import { useContext, useState } from 'react';
 
 
-const AddNewVariantAdmin = ({ open, handleClose, productId, variantId=null }) => {
+const AddNewVariantAdmin = ({ open, handleClose, productId, variantId=null,onVariantUpdate  }) => {
     const [quantity, setQuantity] = useState(0 );
     const [discount, setDiscount] = useState(0 );
     const {token, showSnackbar } = useContext(AppContext)
@@ -21,7 +21,6 @@ const AddNewVariantAdmin = ({ open, handleClose, productId, variantId=null }) =>
         try {
             let endPoint = "http://localhost:8000/variants"
             let meth = variantId ? 'PUT' : 'POST';
-            console.log("yash",  `Bearer ${token}`)
             const res = await fetch(endPoint , {
                 method: meth,
                 headers: {
@@ -36,8 +35,8 @@ const AddNewVariantAdmin = ({ open, handleClose, productId, variantId=null }) =>
             }
             showSnackbar("Variant added successfully", "success")
             handleClose()
+            onVariantUpdate();
         } catch (error) {
-            console.log("error loging",error)
             showSnackbar(error?.message || "error", "error")
         }
     };

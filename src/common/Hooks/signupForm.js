@@ -71,7 +71,6 @@ const useSignupForm = (router, isAdmin) => {
           errors.confirmPassword = "Please enter valid confirm password!"
         }
         if(!((values?.confirmPassword && values?.password)  && values?.confirmPassword === values?.password)){
-          console.log(values.password, values.confirmPassword)
           errors.confirmPassword = "Password not matching"
         }
         return errors;

@@ -6,6 +6,9 @@ import { MemoizedButton } from "@/constants/SDK/CustomButton.js";
 import { colors } from "@/constants/colors.js";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import ProductCard from "@/pages/shop/products.jsx";
+import CircularProgress from '@mui/material/CircularProgress';
+
+import Backdrop from '@mui/material/Backdrop';
 import FilterDrawer from "@/pages/shop/FilterDrawer.jsx";
 const CustomShop = styled(Box)(({ theme }) => ({
   padding: "4rem",
@@ -63,7 +66,13 @@ const ShopPage = () => {
   }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Backdrop
+    sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+    open={loading}
+   
+  >
+    <CircularProgress color="inherit" />
+  </Backdrop>;
   }
 
   if (error) {

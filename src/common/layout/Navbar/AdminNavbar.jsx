@@ -12,15 +12,28 @@ import Image from "next/image";
 import Link from "next/link";
 import PropTypes from "prop-types";
 import React, { useContext, useState } from "react";
-import logo from '../../../../public/logo.svg';
+import logo from "../../../../public/logo.svg";
 import { Menu } from "@mui/icons-material";
-import MenuItem from '@mui/material/MenuItem';
+import MenuItem from "@mui/material/MenuItem";
 function AdminNavbar(props) {
   const { window } = props;
-  const {  user } = useContext(AppContext); 
- 
+  const { user } = useContext(AppContext);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
-    <Box sx={{ display: "flex", background: colors?.MonochromeLight, marginBottom:"4rem" }}>
+    <Box
+      sx={{
+        display: "flex",
+        background: colors?.MonochromeLight,
+        marginBottom: "4rem",
+      }}
+    >
       <AppBar component="nav" sx={{ background: colors?.MonochromeLight }}>
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
           <Image
@@ -64,17 +77,32 @@ function AdminNavbar(props) {
             <IconButton
               size="large"
               edge="end"
+              id="basic-button"
               aria-label="account of current user"
               aria-haspopup="true"
               color={colors?.primaryDark}
+              onClick={handleClick}
+              aria-controls={open ? "basic-menu" : undefined}
+              aria-expanded={open ? "true" : undefined}
             >
               <AccountCircle style={{ color: `${colors?.primaryDark}` }} />
             </IconButton>
-            
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{
+                "aria-labelledby": "basic-button",
+              }}
+            >
+              <MenuItem onClick={handleClose}>Profile</MenuItem>
+              <MenuItem onClick={handleClose}>My account</MenuItem>
+              <MenuItem onClick={handleClose}>Logout</MenuItem>
+            </Menu>
           </Box>
         </Toolbar>
       </AppBar>
-      
     </Box>
   );
 }

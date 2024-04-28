@@ -8,8 +8,8 @@ import {
   Typography,
   styled,
 } from "@mui/material";
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 import React, { useContext, useState, useEffect } from "react";
 import StarIcon from "@mui/icons-material/Star";
 import { MemoizedButton } from "@/constants/SDK/CustomButton";
@@ -73,7 +73,7 @@ const CustomPRodDetails = styled(Box)(({ theme }) => ({
 }));
 
 const ProdDetails = ({ productData, productId }) => {
-  const { addToCart } = useContext(AppContext);
+  const { addToCart, cart, removeItem } = useContext(AppContext);
 
   const [selectedOption, setSelectedOption] = useState("quantity");
   const [quantity, setQuantity] = useState(1); // Default quantity for the quantity option
@@ -82,13 +82,12 @@ const ProdDetails = ({ productData, productId }) => {
   const [variants, setVariants] = useState([]); // Default selected pack option
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
   useEffect(() => {
     // Function to fetch data from the API
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8000/variants/${productId}`,
+          `http://localhost:8000/variants/${productId}`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch data");
@@ -112,7 +111,12 @@ const ProdDetails = ({ productData, productId }) => {
   }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
   const handleAddToCart = () => {
-    addToCart(productData, quantity);
+    const updatedProductData = { ...productData, product_id: productId };
+    addToCart(updatedProductData, quantity);
+  };
+
+  const handleRemoveFromCart = () => {
+    removeItem(productId);
   };
 
   const calDisPrice = (price, discount) => {
@@ -148,7 +152,7 @@ const ProdDetails = ({ productData, productId }) => {
           >
             Rs. {price}
           </Typography>
-          Rs. {calDisPrice(productData?.price, discount)}
+          Rs. {calDisPrice(productData?.selling_price, discount)}
         </Typography>
       );
     } else {
@@ -168,12 +172,14 @@ const ProdDetails = ({ productData, productId }) => {
   };
 
   if (loading) {
-    return <Backdrop
-    sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-    open={loading}
-  >
-    <CircularProgress color="inherit" />
-  </Backdrop>;
+    return (
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    );
   }
 
   if (error) {
@@ -193,10 +199,9 @@ const ProdDetails = ({ productData, productId }) => {
       </Typography>
       <Typography style={{ display: "flex", alignItems: "center", gap: "4px" }}>
         <StarIcon /> 4.5
-       </Typography>
-       
+      </Typography>
 
-      {returnPriceComponent(productData?.price, discount)}
+      {returnPriceComponent(productData?.selling_price, discount)}
       <RadioGroup
         aria-label="quantity-option"
         name="quantity-option"
@@ -236,16 +241,17 @@ const ProdDetails = ({ productData, productId }) => {
         />
         {selectedOption === "pack" && (
           <Box style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-            {console.log(variants)}
             {/* Your pack options */}
             {variants.map((variant) => {
               return (
                 <MemoizedButton
                   key={variant.variant_id}
-                  className={`btn favBtn ${selectedPack === "2" ? "active" : ""}`}
+                  className={`btn favBtn ${
+                    selectedPack === "2" ? "active" : ""
+                  }`}
                   content={variant.quantity}
                   handleClick={() => {
-                    setQuantity(variant.quantity);
+                    setQuantity(parseInt(variant.quantity));
                     setSelectedPack(variant.quantity.toString());
                     setDiscount(variant.discount_percentage);
                   }}
@@ -265,21 +271,38 @@ const ProdDetails = ({ productData, productId }) => {
           gap: "12px",
         }}
       >
-        <MemoizedButton
-          className={"btn addToBtn"}
-          content={"Add to Cart"}
-          style={{
-            marginBlock: "16px",
-            width: "60%",
-            display: "flex",
-            alignItems: "center",
-            gap: "12px",
-          }}
-          handleClick={handleAddToCart}
-        />
-        <IconButton  className="btn favBtn">
-          <FavoriteIcon />
-        </IconButton>
+        {cart?.some((item) => item?.product_id === productId) ? (
+          <MemoizedButton
+            className={"btn addToBtn"}
+            content={"Remove from Cart"}
+            style={{
+              marginBlock: "16px",
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              gap: "12px",
+            }}
+            handleClick={handleRemoveFromCart} // Adjust the click handler
+          />
+        ) : (
+          <>
+            <MemoizedButton
+              className={"btn addToBtn"}
+              content={"Add to Cart"}
+              style={{
+                marginBlock: "16px",
+                width: "60%",
+                display: "flex",
+                alignItems: "center",
+                gap: "12px",
+              }}
+              handleClick={handleAddToCart}
+            />
+            <IconButton className="btn favBtn">
+              <FavoriteIcon />
+            </IconButton>
+          </>
+        )}
       </Box>
       <MemoizedButton className={"btn checkBtn"} content={"checkout"} />
     </CustomPRodDetails>
