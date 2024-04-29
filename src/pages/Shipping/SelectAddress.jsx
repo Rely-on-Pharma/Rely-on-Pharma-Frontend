@@ -139,7 +139,7 @@ const SelectAddress = ({ addresses }) => {
 
   const handleAddNewAddress = async () => {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('token').slice(1,-1);
       if (!token) {
         showSnackbar("You need to login/signup to process the order", "info");
         router.push("/login");
@@ -156,7 +156,7 @@ const SelectAddress = ({ addresses }) => {
         return;
       }
   
-      const resp = await fetch("https://localhost:8000/address", {
+      const resp = await fetch("http://localhost:8000/address", {
         method: "POST",
         headers: headers,
         body: JSON.stringify({
@@ -235,7 +235,7 @@ const SelectAddress = ({ addresses }) => {
             name="pincode"
             label="Enter Pincode"
             fullWidth
-            onChange={(e)=> setAddressValue({...addressValue, pincode: e?.target?.value})}
+            onChange={(e)=> setAddressValue({...addressValue, pincode: parseInt(e?.target?.value)})}
             variant="outlined"
           />
         </DialogContent>

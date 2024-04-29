@@ -1,15 +1,19 @@
-import useAddNewProductForm from '@/common/Hooks/addnewForm';
 import { checkError } from '@/common/utils/validateHelpers';
 import { MemoizedAutoSelectDropDown } from '@/constants/SDK/autoCompleteSelect';
+import { MemoizedInputField } from '@/constants/SDK/customInput';
 import { MemoizedSelectDropDown } from '@/constants/SDK/selectDropdown';
 import { brandOptions, categoryOptions, verticalsOptions } from '@/constants/data/adminFormData';
-import { Box } from '@mui/material';
-import React from 'react'
 
-const CategorySelection = () => {
-    const {form} = useAddNewProductForm()
+const CategorySelection = ({form}) => {
   return (
     <>
+        <MemoizedInputField
+          type={"text"}
+          label={"Enter producct name"}
+          name="name"
+          value={form?.values?.name}
+          onChange={(e) => form?.setFieldValue("name", e?.target?.value)}
+        />
             <MemoizedSelectDropDown className="input-dropdown"
               id={"category"}
               name="category" 
@@ -26,18 +30,18 @@ const CategorySelection = () => {
                 form?.setFieldValue("category", val);
               }}/>
               <MemoizedSelectDropDown className="input-dropdown"
-              id={"verticals"}
-              name="verticals" 
+              id={"vartical"}
+              name="vartical" 
               required={true}
               form={form}
               label={"hello"}
-              value={form?.values?.verticals}
-              helperText={form?.errors?.verticals}
-              title={"Select verticals"}
+              value={form?.values?.vartical}
+              helperText={form?.errors?.vartical}
+              title={"Select varticals"}
               optionsData={verticalsOptions}
               onChange={(e) => {
                 const val = e?.target?.value;
-                form?.setFieldValue("verticals", val);
+                form?.setFieldValue("vartical", val);
               }}/>
               <MemoizedAutoSelectDropDown
               id="brand-options"

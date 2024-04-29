@@ -7,6 +7,7 @@ import ProductDetails from "./ProductDetails";
 import FileUploadComponent from "./ImageUploader";
 import { MemoizedButton } from "@/constants/SDK/CustomButton";
 import { colors } from "@/constants/colors";
+import { useRouter } from "next/navigation";
 
 const CustomAddNewForm = styled(Box)(({ theme }) => ({
   ".categorySection": {
@@ -15,28 +16,38 @@ const CustomAddNewForm = styled(Box)(({ theme }) => ({
     gap: "1rem",
     margin: "1rem 0",
   },
-  ".btn":{
-    width:"100%",
-    background:colors?.MonochromeDark,
-    margin:"1rem auto"
-  }
+  ".btn": {
+    width: "100%",
+    background: colors?.MonochromeDark,
+    margin: "1rem auto",
+  },
 }));
 const AddnewForm = () => {
-  const { form } = useAddNewProductForm();
+  const router = useRouter()
+  const { form } = useAddNewProductForm(router);
   return (
     <CustomAddNewForm>
-      <Typography>Select Category</Typography>
-      <Box className="categorySection">
-        <CategorySelection />
-      </Box>
-      <Typography>Price, Stock and Shipping Information</Typography>
+      <form onSubmit={form?.handleSubmit}>
+        <Typography>Select Category</Typography>
+        <Box className="categorySection">
+          <CategorySelection form={form}/>
+        </Box>
+        <Typography>Price, Stock and Shipping Information</Typography>
 
-      <PricingInfo />
-      <Typography>Product Details</Typography>
-      <FileUploadComponent/>
-      <ProductDetails/>
+        <PricingInfo form={form}/>
+        <Typography>Product Details</Typography>
+        <ProductDetails form={form}/>
+        {/* <FileUploadComponent/> */}
 
-      <MemoizedButton className={"btn"} content={"Save"}/>
+        <MemoizedButton
+          className={"btn"}
+          content={"Save"}
+          type="submit"
+          handleClick={(e) => {
+            form.handleSubmit(e);
+          }}
+        />
+      </form>
     </CustomAddNewForm>
   );
 };
