@@ -1,16 +1,6 @@
-import useAddNewProductForm from "@/common/Hooks/addnewForm";
-import { MemoizedButton } from "@/constants/SDK/CustomButton";
 import { MemoizedInputField } from "@/constants/SDK/customInput";
-import { MemoizedSelectDropDown } from "@/constants/SDK/selectDropdown";
 import { colors } from "@/constants/colors";
-import AddIcon from '@mui/icons-material/Add';
-import { quantityOptions } from "@/constants/data/adminFormData";
-import { Box, Typography, styled, ListItem } from "@mui/material";
-import Chip from '@mui/material/Chip';
-import Paper from '@mui/material/Paper';
-import React, { useState } from "react";
-import { MemoizedIconButton } from "@/constants/SDK/CustomIconButton";
-import { Height, Padding } from "@mui/icons-material";
+import { Box, styled } from "@mui/material";
 const CustomProductDetails = styled(Box)(({theme})=>({
   ".input-field":{
     width:"30%",
@@ -24,35 +14,52 @@ const CustomProductDetails = styled(Box)(({theme})=>({
     Padding:"1rem"
   }
 }))
-const ProductDetails = () => {
-  const { form } = useAddNewProductForm();
-  const [quantity, setQuantity] = useState(0);
-  const [discount, setDiscount] = useState(0);
-  const [chipData, setChipData] = React.useState([])
-  const handleDelete = (chipToDelete) => () => {
-    setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
-  };
+const ProductDetails = ({ form }) => {
+  // const [quantity, setQuantity] = useState(0);
+  // const [discount, setDiscount] = useState(0);
+  // const [chipData, setChipData] = React.useState([])
+  // const handleDelete = (chipToDelete) => () => {
+  //   setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
+  // };
   return (
     <CustomProductDetails>
+      <MemoizedInputField
+          type={"number"}
+          label={"Enter quantity"}
+          name="quantity"
+          value={form?.values?.quantity}
+          onChange={(e) => form?.setFieldValue("quantity", e?.target?.value)}
+        />
       <MemoizedInputField
         multiline={true}
         type={"text"}
         rows={4}
         label="Description"
+        value={form?.values?.description}
+        name={"description"}
+        onChange={(e)=> form?.setFieldValue("description", e?.target?.value)}
       />
       <MemoizedInputField
         multiline={true}
         type={"text"}
         rows={4}
         label="Ingredients"
+        value={form?.values?.ingredients}
+        name={"ingredients"}
+        onChange={(e)=> form?.setFieldValue("ingredients", e?.target?.value)}
       />
       <MemoizedInputField
         multiline={true}
         type={"text"}
         rows={4}
         label="How To Use"
+        value={form?.values?.how_to_use}
+        name={"how_to_use"}
+        onChange={(e)=> form?.setFieldValue("how_to_use", e?.target?.value)}
       />
-      <Box>
+
+      {/* Manage variants moved to seperate page */}
+      {/* <Box>
         <Typography>Manage Variants</Typography>
 
         <Box  style={{display:"flex", justifyContent:"space-between", alignItems:"center"}}>
@@ -102,7 +109,7 @@ const ProductDetails = () => {
       }) : (<Typography>No variants added</Typography>)}
     </Paper>
         </Box>
-      </Box>
+      </Box> */}
     </CustomProductDetails>
   );
 };
