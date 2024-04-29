@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useContext } from "react";
 import { colors } from "@/constants/colors";
 import {
   Box,
@@ -17,6 +17,8 @@ import {
 } from "@mui/material";
 import { AddRounded } from "@mui/icons-material";
 import { MemoizedButton } from "@/constants/SDK/CustomButton";
+import AppContext from "@/constants/context/context";
+import { useRouter } from "next/navigation";
 
 const CustomSelectAddress = styled(Box)(({ theme }) => ({
   display: "block",
@@ -118,9 +120,15 @@ const CustomSelectAddress = styled(Box)(({ theme }) => ({
 }));
 
 const SelectAddress = ({ addresses }) => {
-  const [value, setValue] = React.useState(null);
+  const [value, setValue] = React.useState(0 || null);
   const [open, setOpen] = React.useState(false);
-
+  const {showSnackbar} = useContext(AppContext)
+  const router = useRouter();
+  const [addressValue, setAddressValue]=  React.useState({
+    user_tag:"",
+    address_line:"",
+    pincode:null
+  })
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -128,6 +136,49 @@ const SelectAddress = ({ addresses }) => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleAddNewAddress = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        showSnackbar("You need to login/signup to process the order", "info");
+        router.push("/login");
+        return;
+      }
+  
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
+  
+      if (!addressValue?.address_line || !addressValue?.pincode || !addressValue?.user_tag) {
+        showSnackbar("All fields are mandatory", "error");
+        return;
+      }
+  
+      const resp = await fetch("https://localhost:8000/address", {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify({
+          user_tag: addressValue?.user_tag,
+          pincode: addressValue?.pincode,
+          address_line: addressValue?.address_line
+        })
+      });
+  
+      if (!resp.ok) {
+        throw new Error("Unable to add new address");
+      }
+  
+      showSnackbar("New Address Added successfully!", "success");
+      setOpen(false);
+    } catch (error) {
+      console.error("Error adding new address:", error);
+      showSnackbar("Unable to add new address", "error");
+      setOpen(false)
+    }
+  };
+  
   return (
     <CustomSelectAddress>
       <Typography className="order-ov" mb={2}>
@@ -157,10 +208,11 @@ const SelectAddress = ({ addresses }) => {
             required
             margin="dense"
             id="address title"
-            name="address title"
+            name="user_tag"
             label="Address Title"
             fullWidth
             variant="outlined"
+            onChange={(e)=> setAddressValue({...addressValue, user_tag: e?.target?.value})}
           />
           <TextField
             autoFocus
@@ -169,9 +221,21 @@ const SelectAddress = ({ addresses }) => {
             rows={4}
             margin="dense"
             id="address"
-            name="address"
+            name="address_line"
             label="Address"
             fullWidth
+            variant="outlined"
+            onChange={(e)=> setAddressValue({...addressValue, address_line: e?.target?.value})}
+          />
+          <TextField
+            autoFocus
+            required
+            margin="dense"
+            id="pincode"
+            name="pincode"
+            label="Enter Pincode"
+            fullWidth
+            onChange={(e)=> setAddressValue({...addressValue, pincode: e?.target?.value})}
             variant="outlined"
           />
         </DialogContent>
@@ -206,16 +270,17 @@ const SelectAddress = ({ addresses }) => {
               boxShadow: "none",
               margin: "0rem 0.4rem",
             }}
+            onClick={handleAddNewAddress}
           >
             Add
           </Button>
         </DialogActions>
       </Dialog>
       <RadioGroup value={value} onChange={(e) => setValue(e.target.value)}>
-        {addresses.map((address, index) => (
+        {addresses?.length>0 ? (addresses.map((address, index) => (
           <Box key={index} className="cust-address-box">
             <Radio
-              value={address.id}
+              value={index}
               sx={{
                 "&.Mui-checked": {
                   color: colors?.primaryDark,
@@ -227,9 +292,10 @@ const SelectAddress = ({ addresses }) => {
                 {address.name}
               </Typography>
               <Typography ml={2}>{address.address}</Typography>
+              <Typography ml={2}>{address.pincode}</Typography>
             </Box>
           </Box>
-        ))}
+        ))):(<Typography>No Saved Address</Typography>)}
       </RadioGroup>
       <MemoizedButton className="btn" content={"Continue"} />
     </CustomSelectAddress>

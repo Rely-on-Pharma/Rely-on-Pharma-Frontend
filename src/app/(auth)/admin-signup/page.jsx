@@ -283,7 +283,7 @@ const AdminSignUp = () => {
                   content={"Create an Account"}
                   handleClick={(e) => form.handleSubmit(e)}
                 />
-                 <Link href={`/login`} style={{fontWeight:"700", textAlign:"center", display:"block"}}>Already have an account? Login</Link>
+                 <Link href={`/admin-login`} style={{fontWeight:"700", textAlign:"center", display:"block"}}>Already have an account? Login</Link>
                  <Link href={`/`} style={{fontWeight:"700", textAlign:"center", display:"block"}}>Home</Link>
             </form>
           </Grid>

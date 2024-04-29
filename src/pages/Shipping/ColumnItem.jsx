@@ -55,7 +55,7 @@ const ColumnItem = ({ item }) => {
             {item?.name}
           </Typography>
           <Typography variant="body1" fontWeight={"100"}>
-            Rs. {item?.price}/-
+            Rs. {item?.selling_price}/-
           </Typography>
           <Typography variant="body1" fontWeight={"100"}>
             Qty :{item?.qty}

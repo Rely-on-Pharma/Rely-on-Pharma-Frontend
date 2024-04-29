@@ -351,7 +351,7 @@ const Profile = () => {
           custPadding={"1rem"}
           childMargin={{ xs: "1rem", sm: "1rem", md: "2rem", lg: "2rem" }}
           backgroundColor="#EEE2DF"
-          childPadding={{ xs: "0.5rem", sm: "0.5rem", md: "2rem", lg: "2rem" }}
+          childPadding={{ xs: "0.2rem", sm: "0.5rem", md: "2rem", lg: "2rem" }}
         >
           {
             // <Grid container>
