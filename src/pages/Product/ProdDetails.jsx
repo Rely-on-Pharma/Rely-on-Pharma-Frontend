@@ -16,6 +16,7 @@ import { MemoizedButton } from "@/constants/SDK/CustomButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { colors } from "@/constants/colors";
 import AppContext from "@/constants/context/context";
+import { useRouter } from "next/navigation";
 
 const CustomPRodDetails = styled(Box)(({ theme }) => ({
   padding: "2rem",
@@ -82,6 +83,7 @@ const ProdDetails = ({ productData, productId }) => {
   const [variants, setVariants] = useState([]); // Default selected pack option
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const router = useRouter()
   useEffect(() => {
     // Function to fetch data from the API
     const fetchData = async () => {
@@ -304,7 +306,9 @@ const ProdDetails = ({ productData, productId }) => {
           </>
         )}
       </Box>
-      <MemoizedButton className={"btn checkBtn"} content={"checkout"} />
+      <MemoizedButton className={"btn checkBtn"} handleClick={()=>{
+        router.push("/cart")
+      }} content={"checkout"} />
     </CustomPRodDetails>
   );
 };

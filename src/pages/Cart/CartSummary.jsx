@@ -2,8 +2,8 @@
 import { MemoizedButton } from "@/constants/SDK/CustomButton";
 import { colors } from "@/constants/colors";
 import { Box, Typography, styled } from "@mui/material";
-import React from "react";
 import Link from "next/link";
+
 
 const CustomCartSummary = styled(Box)(({ theme }) => ({
   display: "block",
@@ -80,7 +80,10 @@ const CartSummary = ({ cart, totalPrice }) => {
       <Link href="/shipping">
         <MemoizedButton className={"btn"} content={"Checkout"} />
       </Link>
+      <Link href="/shop">
+        
       <MemoizedButton className={"btn"} content={"Continue Shopping"} />
+      </Link>
     </CustomCartSummary>
   );
 };
