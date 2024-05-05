@@ -34,7 +34,7 @@ const ProductCard = ({productData}) => {
         <Image src={imageUrl} alt={productData?.name} width={360} height={300}/>
         <Stack className='details'>
         <Link href={`/product/${productData?.id}`} style={{fontWeight:"700"}}>{productData?.name}</Link>
-        <Typography variant='body'> Rs. {productData?.price}</Typography>
+        <Typography variant='body'> Rs. {productData?.selling_price}</Typography>
         </Stack>
         <MemoizedButton content={"Quick View"} href={`/product/${productData?.id}`} className={"addBtn"}/>
     </CustomCard>

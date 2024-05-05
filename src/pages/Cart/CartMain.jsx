@@ -42,9 +42,9 @@ const CartMain = () => {
               <ProductRow
                 key={item.id}
                 item={item}
-                onDecrement={() => decrementQty(item.id)}
-                onIncrement={() => incrementQty(item.id)}
-                onRemove={() => removeItem(item.id)}
+                onDecrement={() => decrementQty(item?.id)}
+                onIncrement={() => incrementQty(item?.id)}
+                onRemove={() => removeItem(item?.product_id)}
               />
             ))
           ) : (

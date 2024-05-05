@@ -11,21 +11,18 @@ import Toolbar from "@mui/material/Toolbar";
 import Image from "next/image";
 import Link from "next/link";
 import PropTypes from "prop-types";
-import React, { useContext, useState } from "react";
+import { useContext } from "react";
 import logo from "../../../../public/logo.svg";
-import { Menu } from "@mui/icons-material";
-import MenuItem from "@mui/material/MenuItem";
+import { Tooltip } from "@mui/material";
+import { useRouter } from "next/navigation";
 function AdminNavbar(props) {
   const { window } = props;
-  const { user } = useContext(AppContext);
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const { user ,logOutUser} = useContext(AppContext);
+  const router = useRouter();
+const handleLogout = ()=>{
+  logOutUser();
+  router.push("/admin-login")
+}
   return (
     <Box
       sx={{
@@ -74,32 +71,11 @@ function AdminNavbar(props) {
             ))}
           </Box>
           <Box sx={{ display: { xs: "flex" } }}>
-            <IconButton
-              size="large"
-              edge="end"
-              id="basic-button"
-              aria-label="account of current user"
-              aria-haspopup="true"
-              color={colors?.primaryDark}
-              onClick={handleClick}
-              aria-controls={open ? "basic-menu" : undefined}
-              aria-expanded={open ? "true" : undefined}
-            >
-              <AccountCircle style={{ color: `${colors?.primaryDark}` }} />
-            </IconButton>
-            <Menu
-              id="basic-menu"
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-              MenuListProps={{
-                "aria-labelledby": "basic-button",
-              }}
-            >
-              <MenuItem onClick={handleClose}>Profile</MenuItem>
-              <MenuItem onClick={handleClose}>My account</MenuItem>
-              <MenuItem onClick={handleClose}>Logout</MenuItem>
-            </Menu>
+            <Tooltip title="Click to logout" placement="left">
+              <IconButton size="large" edge="end" color={colors?.primaryDark} onClick={handleLogout}>
+                <AccountCircle style={{ color: `${colors?.primaryDark}` }} />
+              </IconButton>
+            </Tooltip>
           </Box>
         </Toolbar>
       </AppBar>

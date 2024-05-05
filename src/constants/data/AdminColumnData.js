@@ -1,6 +1,6 @@
 export const listingPageColumns = [
     { id: "name", label: "Product", minWidth: 170 },
-    { id: "price", label: "Price", minWidth: 100 },
+    { id: "selling_price", label: "Price", minWidth: 100 },
     {
       id: "category",
       label: "Category",
@@ -26,6 +26,7 @@ export const listingPageColumns = [
   export const inventoryPageColumns = [
     { id: "name", label: "Product Information", minWidth: 200 ,align: "center",},
     { id: "quantity", label: "Current Stock", minWidth: 150 ,align: "center",},
+    { id: "selling_price", label: "Current Stock", minWidth: 150 ,align: "center",},
     {
       id: "sales_count",
       label: "Sale rate/ Month",

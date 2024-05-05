@@ -229,7 +229,7 @@ const AdminLogin = () => {
               handleClick={(e) => form.handleSubmit(e)}
             />
             <Link
-              href={`/signup`}
+              href={`/admin-signup`}
               style={{
                 fontWeight: "700",
                 textAlign: "center",
