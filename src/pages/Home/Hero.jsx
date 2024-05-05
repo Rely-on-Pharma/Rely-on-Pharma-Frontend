@@ -1,6 +1,6 @@
 "use client";
 import { data } from "@/constants/CarousalData";
-import { trendingProducts } from "@/constants/data/trendingData";
+//import { trendingProducts } from "@/constants/data/trendingData";
 import { MemoizedSwiper } from "@/constants/SDK/CustomSwipper";
 import {
   Box,
@@ -15,14 +15,14 @@ import heroBg from "../../../public/hero-bg.png";
 import shopNowBg from "../../../public/shop-now-bg.png";
 import aboutBg from "../../../public/mission-vision-bg.png";
 import { FavoriteOutlined, Star } from "@mui/icons-material";
-import React from "react";
-import Image from "next/image"
+import { React, useState, useEffect } from "react";
+import Image from "next/image";
 import { colors } from "@/constants/colors";
 import { MemoizedButton } from "@/constants/SDK/CustomButton";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { useRouter } from "next/navigation";
-import Link from "next/link"
+import Link from "next/link";
 const CustomHero = styled(Box)(({ theme }) => ({
   ".grid-container": {
     background: `url(${heroBg.src})`,
@@ -209,7 +209,27 @@ const Hero = () => {
       items: 1,
     },
   };
+  const [trendingProducts, setTrendingProducts] = useState([]);
+  useEffect(() => {
+    const fetchSimilarProducts = async () => {
+      try {
+        const response = await fetch(`http://localhost:8000/reccomendation`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch similar products");
+        }
+        const jsonData = await response.json();
+        const products = jsonData.map((item) => item[1]);
+        // Flatten the array of arrays into a single array of products
+        const flattenedProducts = products.flat();
+        setTrendingProducts(flattenedProducts);
+      } catch (error) {
+        console.error("Error fetching similar products:", error);
+      }
+    };
 
+    fetchSimilarProducts();
+  }, []);
+  const imageUrl = "https://loremflickr.com/640/480?lock=2391645746102272";
   return (
     <CustomHero>
       <Grid container className="grid-container">
@@ -220,7 +240,11 @@ const Hero = () => {
             <Typography variant="span">R</Typography>EJUVANATE <br />
             <Typography variant="span">R</Typography>ECOVER
           </Typography>
-          <MemoizedButton className={"btn"} content="Shop Now" handleClick={()=> router.push("/shop")}/>
+          <MemoizedButton
+            className={"btn"}
+            content="Shop Now"
+            handleClick={() => router.push("/shop")}
+          />
         </Grid>
         <Grid item md={6} className="grid_item">
           <MemoizedSwiper
@@ -248,30 +272,31 @@ const Hero = () => {
       </Typography>
 
       <Carousel className="caraousel" responsive={responsive}>
-        {trendingProducts.map((product) => (
-          <Box key={product.id} textAlign="center" p={2} className="card">
-            <Image
-            width={300}
-            height={300}
-              src={product.image}
-              alt={product.name}
-              className="product--image"
-            />
-            <Typography variant="body1" mt={1}>
-              {product.name}
-            </Typography>
-            <Typography variant="body2" mt={1} mb={1}>
-              {product.price}
-            </Typography>
-            <Box display="flex" justifyContent="space-around">
-              <MemoizedButton className={"btn"} content="+" />
-              <MemoizedButton
-                className={"btn"}
-                content={<FavoriteOutlined style={{ fontSize: "14px" }} />}
+        {trendingProducts?.length > 0 &&
+          trendingProducts.map((product, ind) => (
+            <Box key={product?.id} textAlign="center" p={2} className="card">
+              <Image
+                width={300}
+                height={300}
+                src={imageUrl}
+                alt={product?.name}
+                className="product--image"
               />
+              <Typography variant="body1" mt={1}>
+                {product?.name}
+              </Typography>
+              <Typography variant="body2" mt={1} mb={1}>
+                {product?.selling_price}
+              </Typography>
+              <Box display="flex" justifyContent="space-around">
+                <MemoizedButton className={"btn"} content="+" />
+                <MemoizedButton
+                  className={"btn"}
+                  content={<FavoriteOutlined style={{ fontSize: "14px" }} />}
+                />
+              </Box>
             </Box>
-          </Box>
-        ))}
+          ))}
       </Carousel>
       <Box className="shop-now-box">
         <Grid
@@ -307,7 +332,7 @@ const Hero = () => {
             <MemoizedButton
               className="btn"
               content="SIGN UP NOW"
-              handleClick={()=> router.push("/signup")}
+              handleClick={() => router.push("/signup")}
               style={{
                 marginTop: "10px",
                 backgroundColor: colors?.secondaryDark,
@@ -356,8 +381,7 @@ const Hero = () => {
           sx={{ margin: "7vh" }}
         >
           <Link href="/aboutus">
-
-          <MemoizedButton className="explore-more" content="EXPLORE MORE" />
+            <MemoizedButton className="explore-more" content="EXPLORE MORE" />
           </Link>
         </Grid>
       </Box>

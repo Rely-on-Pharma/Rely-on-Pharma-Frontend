@@ -4,7 +4,7 @@ import { Box, Stack, Typography, styled } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-const CustomCard = styled(Box)(({ theme }) => ({
+const CustomSimilarCard = styled(Box)(({ theme }) => ({
   borderRadius: "4px",
   overflow: "hidden",
   ".details": {
@@ -22,11 +22,22 @@ const CustomCard = styled(Box)(({ theme }) => ({
       background: colors?.white,
     },
   },
+  "product--image": {
+    objectFit: "contain",
+    [theme.breakpoints.down("xs")]: {
+      width: 150,
+      height: 100,
+    },
+    [theme.breakpoints.down("sm")]: {
+      width: 150,
+      height: 100,
+    },
+  },
 }));
-const ProductCard = ({ productData }) => {
+const SimilarProductCard = ({ productData }) => {
   const imageUrl = "https://loremflickr.com/640/480?lock=2391645746102272"; //currently hardcoding the image url, as backend does not have image URL set.
   return (
-    <CustomCard>
+    <CustomSimilarCard>
       {/*<Image src={productData?.image_url} alt={productData?.name} width={360} height={300}/> */}
       <Image src={imageUrl} alt={productData?.name} width={360} height={300} />
       <Stack className="details">
@@ -46,8 +57,8 @@ const ProductCard = ({ productData }) => {
         href={`/product/${productData?.id}`}
         className={"addBtn"}
       />
-    </CustomCard>
+    </CustomSimilarCard>
   );
 };
 
-export default ProductCard;
+export default SimilarProductCard;
