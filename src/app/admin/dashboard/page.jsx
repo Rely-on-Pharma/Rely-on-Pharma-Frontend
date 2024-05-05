@@ -1,9 +1,11 @@
-import React from 'react'
-
+import React from "react";
+import DashboardMain from "@/pages/Admin/Dashboard/DashboardMain";
 const Dashbooard = () => {
   return (
-    <div>Dashbooard</div>
-  )
-}
+    <>
+      <DashboardMain />
+    </>
+  );
+};
 
-export default Dashbooard
+export default Dashbooard;
