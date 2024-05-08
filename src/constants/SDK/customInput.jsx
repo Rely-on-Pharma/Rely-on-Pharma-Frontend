@@ -9,7 +9,7 @@ const CustomInputField = styled(TextField)(({theme})=>({
         },
       },
 }))
-const CustomInput = ({id, className,fullWidth=true, multiline=false , name, label, helpertext, onChange,type, ...rest}) => {
+const CustomInput = ({id, className,fullWidth=true, multiline=false , name, value,label, helpertext, onChange,type, ...rest}) => {
   return (
     <CustomInputField 
         id={id}

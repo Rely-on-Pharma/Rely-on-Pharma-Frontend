@@ -25,8 +25,6 @@ const useAddNewProductForm = (router) => {
     if(!resp?.ok){
       throw new Error("Unable to creta product");
     }
-
-    console.log("resp", resp.json())
     } catch (error) {
       console.log("yash",error)
     }
@@ -63,7 +61,6 @@ const useAddNewProductForm = (router) => {
         return errors;
       },
     onSubmit: (values) => {
-      console.log("yash", values)
       handleSubmit(values);
     },
   });
