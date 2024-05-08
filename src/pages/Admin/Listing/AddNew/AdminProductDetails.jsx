@@ -2,31 +2,21 @@
 import { MemoizedButton } from "@/constants/SDK/CustomButton";
 import { MemoizedIconButton } from "@/constants/SDK/CustomIconButton";
 import { colors } from "@/constants/colors";
-import AppContext from "@/constants/context/context";
-import StarIcon from "@mui/icons-material/Star";
 import EditIcon from "@mui/icons-material/Edit";
+import StarIcon from "@mui/icons-material/Star";
 import {
   Box,
-  Typography,
-  styled,
   List,
   ListItem,
   ListItemText,
+  Typography,
+  styled,
 } from "@mui/material";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useContext, useEffect, useState } from "react";
-import {
-  DialogContent,
-  DialogActions,
-  Dialog,
-  Button,
-  DialogTitle,
-} from "@mui/material";
-import { MemoizedSelectDropDown } from "@/constants/SDK/selectDropdown";
-import { MemoizedInputField } from "@/constants/SDK/customInput";
-import { quantityOptions } from "@/constants/data/adminFormData";
+import { useEffect, useState } from "react";
 import AddNewVariantAdmin from "./AddNewVariantAdmin";
+import FileUploadComponent from "./ImageUploader";
 const CustomAdminProductDetails = styled(Box)(({ theme }) => ({
   padding: "2rem",
   ".prodName": {
@@ -85,11 +75,10 @@ const CustomAdminProductDetails = styled(Box)(({ theme }) => ({
 const AdminProductDetails = ({ productData, productId }) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [variantId, setvariantId] = useState(null);
-  const [variants, setVariants] = useState([]); 
+  const [variants, setVariants] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-
+  const [openImageDialog, setImageDialog] = useState(false);
   // Function to fetch data from the API
   const fetchData = async () => {
     try {
@@ -114,19 +103,26 @@ const AdminProductDetails = ({ productData, productId }) => {
     return () => {
       // Cleanup code, if needed
     };
-  }, []); 
+  }, []);
 
   const handleVariantUpdate = () => {
     // Fetch variants again after update
     fetchData();
-};
-  const handleOpenDialog = (item=null) => {
+  };
+  const handleOpenDialog = (item = null) => {
     setvariantId(item?.variant_id);
     setOpenDialog(true);
   };
 
   const handleCloseDialog = () => {
     setOpenDialog(false);
+  };
+
+  const handleOpenImageDialog = (item = null) => {
+    setImageDialog(true);
+  };
+  const handleCloseImageDialog = () => {
+    setImageDialog(false);
   };
   if (loading) {
     return (
@@ -192,9 +188,7 @@ const AdminProductDetails = ({ productData, productId }) => {
               boxShadow: "none",
               borderRadius: "4px",
             }}
-
-            handleClick={()=> 
-                handleOpenDialog()}
+            handleClick={() => handleOpenDialog()}
           />
         </List>
       </Box>
@@ -211,12 +205,31 @@ const AdminProductDetails = ({ productData, productId }) => {
         }}
       />
 
+      <MemoizedButton
+        className={"btn addToBtn"}
+        content={"Add/Update Images"}
+        handleClick={() => handleOpenImageDialog()}
+        style={{
+          margin: "auto",
+          width: "100%",
+          padding: "8px",
+          background: colors?.MonochromeMedium,
+          boxShadow: "none",
+        }}
+      />
+
       <AddNewVariantAdmin
         open={openDialog}
         handleClose={handleCloseDialog}
         productId={productId}
         variantId={variantId}
         onVariantUpdate={handleVariantUpdate}
+      />
+      <FileUploadComponent
+        open={openImageDialog}
+        handleClose={handleCloseDialog}
+        productId={productId}
+        productImgs={["https://picsum.photos/seed/OyKk2mm/640/480","https://picsum.photos/seed/OyKk2mm/640/480" ]}
       />
     </CustomAdminProductDetails>
   );

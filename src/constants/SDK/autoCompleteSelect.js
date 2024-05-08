@@ -11,6 +11,7 @@ const AutoCompleteSelectDropDown = ({
   inputValue,
   value,
   label,
+  defaultValue,
   onInputChange,
   helperText,
   options,
@@ -19,7 +20,7 @@ const AutoCompleteSelectDropDown = ({
 }) => {
   return (
     <Autocomplete
-      value={value}
+      value={value || defaultValue}
       onChange={onChange}
       inputValue={inputValue}
       onInputChange={onInputChange}

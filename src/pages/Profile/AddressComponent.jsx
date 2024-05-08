@@ -15,7 +15,6 @@ const HomeAddressBox = () => {
   const token = localStorage.getItem('token').slice(1,-1) // the token string is "token". Hence stripping the "
     const url = 'http://localhost:8000/address'
 
-     console.log(address)
     fetch(url, {
       method: 'PUT',
       headers: {
@@ -55,7 +54,6 @@ const HomeAddressBox = () => {
       throw new Error('Failed to fetch data');
     }
         const data = await response.json();
-        console.log(data);
         return data;
     }
     catch (error) {
@@ -75,10 +73,9 @@ const HomeAddressBox = () => {
   };
 
   const handleSaveClick = async (index) => {
-    console.log(addresses[index])
+
     if(addresses[index].id === undefined ){
         const id = await addNewAddress({user_tag: addresses[index].user_tag, address_line: addresses[index].address_line, pincode: addresses[index].pincode})
-        console.log(id)
         addresses[index].id = id
     }
     else{

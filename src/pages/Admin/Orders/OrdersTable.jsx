@@ -24,6 +24,7 @@ import {
 import { MemoizedInputField } from "@/constants/SDK/customInput";
 import { MemoizedButton } from "@/constants/SDK/CustomButton";
 import { colors } from "@/constants/colors";
+import AddressComponent from "./CustomAddress";
 
 const CustomOrdersTable = styled(Box)(({ theme }) => ({
   ".bold-title": {
@@ -108,7 +109,14 @@ export default function OrdersTable({ columns, rows }) {
                             </TableCell>
                           );
                         }
-                        if (column.id === "action") {
+                        else if(column?.id=== "address"){
+                          return (
+                            <TableCell key={column?.id} align={column?.align}>
+                              <AddressComponent address={row?.address}/>
+                            </TableCell>
+                          )
+                        }
+                        else if (column.id === "action") {
                           // Render buttons for the "action" column
                           return (
                             <TableCell key={column.id} align={column.align}>

@@ -62,7 +62,7 @@ const CustomSwiperComponent = ({slidesPerView=1, spaceBetween=30, loop=true, del
             {
                 data?.length>0 && data?.map((item, ind)=>(
                     <SwiperSlide key={item?.id} style={{width:"60%", height:"60vh"}}>
-                        <Image src={item?.image} alt='ok' width={100} height={100} style={{width:"100%", height:"100%", objectFit:"contain"}}/>
+                        <Image src={item?.image} alt='ok' width={250} height={250} style={{width:"100%", height:"100%", objectFit:"contain"}}/>
                     </SwiperSlide>
                 ))
             }

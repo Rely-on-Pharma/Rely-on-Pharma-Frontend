@@ -4,7 +4,7 @@ import AppContext from "@/constants/context/context";
 import AdminProductDetails from "@/pages/Admin/Listing/AddNew/AdminProductDetails";
 import DescriptionTab from "@/pages/Product/DescriptionTab";
 import Gallery from "@/pages/Product/Gallery";
-import { Box, Grid, styled } from "@mui/material";
+import { Box, Grid, Typography, styled } from "@mui/material";
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import { usePathname } from "next/navigation";
@@ -119,7 +119,11 @@ const SingleProduct = () => {
       <Grid className="productContainer" container spacing={2}>
         {/* Gallery */}
         <Grid item xs={12} style={{ padding: "0" }} md={6}>
-          <Gallery imageGallery={ProductData?.imgs} />
+          {
+            productData?.length > 0 ? (<Gallery imageGallery={ProductData?.imgs} />):(<Typography style={{margin:"auto"}} variant="body">No images yet</Typography>)
+          }
+          
+
         </Grid>
         <Grid item xs={12} style={{ padding: "0" }} md={6}>
           <AdminProductDetails productId={id} productData={productData}/>
