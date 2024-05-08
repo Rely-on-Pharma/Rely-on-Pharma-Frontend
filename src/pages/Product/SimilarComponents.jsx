@@ -8,6 +8,7 @@ import "swiper/css/navigation";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import { Box, Grid, styled } from "@mui/material";
 import ProductCard from "../shop/products";
+import SimilarProductCard from "./SimilarProductCard";
 const CustomSwiper = styled(Box)(({ theme }) => ({
   ".swiper": {
     width: "100%",
@@ -40,7 +41,7 @@ const SimilarComponents = ({
       <Swiper
         slidesPerView={slidesPerView}
         spaceBetween={spaceBetween}
-        loop={loop}
+        loop={false}
         centeredSlides={true}
         autoplay={{
           delay: delay,
@@ -58,17 +59,22 @@ const SimilarComponents = ({
         navigation={navigation}
         id={id}
         style={style}
-        modules={[Autoplay, Pagination, Navigation]}
+        modules={[Pagination, Navigation]}
         className={className}
+        dir="rtl"
       >
         {data?.length > 0 &&
           data?.map((item, ind) => (
             <SwiperSlide
               key={item?.id}
-              style={{ width: "60%", height: "60vh" }}
+              style={{
+                width: "60%",
+                height: "60vh",
+                backgroundColor: "transparent",
+              }}
             >
               <Grid item xs={12} sm={6} md={4} lg={3} key={ind}>
-                <ProductCard productData={item} />
+                <SimilarProductCard productData={item} />
               </Grid>
             </SwiperSlide>
           ))}

@@ -7,8 +7,8 @@ import { Box, Grid, Typography, styled } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useMobile } from "@/common/utils/finndViewSize";
 import { usePathname } from "next/navigation";
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 const ProductData = {
   id: "65d477565b75282dda587003",
   name: "Unbranded Concrete Mouse",
@@ -77,6 +77,7 @@ const SingleProduct = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [productData, setProductData] = useState([]);
+  const [similarProducts, setSimilarProducts] = useState([]);
 
   useEffect(() => {
     // Function to fetch data from the API
@@ -104,14 +105,34 @@ const SingleProduct = () => {
     };
   }, [id]); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
+  useEffect(() => {
+    const fetchSimilarProducts = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8000/recommendation/${id}`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch similar products");
+        }
+        const jsonData = await response.json();
+        setSimilarProducts(jsonData);
+      } catch (error) {
+        console.error("Error fetching similar products:", error);
+      }
+    };
+
+    fetchSimilarProducts();
+  }, [id]);
+
   if (loading) {
-    return <Backdrop
-    sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-    open={loading}
-   
-  >
-    <CircularProgress color="inherit" />
-  </Backdrop>;
+    return (
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    );
   }
 
   if (error) {
@@ -119,7 +140,6 @@ const SingleProduct = () => {
   }
   return (
     <CustomSingleProduct>
-      
       <Grid className="productContainer" container spacing={2}>
         {/* Gallery */}
         <Grid item xs={12} style={{ padding: "0" }} md={6}>
@@ -138,13 +158,15 @@ const SingleProduct = () => {
       />
       {/* related */}
 
-      <Typography variant="h3">Similar Products</Typography>
+      <Typography variant="h3" mt={4}>
+        Similar Products
+      </Typography>
       <SimilarComponents
         slidesPerView={isMobile ? 1 : 3}
         spaceBetween={30}
         loop={true}
         delay={2500}
-        data={productData}
+        data={similarProducts}
         navigation={false}
       />
     </CustomSingleProduct>
