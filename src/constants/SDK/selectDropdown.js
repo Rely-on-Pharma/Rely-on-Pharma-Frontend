@@ -7,8 +7,8 @@ import { getSelectOptions } from "./selectFieldsOptions";
 
 const SelectDropDown = ({
   form, //formik form
-  id, //state or vehicle
-  labelId, //label id(Select vehicle)
+  id, 
+  labelId, 
   name,
   onChange,
   label,
@@ -16,7 +16,7 @@ const SelectDropDown = ({
   value,
   title, // placeholder
   optionsData, // options for dropdown
-  helperText,
+  defaultValue,
   ...rest
 }) => {
 
@@ -33,7 +33,6 @@ const SelectDropDown = ({
       onChange={onChange}
       label={label}
       required={required}
-      helperText={helperText}
       fullWidth={true}
       sx={{
         "&.Mui-focused .MuiOutlinedInput-notchedOutline": {

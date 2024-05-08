@@ -24,8 +24,13 @@ const useSignupForm = (router, isAdmin) => {
           if(response.status === 404){
               throw new Error("unknown user"); //TODO: What UI element to add here? popup?
           }
-
-        throw new Error('Failed to login');
+          return response.json().then(errorData => {
+            if (errorData && errorData.error) {
+                throw new Error(errorData.error);
+            } else {
+                throw new Error('Failed to Signup');
+            }
+        });
       }
       return response.json();
     })
@@ -34,11 +39,9 @@ const useSignupForm = (router, isAdmin) => {
       localStorage.setItem('token', data.token);
       loginUser(data?.token) // Assuming response contains the token
       router.push(isAdmin ? "/admin/dashboard" : "/");
-
-      // Store the token securely (e.g., in localStorage)
     })
     .catch(error => {
-      showSnackbar("Failed to create an account", "error")
+      showSnackbar(error?.message||"Failed to create an account", "error")
       console.error('Error logging in:', error);
     });
   }

@@ -82,6 +82,7 @@ const themeMaster = createTheme({
       defaultProps: {
         MenuProps: {
           style: {
+            color:"black",
             maxHeight: 400,
           },
         },

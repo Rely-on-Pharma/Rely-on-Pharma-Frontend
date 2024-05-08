@@ -2,7 +2,7 @@ import { checkError } from '@/common/utils/validateHelpers';
 import { MemoizedAutoSelectDropDown } from '@/constants/SDK/autoCompleteSelect';
 import { MemoizedInputField } from '@/constants/SDK/customInput';
 import { MemoizedSelectDropDown } from '@/constants/SDK/selectDropdown';
-import { brandOptions, categoryOptions, verticalsOptions } from '@/constants/data/adminFormData';
+import { brandOptions, categoryOptions, verticalsOptions,  } from '@/constants/data/adminFormData';
 
 const CategorySelection = ({form}) => {
   return (
