@@ -86,9 +86,9 @@ const CustomContact = styled(Box)(({ theme }) => ({
       boxShadow: "none",
     },
   },
-  ".heading-text":{
+  ".heading-text": {
     margin: "5px 0px",
-    fontSize:"2.5rem"
+    fontSize: "2.5rem",
   },
   ".feedBack_container": {
     padding: "2rem",
@@ -132,7 +132,6 @@ const CustomContact = styled(Box)(({ theme }) => ({
       paddingLeft: "0",
     },
     ".icon-decoration-1": {
-     
       fontSize: "2rem",
       margin: "4px",
     },
@@ -140,9 +139,9 @@ const CustomContact = styled(Box)(({ theme }) => ({
       fontSize: "2rem",
       margin: "4px",
     },
-    ".heading-text":{
+    ".heading-text": {
       margin: "5px 0px",
-      fontSize:"1rem"
+      fontSize: "1rem",
     },
   },
 }));
@@ -200,43 +199,48 @@ const ContactUs = () => {
             <Typography
               style={{
                 color: colors?.primaryLight,
-                
               }}
               className="heading-text"
-
             >
               WE ARE HER
             </Typography>
           </Box>
-          <Box style={{display:"flex", justifyContent:"center", flexDirection:"column", alignItems:"center"}}>
-          <Typography
-            sx={{
-              fontSize: "0.6rem",
-              fontStyle: "italic",
-              color: colors?.primaryLight,
-              fontWeight: "bold",
+          <Box
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
+              alignItems: "center",
             }}
           >
-            Phone Number
-          </Typography>
-          <Typography
-            sx={{
-              fontSize: "0.6rem",
-              fontStyle: "italic",
-              color: colors?.white,
-            }}
-          >
-            +91 9765986466
-          </Typography>
-          <Typography
-            sx={{
-              fontSize: "0.6rem",
-              fontStyle: "italic",
-              color: colors?.white,
-            }}
-          >
-            +91 9765986466
-          </Typography>
+            <Typography
+              sx={{
+                fontSize: "0.6rem",
+                fontStyle: "italic",
+                color: colors?.primaryLight,
+                fontWeight: "bold",
+              }}
+            >
+              Phone Number
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: "0.6rem",
+                fontStyle: "italic",
+                color: colors?.white,
+              }}
+            >
+              +91 9765986466
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: "0.6rem",
+                fontStyle: "italic",
+                color: colors?.white,
+              }}
+            >
+              +91 9765986466
+            </Typography>
           </Box>
         </Box>
 
@@ -252,27 +256,34 @@ const ContactUs = () => {
             </Typography>
             <Email className="icon-decoration-2" />
           </Box>
-          <Box style={{display:"flex", justifyContent:"center", flexDirection:"column", alignItems:"center"}}>
-          <Typography
-            sx={{
-              fontSize: "0.6rem",
-              fontStyle: "italic",
-              color: colors?.primaryDark,
-              fontWeight: "bold",
+          <Box
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
+              alignItems: "center",
             }}
           >
-            Email
-          </Typography>
-          <Typography
-            sx={{
-              fontSize: "0.6rem",
-              fontStyle: "italic",
-              color: colors?.black,
-              fontWeight: 600,
-            }}
-          >
-            jatinthakkar1590@gmail.com
-          </Typography>
+            <Typography
+              sx={{
+                fontSize: "0.6rem",
+                fontStyle: "italic",
+                color: colors?.primaryDark,
+                fontWeight: "bold",
+              }}
+            >
+              Email
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: "0.6rem",
+                fontStyle: "italic",
+                color: colors?.black,
+                fontWeight: 600,
+              }}
+            >
+              jatinthakkar1590@gmail.com
+            </Typography>
           </Box>
         </Box>
       </Box>
