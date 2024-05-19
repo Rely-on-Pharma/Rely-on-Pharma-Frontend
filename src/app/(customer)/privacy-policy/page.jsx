@@ -80,7 +80,7 @@ const PrivacyPolicy = () => {
       <div className="body">
         <ul className="list-items">
           <li className="item">
-            Evogen Lifestyle Private Limited Ltd. (“<b>Company</b>”, “<b>we</b>
+            Vayor Tricks Private Limited Ltd. (“<b>Company</b>”, “<b>we</b>
             ”, “<b>our</b>”, “<b>us</b>”) respects an individual’s privacy and
             is committed to protecting the same. This Privacy Policy (“
             <b>Policy</b>”) describes how we collect, use, disclose and transfer

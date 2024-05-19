@@ -59,7 +59,9 @@ const Footer = () => {
             <ListItem>
               <Link href={"/contact"}>Contact Us</Link>
             </ListItem>
-            <ListItem>Shipping Information</ListItem>
+            <ListItem>
+              <Link href={"/shipping-policy"}>Shipping Policy</Link>
+            </ListItem>
             <ListItem>
               <Link href={"/privacy-policy"}>Privacy Policy</Link>
             </ListItem>
@@ -80,7 +82,9 @@ const Footer = () => {
               <Link href={"/aboutus"}>About Us</Link>
             </ListItem>
             {/* <ListItem>FAQs</ListItem> */}
-            <ListItem>Return & Refund Policy</ListItem>
+            <ListItem>
+              <Link href="/refund-policy">Return & Refund Policy</Link>
+            </ListItem>
           </List>
         </Grid>
         <Grid item className="grid-item" xs={12} md={12} lg={6}>
