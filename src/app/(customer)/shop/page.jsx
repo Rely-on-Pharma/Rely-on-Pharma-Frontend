@@ -36,6 +36,7 @@ const ShopPage = () => {
     setMobileOpen((prevState) => !prevState);
   };
   const [productData, setProductData] = useState([])
+  const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -48,6 +49,7 @@ const ShopPage = () => {
           throw new Error('Failed to fetch data');
         }
         const jsonData = await response.json();
+        console.log("yash", jsonData)
         setProductData(jsonData);
       } catch (error) {
         setError(error.message);
@@ -64,6 +66,37 @@ const ShopPage = () => {
       // Cleanup code, if needed
     };
   }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
+
+  const applyFilters = (filters) => {
+    console.log("Filters applied:", productData);
+  
+    let filteredProducts = productData;
+  
+    // Filter by category
+    if (filters.category !== "All") {
+      filteredProducts = filteredProducts.filter(product => product.category === filters.category);
+    }
+  
+    // Filter by company
+    if (filters.company.length > 0) {
+      filteredProducts = filteredProducts.filter(product => filters.company.includes(product.company));
+    }
+  
+    // Sorting by price
+    if (filters.price === "Low to High") {
+      filteredProducts.sort((a, b) => a.selling_price - b.selling_price);
+    } else if (filters.price === "High to Low") {
+      filteredProducts.sort((a, b) => b.selling_price - a.selling_price);
+    }
+    console.log('yash', filteredProducts)
+    setFilteredData(filteredProducts);
+  };
+  
+
+  const resetFilters = () => {
+    // Reset the filteredData state or do any other reset operations
+    setFilteredData([]);
+  };
 
   if (loading) {
     return <Backdrop
@@ -91,15 +124,21 @@ const ShopPage = () => {
         />
       </Box>
       <Grid container spacing={2}>
-        {productData?.map((item, ind) => {
-          return (
+      {filteredData.length > 0 ? (
+          filteredData.map((item, ind) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={ind}>
               <ProductCard productData={item} />
             </Grid>
-          );
-        })}
+          ))
+        ) : (
+          productData.map((item, ind) => (
+            <Grid item xs={12} sm={6} md={4} lg={3} key={ind}>
+              <ProductCard productData={item} />
+            </Grid>
+          ))
+        )}
       </Grid>
-      <FilterDrawer drawerClose={handleDrawerToggle} mobileOpen={mobileOpen}/>
+      <FilterDrawer drawerClose={handleDrawerToggle} mobileOpen={mobileOpen} onApplyFilters={applyFilters} onResetFilters={resetFilters}/>
     </CustomShop>
   );
 };

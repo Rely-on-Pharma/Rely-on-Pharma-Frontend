@@ -80,11 +80,13 @@ const FilterDrawer = (props) => {
   };
 
   const handleApplyFilters = () => {
+    onApplyFilters(filters);
     drawerClose();
   };
 
   const handleReset = () => {
     setFilters(initialFilters);
+    onResetFilters();
   };
 
   return (
