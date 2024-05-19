@@ -13,7 +13,9 @@ export default function RootLayout({ children }) {
         <header>
           <DrawerAppBar />
         </header>
+        <div style={{minHeight:"100vh"}}>
         {children}
+        </div>
         <footer>
           <Footer />
         </footer>
