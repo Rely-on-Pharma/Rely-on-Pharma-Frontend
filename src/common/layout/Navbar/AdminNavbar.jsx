@@ -17,9 +17,9 @@ import { Tooltip, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 function AdminNavbar(props) {
   const { window } = props;
-  const { user ,logOutUser} = useContext(AppContext);
+  const { user ,logOutUser, token} = useContext(AppContext);
   const router = useRouter();
-  const token = localStorage.getItem('token')?.slice(1,-1)
+  
 const handleLogout = ()=>{
   logOutUser();
   router.push("/admin-login")
