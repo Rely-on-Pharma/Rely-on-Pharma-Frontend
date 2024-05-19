@@ -76,8 +76,10 @@ const Footer = () => {
             >
               Explore
             </ListItem>
-            <ListItem>About Us</ListItem>
-            <ListItem>FAQs</ListItem>
+            <ListItem>
+              <Link href={"/aboutus"}>About Us</Link>
+            </ListItem>
+            {/* <ListItem>FAQs</ListItem> */}
             <ListItem>Return & Refund Policy</ListItem>
           </List>
         </Grid>
@@ -97,17 +99,17 @@ const Footer = () => {
               }}
             >
               <ListItem style={{ width: "max-content" }}>
-                <Link href="#">
+                <Link href="https://www.facebook.com/p/Rely-On-Pharmaceuticals-100064139110369/">
                   <FacebookIcon />
                 </Link>
               </ListItem>
               <ListItem style={{ width: "max-content" }}>
-                <Link href="#">
+                <Link href="https://www.instagram.com/relyon_pharmaceuticals/?hl=en">
                   <InstagramIcon />
                 </Link>
               </ListItem>
               <ListItem style={{ width: "max-content" }}>
-                <Link href="#">
+                <Link href="https://www.linkedin.com/in/jayesh-ramji-thakkar-8a164664/">
                   <LinkedInIcon />
                 </Link>
               </ListItem>
@@ -117,7 +119,11 @@ const Footer = () => {
       </Grid>
       <Divider />
       <Typography
-        style={{ color: colors?.MonochromeLight, margin: "12px 8px" }}
+        style={{
+          color: colors?.MonochromeLight,
+          fontWeight: "lighter",
+          margin: "12px 8px",
+        }}
       >
         © VayorTricks Pvt Ltd. All Rights Reserved
       </Typography>
