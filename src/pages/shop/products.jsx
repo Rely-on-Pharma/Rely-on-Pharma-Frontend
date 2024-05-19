@@ -3,6 +3,7 @@ import { colors } from "@/constants/colors";
 import { Box, Stack, Typography, styled } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 const CustomCard = styled(Box)(({ theme }) => ({
   borderRadius: "4px",
@@ -24,7 +25,8 @@ const CustomCard = styled(Box)(({ theme }) => ({
   },
 }));
 const ProductCard = ({ productData }) => {
-  const imageUrl = "https://loremflickr.com/640/480?lock=2391645746102272"; //currently hardcoding the image url, as backend does not have image URL set.
+  const imageUrl = "https://loremflickr.com/640/480?lock=2391645746102272"; 
+  const router = useRouter()
   return (
     <CustomCard>
       {/*<Image src={productData?.image_url} alt={productData?.name} width={360} height={300}/> */}
@@ -43,7 +45,7 @@ const ProductCard = ({ productData }) => {
       </Stack>
       <MemoizedButton
         content={"Quick View"}
-        href={`/product/${productData?.id}`}
+        handleClick={(()=>router.push(`/product/${productData?.id}`))}
         className={"addBtn"}
       />
     </CustomCard>

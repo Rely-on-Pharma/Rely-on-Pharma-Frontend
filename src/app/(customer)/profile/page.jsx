@@ -8,6 +8,7 @@ import OrderBox from "../../../pages/Profile/OrderTileComponent";
 import { useEffect, useContext, useState } from "react";
 import AppContext from "@/constants/context/context";
 import { useRouter } from "next/navigation";
+import { showSnackbar } from "@/constants/context/contextFunctions";
 
 const CustomProfile = styled(Box)(({ theme }) => ({
   ".user-avatar": {
@@ -68,7 +69,11 @@ const Profile = () => {
 
   useEffect(() => {
     // Function to fetch data from the API
-    const token = localStorage.getItem('token').slice(1,-1) // the token string is "token". Hence stripping the 
+    const token = localStorage.getItem('token').slice(1,-1)
+    if(!token){
+      showSnackbar("Not authenticated!", "error")
+      return;
+    } // the token string is "token". Hence stripping the 
     const headers = {
       "Content-Type": "application/json", // Example content type
       Authorization: `Bearer ${token}`, // Example authorization header
