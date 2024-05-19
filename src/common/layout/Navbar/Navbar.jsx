@@ -31,16 +31,14 @@ function DrawerAppBar(props) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const container = window !== undefined ? () => window().document.body : undefined;
   // const router = useRouter();
-  const { cart, user, token } = useContext(AppContext); // Access the cart from your context
+  const { cart } = useContext(AppContext); // Access the cart from your context
   const [cartLength, setCartLength] = useState(cart.length);
-
+  const token = localStorage.getItem('token')?.slice(1,-1)
   useEffect(() => {
     // Update cart length when cart updates
     setCartLength(cart.length);
   }, [cart]);
 
-  useEffect(()=>{
-  },[user])
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };

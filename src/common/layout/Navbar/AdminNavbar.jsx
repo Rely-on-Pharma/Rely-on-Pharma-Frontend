@@ -13,12 +13,13 @@ import Link from "next/link";
 import PropTypes from "prop-types";
 import { useContext } from "react";
 import logo from "../../../../public/Logo_Seller.png";
-import { Tooltip } from "@mui/material";
+import { Tooltip, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 function AdminNavbar(props) {
   const { window } = props;
   const { user ,logOutUser} = useContext(AppContext);
   const router = useRouter();
+  const token = localStorage.getItem('token')?.slice(1,-1)
 const handleLogout = ()=>{
   logOutUser();
   router.push("/admin-login")
@@ -71,11 +72,11 @@ const handleLogout = ()=>{
             ))}
           </Box>
           <Box sx={{ display: { xs: "flex" } }}>
-            <Tooltip title="Click to logout" placement="left">
+            {token ? <Tooltip title="Click to logout" placement="left">
               <IconButton size="large" edge="end" color={colors?.primaryDark} onClick={handleLogout}>
                 <AccountCircle style={{ color: `${colors?.primaryDark}` }} />
               </IconButton>
-            </Tooltip>
+            </Tooltip> : <Typography>jhh</Typography>}
           </Box>
         </Toolbar>
       </AppBar>
