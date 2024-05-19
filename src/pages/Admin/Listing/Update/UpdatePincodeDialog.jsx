@@ -190,6 +190,7 @@ const UpdatePincodeDialog = ({ open, handleClose }) => {
                       onChange={(e) => setPincode(e?.target?.value)}
                     />
                     <MemoizedIconButton
+                    ariaLabel={"close"}
                       icon={AddIcon}
                       className="btn"
                       onClick={handleAddPincode}
