@@ -53,3 +53,7 @@ export const brandOptions = [
   export const countryOptions = [
     { value: "India", label: "India" },
   ];
+  export const pincodeOptions = [
+    { value: "Delete", label: "Delete" },
+    { value: "Add", label: "Add New Pincodes" },
+  ];

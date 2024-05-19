@@ -69,7 +69,7 @@ export default function InventoryTable({ columns, rows }) {
                         // Render buttons for the "action" column
                         return (
                           <TableCell key={column.id} align={column.align}>
-                            <MemoizedIconButton icon={EditIcon}/>
+                            <MemoizedIconButton ariaLabel={"close"} icon={EditIcon}/>
                           </TableCell>
                         );
                       } else {

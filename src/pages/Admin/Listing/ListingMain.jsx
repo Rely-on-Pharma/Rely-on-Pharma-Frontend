@@ -9,6 +9,7 @@ import { MemoizedButton } from "@/constants/SDK/CustomButton";
 import { colors } from "@/constants/colors";
 import { useRouter } from 'next/navigation'
 import AppContext from "@/constants/context/context";
+import UpdatePincodeDialog from "./Update/UpdatePincodeDialog";
 const data = [
   { name: "All Inventory", sub: "34" },
   { name: "Stocks", sub: "54" },
@@ -27,6 +28,7 @@ const ListingMain = () => {
   const router = useRouter();
   const [rowsData, setRowsData] = useState([]);
   const {showSnackbar} = useContext(AppContext)
+  const [openDialog, setOpenDialog] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -51,11 +53,20 @@ const ListingMain = () => {
 
     fetchData();
   }, []);
+
+  const handleCloseDialog = ()=>{
+    setOpenDialog(false)
+  }
   return (
     <CustomListingMain>
       <Heading title="LISTING" />
       <Capsule data={data} />
       <MemoizedButton handleClick={()=> router.push("/admin/listing/add-new")} className={"btn"} content={"Add New Product"}/>
+      <MemoizedButton className={"btn"} content={"Add Pincodes"}  handleClick={() => setOpenDialog(true)}/>
+      <UpdatePincodeDialog
+        open={openDialog}
+        handleClose={handleCloseDialog}
+      />
       <ListingTable columns={listingPageColumns} rows={rowsData} />
     </CustomListingMain>
   );
