@@ -52,9 +52,9 @@ export default function ListingTable({ columns, rows }) {
           <TableBody>
             {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
+              .map((row, ind) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                  <TableRow hover role="checkbox" tabIndex={-1} key={ind}>
                     {columns.map((column) => {
                       const value = row[column.id];
                       // Render custom component for "name" column
@@ -70,7 +70,7 @@ export default function ListingTable({ columns, rows }) {
                           <TableCell key={column.id} align={column.align}>
                             <Link href={`/admin/product/${row?.id}`}>
 
-                            <MemoizedIconButton icon={Visibility}/>                            
+                            <MemoizedIconButton ariaLabel={"close"} icon={Visibility}/>                            
                             </Link>
                           </TableCell>
                         );

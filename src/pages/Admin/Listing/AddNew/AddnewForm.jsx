@@ -37,7 +37,7 @@ const AddnewForm = () => {
         <PricingInfo form={form}/>
         <Typography>Product Details</Typography>
         <ProductDetails form={form}/>
-        <FileUploadComponent/>
+        {/* <FileUploadComponent/> Not in use  */}
 
         <MemoizedButton
           className={"btn"}

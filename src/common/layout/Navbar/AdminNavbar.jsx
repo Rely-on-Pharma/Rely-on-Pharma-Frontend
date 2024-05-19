@@ -12,7 +12,7 @@ import Image from "next/image";
 import Link from "next/link";
 import PropTypes from "prop-types";
 import { useContext } from "react";
-import logo from "../../../../public/logo.svg";
+import logo from "../../../../public/Logo_Seller.png";
 import { Tooltip } from "@mui/material";
 import { useRouter } from "next/navigation";
 function AdminNavbar(props) {
@@ -36,11 +36,11 @@ const handleLogout = ()=>{
           <Image
             style={{
               marginInline: "8px",
-              width: "60px",
-              height: "40px",
+              width: "120px",
+              height: "60px",
               objectFit: "contain",
             }}
-            width={50}
+            width={150}
             height={40}
             src={logo}
             alt="logo"
