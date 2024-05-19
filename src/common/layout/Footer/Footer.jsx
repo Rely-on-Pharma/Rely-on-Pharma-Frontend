@@ -56,10 +56,16 @@ const Footer = () => {
             >
               Support
             </ListItem>
-            <ListItem>Contact Us</ListItem>
+            <ListItem>
+              <Link href={"/contact"}>Contact Us</Link>
+            </ListItem>
             <ListItem>Shipping Information</ListItem>
-            <ListItem>Privacy Policy</ListItem>
-            <ListItem>Terms and Conditions</ListItem>
+            <ListItem>
+              <Link href={"/privacy-policy"}>Privacy Policy</Link>
+            </ListItem>
+            <ListItem>
+              <Link href={"/terms-of-service"}>Terms of Service</Link>
+            </ListItem>
           </List>
         </Grid>
         <Grid item className="grid-item" xs={12} sm={6} lg={3}>
