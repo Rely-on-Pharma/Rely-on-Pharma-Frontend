@@ -4,7 +4,10 @@ import { Box, styled } from "@mui/material";
 import Heading from "../Listing/Heading";
 import Capsule from "../Listing/Capsule";
 import OrdersTable from "./OrdersTable";
-import { dummyOrdersRows, orderPageColumns } from "@/constants/data/AdminColumnData";
+import {
+  dummyOrdersRows,
+  orderPageColumns,
+} from "@/constants/data/AdminColumnData";
 import { useRouter } from "next/navigation";
 import AppContext from "@/constants/context/context";
 const data = [
@@ -17,16 +20,19 @@ const CustomOrdersMain = styled(Box)(({ theme }) => ({
 const OrdersMain = () => {
   const router = useRouter();
   const [rowsData, setRowsData] = useState([]);
-  const {showSnackbar} = useContext(AppContext)
-  const token = typeof localStorage !== 'undefined' ? localStorage.getItem('token')?.slice(1, -1) : null;
+  const { showSnackbar } = useContext(AppContext);
+  const token =
+    typeof localStorage !== "undefined"
+      ? localStorage.getItem("token")?.slice(1, -1)
+      : null;
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch("http://localhost:8000/orders", {
-          method: 'GET',
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         });
 
@@ -40,20 +46,20 @@ const OrdersMain = () => {
       } catch (error) {
         showSnackbar(error.message || "Something went wrong!", "error");
       }
-    }
+    };
 
     fetchData();
   }, []);
   return (
     <CustomOrdersMain>
       <Heading title="ORDERS" />
-      <Box style={{display:"flex", justifyContent:"flex-start", gap:"1rem"}}>
-
-      <Capsule data={[{ name: "Orders Processing", sub: "34" }]} />
-      <Capsule data={data} />
+      <Box
+        style={{ display: "flex", justifyContent: "flex-start", gap: "1rem" }}
+      >
+        <Capsule data={[{ name: "Orders Processing", sub: "34" }]} />
+        <Capsule data={data} />
       </Box>
-      <OrdersTable columns={orderPageColumns} rows={rowsData}/>
-      
+      <OrdersTable columns={orderPageColumns} rows={rowsData} />
     </CustomOrdersMain>
   );
 };

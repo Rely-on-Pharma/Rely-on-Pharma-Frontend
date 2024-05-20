@@ -14,6 +14,8 @@ import { Email, LocalPhone } from "@mui/icons-material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Fjalla_One } from "next/font/google";
 import { MemoizedButton } from "@/constants/SDK/CustomButton";
+import { useState, useContext } from "react";
+import AppContext from "@/constants/context/context";
 
 const theme = createTheme({
   typography: {
@@ -147,8 +149,65 @@ const CustomContact = styled(Box)(({ theme }) => ({
 }));
 
 const ContactUs = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [feedback, setFeedback] = useState("");
+  const { showSnackbar } = useContext(AppContext);
+
+  const validateEmail = (email) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(String(email).toLowerCase());
+  };
+
+  const handleSubmit = async () => {
+    // Validation
+    if (!email || !feedback) {
+      showSnackbar("Email and Feedback are required fields!", "error");
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      showSnackbar("Please enter a valid email address!", "error");
+      return;
+    }
+
+    // Set default name if not provided
+    const feedbackName = name.trim() === "" ? "Anonymous" : name;
+
+    // Data to be sent to the API
+    const feedbackData = {
+      name: feedbackName,
+      email,
+      feedback,
+    };
+
+    try {
+      const response = await fetch("http://localhost:8000/feedback", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(feedbackData),
+      });
+
+      if (!response.ok) {
+        const errorMessage = await response.text();
+        throw new Error(errorMessage);
+      }
+
+      showSnackbar("Feedback submitted successfully!", "success");
+
+      // Clear form fields after successful submission
+      setName("");
+      setEmail("");
+      setFeedback("");
+    } catch (error) {
+      showSnackbar(error.message || "Something went wrong!", "error");
+    }
+  };
+
   return (
-    <CustomContact>
+    <CustomContact theme={theme}>
       <Typography className="heading" variant="h2">
         CONTACT US
       </Typography>
@@ -171,12 +230,16 @@ const ContactUs = () => {
               className="name-tf"
               placeholder="Name"
               variant="standard"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
 
             <TextField
               className="name-tf"
               placeholder="Email"
               variant="standard"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -186,10 +249,16 @@ const ContactUs = () => {
               variant="standard"
               multiline
               rows={4}
+              value={feedback}
+              onChange={(e) => setFeedback(e.target.value)}
             />
           </Grid>
         </Grid>
-        <MemoizedButton className="submit-button" content={"submit"} />
+        <MemoizedButton
+          className="submit-button"
+          content={"submit"}
+          onClick={handleSubmit}
+        />
       </Box>
       <br />
       <Box className="contact-details">
