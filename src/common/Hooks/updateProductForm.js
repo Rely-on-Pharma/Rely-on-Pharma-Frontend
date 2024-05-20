@@ -79,7 +79,7 @@ const useUpdateProductForm = (productId, router) => {
     initialValues:{
       name: "",
       brand: "",
-      vartical: "",
+      vertical: "",
       category: "",
       vendor_id: null,
       description: "",

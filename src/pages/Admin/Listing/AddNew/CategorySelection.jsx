@@ -30,18 +30,18 @@ const CategorySelection = ({form}) => {
                 form?.setFieldValue("category", val);
               }}/>
               <MemoizedSelectDropDown className="input-dropdown"
-              id={"vartical"}
-              name="vartical" 
+              id={"vertical"}
+              name="vertical" 
               required={true}
               form={form}
               label={"hello"}
-              value={form?.values?.vartical}
-              helperText={form?.errors?.vartical}
-              title={"Select varticals"}
+              value={form?.values?.vertical}
+              helperText={form?.errors?.vertical}
+              title={"Select verticals"}
               optionsData={verticalsOptions}
               onChange={(e) => {
                 const val = e?.target?.value;
-                form?.setFieldValue("vartical", val);
+                form?.setFieldValue("vertical", val);
               }}/>
               <MemoizedAutoSelectDropDown
               id="brand-options"

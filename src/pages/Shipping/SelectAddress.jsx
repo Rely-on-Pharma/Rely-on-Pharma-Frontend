@@ -59,7 +59,7 @@ const CustomSelectAddress = styled(Box)(({ theme }) => ({
     borderRadius: "8px",
   },
   ".address-name": {
-    fontSize: "2rem",
+    fontSize: "1.4rem",
     fontWeight: "medium",
   },
   ".btn": {
@@ -90,7 +90,7 @@ const CustomSelectAddress = styled(Box)(({ theme }) => ({
       width: "100%",
     },
     ".address-name": {
-      fontSize: "1.5rem",
+      fontSize: "1.2rem",
     },
     ".btn": {
       width: "100%",
@@ -110,7 +110,7 @@ const CustomSelectAddress = styled(Box)(({ theme }) => ({
       width: "100%",
     },
     ".address-name": {
-      fontSize: "1.5rem",
+      fontSize: "1.2rem",
     },
     ".btn": {
       width: "100%",
@@ -289,9 +289,9 @@ const SelectAddress = ({ addresses }) => {
             />
             <Box display="flex" flexDirection="column">
               <Typography ml={2} className="address-name">
-                {address.name}
+                {address.user_tag}
               </Typography>
-              <Typography ml={2}>{address.address}</Typography>
+              <Typography ml={2}>{address.address_line}</Typography>
               <Typography ml={2}>{address.pincode}</Typography>
             </Box>
           </Box>

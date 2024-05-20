@@ -72,7 +72,7 @@ const ShippingMain = () => {
   useEffect(()=>{
     const getAddress = async()=>{
       try {
-        const token = localStorage.getItem('token').slice(1,-1) // the token string is "token". Hence stripping the 
+        const token = localStorage.getItem('token')?.slice(1,-1) // the token string is "token". Hence stripping the 
 
         if(!token || token===undefined || token===null){
           showSnackbar("You need to login/signup to process the order", "info")
@@ -82,7 +82,7 @@ const ShippingMain = () => {
          "Content-Type": "application/json", // Example content type
          Authorization: `Bearer ${token}`, // Example authorization header
        };
-         const resp = await fetch("https://localhost:8000/address", {
+         const resp = await fetch("http://localhost:8000/address", {
            method:"GET",
            headers: headers
          })
@@ -104,19 +104,7 @@ const ShippingMain = () => {
     0
   );
   const totalAmount = totalCartValue * 1.12;
-  const address = [
-    {
-      id: 1,
-      name: "Home",
-      address:
-        "B-304 Nisarg Nirmiti Pimple Saudagar Kokane Chowk , Pune 411027",
-    },
-    {
-      id: 2,
-      name: "Home 2",
-      address: "C2 - 501 Gagan Vihar Bibewadi Market yard Pune 411037",
-    },
-  ];
+  
 
   return (
     <CustomShippingMain>

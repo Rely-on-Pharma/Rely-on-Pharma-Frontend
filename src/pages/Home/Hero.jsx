@@ -286,14 +286,14 @@ const Hero = () => {
                 {product?.name}
               </Typography>
               <Typography variant="body2" mt={1} mb={1}>
-                {product?.selling_price}
+                Rs. {product?.selling_price}/-
               </Typography>
-              <Box display="flex" justifyContent="space-around">
-                <MemoizedButton className={"btn"} content="+" />
-                <MemoizedButton
+              <Box display="flex" justifyContent="center">
+                <MemoizedButton className={"btn"} content="View Product" style={{padding:"8px 12px"}} handleClick={()=> router.push(`/product/${product?.id}`)}/>
+                {/* <MemoizedButton
                   className={"btn"}
                   content={<FavoriteOutlined style={{ fontSize: "14px" }} />}
-                />
+                /> */}
               </Box>
             </Box>
           ))}

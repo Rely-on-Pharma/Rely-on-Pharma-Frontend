@@ -1,6 +1,6 @@
 import { MemoizedInputField } from "@/constants/SDK/customInput";
 import { MemoizedSelectDropDown } from "@/constants/SDK/selectDropdown";
-import { statusOptions } from "@/constants/data/adminFormData";
+import { countryOptions, statusOptions } from "@/constants/data/adminFormData";
 import { Box, Typography } from "@mui/material";
 
 const PricingInfo = ({form}) => {
@@ -61,7 +61,7 @@ const PricingInfo = ({form}) => {
         >
           <MemoizedSelectDropDown
             form={form}
-            optionsData={statusOptions}
+            optionsData={countryOptions}
             id={"country_of_origin"}
             name="country_of_origin"
             required={true}
