@@ -1,32 +1,13 @@
 export const brandOptions = [
-    "Mumbai",
-    "Nagpur",
-    "Pune",
-    "Aurangabad",
-    "Bengaluru",
-    "Chennai",
-    "Coimbatore",
-    "Madurai",
-    "Vijayawada",
-    "Kadapa",
-    "Kurnool",
-    "Ananthapur",
-    "Ongole",
-    "Guntur",
-    "Tirupati",
-    "Vishakhapatnam",
-    "Nellore",
-    "Hydrabad",
-    "Vishakapatnam",
-    "Ahmedabad",
-    "Surat",
-    "Indore",
-    "Gwalior",
-    "Bhopal",
-    "Delhi",
-    "Gurgaon",
-    "Noida",
-    "Ghaziabad",
+  "E-Acne",
+  "E-Dew",
+  "Itch Insta",
+ " B-Glow",
+ " NIA GLOW 10",
+"SHYN ON",
+  "S-BLOK",
+  "SHYN ON",
+  "E-Dew",
   ];
 
   export const categoryOptions = [
@@ -37,7 +18,8 @@ export const brandOptions = [
   export const verticalsOptions = [
     { value: "Face", label: "Face" },
     { value: "Hair", label: "Hair" },
-    { value: "6", label: "Child" },
+    { value: "Face+Hair", label: "Face+Hair" },
+    { value: "Face+Hair+Body", label: "Face+Hair+Body" },
   ];
 
   export const  quantityOptions = [
@@ -47,7 +29,7 @@ export const brandOptions = [
   ];
   export const statusOptions = [
     { value: "Active", label: "Active" },
-    { value: "Inactive", label: "Child" },
+    { value: "InActive", label: "Inactive" },
   ];
   
   export const countryOptions = [

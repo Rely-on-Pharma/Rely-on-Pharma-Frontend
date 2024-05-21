@@ -15,6 +15,7 @@ import Link from "next/link";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import { colors } from "@/constants/colors";
+import { fjallaFont } from "@/theme/fonts";
 const CustomFooter = styled(Box)(({ theme }) => ({
   background: `url(${footerImg.src})`,
   backgroundSize: "cover",
@@ -39,7 +40,7 @@ const CustomFooter = styled(Box)(({ theme }) => ({
 const Footer = () => {
   return (
     <CustomFooter>
-      <Typography className="footer-heading">Glow With Healthy Skin</Typography>
+      <Typography className={`${fjallaFont} footer-heading`}>Glow With Healthy Skin</Typography>
       <Grid container className="grid_container" spacing={2}>
         <Grid
           item

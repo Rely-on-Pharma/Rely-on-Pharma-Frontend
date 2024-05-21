@@ -11,17 +11,9 @@ import {
 import headerImg from "../../../../public/contactus-image.png";
 import React from "react";
 import { Email, LocalPhone } from "@mui/icons-material";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Fjalla_One } from "next/font/google";
 import { MemoizedButton } from "@/constants/SDK/CustomButton";
 import { useState, useContext } from "react";
 import AppContext from "@/constants/context/context";
-
-const theme = createTheme({
-  typography: {
-    fontFamily: "Fjalla One", // This should match the name of your imported font
-  },
-});
 
 const CustomContact = styled(Box)(({ theme }) => ({
   ".heading": {
@@ -207,7 +199,7 @@ const ContactUs = () => {
   };
 
   return (
-    <CustomContact theme={theme}>
+    <CustomContact >
       <Typography className="heading" variant="h2">
         CONTACT US
       </Typography>

@@ -74,7 +74,7 @@ const CustomPRodDetails = styled(Box)(({ theme }) => ({
 }));
 
 const ProdDetails = ({ productData, productId }) => {
-  const { addToCart, cart, removeItem } = useContext(AppContext);
+  const { addToCart, cart, removeItem,token, showSnackbar } = useContext(AppContext);
 
   const [selectedOption, setSelectedOption] = useState("quantity");
   const [quantity, setQuantity] = useState(1); // Default quantity for the quantity option
@@ -114,7 +114,13 @@ const ProdDetails = ({ productData, productId }) => {
 
   const handleAddToCart = () => {
     const updatedProductData = { ...productData, product_id: productId };
-    addToCart(updatedProductData, quantity);
+    if(token){
+
+      addToCart(updatedProductData, quantity);
+    }
+    else{
+      showSnackbar("You need to login to add product", "info")
+    }
   };
 
   const handleRemoveFromCart = () => {
@@ -236,11 +242,14 @@ const ProdDetails = ({ productData, productId }) => {
             </IconButton>
           </Box>
         )}
-        <FormControlLabel
+        { variants?.length>0 &&
+
+          <FormControlLabel
           value="pack"
           control={<Radio />}
           label="Select pack of"
-        />
+          />
+        }
         {selectedOption === "pack" && (
           <Box style={{ display: "flex", alignItems: "center", gap: "12px" }}>
             {/* Your pack options */}

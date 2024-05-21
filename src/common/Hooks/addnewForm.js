@@ -6,7 +6,7 @@ const useAddNewProductForm = (router) => {
   const { showSnackbar} = useContext(AppContext)
   const handleSubmit = async(values)=>{
     try {
-      const token = localStorage.getItem('token').slice(1,-1) // the token string is "token". Hence stripping the 
+      const token = localStorage.getItem('token')?.slice(1,-1) // the token string is "token". Hence stripping the 
 
       if(!token || token===undefined || token===null){
         showSnackbar("You need to login/signup to process the order", "info")
@@ -25,7 +25,10 @@ const useAddNewProductForm = (router) => {
     if(!resp?.ok){
       throw new Error("Unable to creta product");
     }
+    showSnackbar("Product Added Successfully","success")
+    router.push("/admin/dashboard")
     } catch (error) {
+      showSnackbar(error?.message || "Unable to save the product","error")
       console.log("yash",error)
     }
   }
@@ -35,7 +38,7 @@ const useAddNewProductForm = (router) => {
     initialValues: {
       name: "",
       brand: "",
-      vartical:"",
+      vertical:"",
       category: "",
       vendor_id: null,
       description: "",
@@ -56,8 +59,6 @@ const useAddNewProductForm = (router) => {
     },
     validate: (values) => {
         const errors = {};
-
-        
         return errors;
       },
     onSubmit: (values) => {

@@ -3,7 +3,7 @@ import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { colors } from "@/constants/colors.js";
 
-const fontFamilyInfo = `'Poppins', sans-serif `;
+// const fontFamilyInfo = `'Poppins', sans-serif `;
 
 const themeMaster = createTheme({
   palette: {
@@ -13,9 +13,9 @@ const themeMaster = createTheme({
       default: colors?.background,
     },
   },
-  typography: {
-    fontFamily: `${fontFamilyInfo} !important`,
-  },
+  // typography: {
+  //   fontFamily: `${fontFamilyInfo} !important`,
+  // },
   components: {
     MuiPaper: {},
     MuiInput: {

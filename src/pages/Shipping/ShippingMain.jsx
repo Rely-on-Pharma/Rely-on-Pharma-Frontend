@@ -1,13 +1,12 @@
 "use client";
 
-import { useContext, useEffect, useState } from "react";
-import AppContext from "@/constants/context/context";
-import { Box, Grid, Typography, styled, Divider } from "@mui/material";
 import { colors } from "@/constants/colors";
+import AppContext from "@/constants/context/context";
+import { Box, Divider, Grid, Typography, styled } from "@mui/material";
+import { useRouter } from "next/navigation";
+import { useCallback, useContext, useEffect, useState } from "react";
 import ColumnItem from "./ColumnItem";
-import { MemoizedButton } from "@/constants/SDK/CustomButton";
 import SelectAddress from "./SelectAddress";
-import { redirect, useRouter } from "next/navigation";
 const CustomShippingMain = styled(Box)(({ theme }) => ({
   padding: "4rem",
   ".heading": {
@@ -69,54 +68,46 @@ const ShippingMain = () => {
   const { cart,showSnackbar } = useContext(AppContext);
   const [addresses, setAddresses] = useState([]);
   const router = useRouter();
-  useEffect(()=>{
-    const getAddress = async()=>{
-      try {
-        const token = localStorage.getItem('token').slice(1,-1) // the token string is "token". Hence stripping the 
+  const fetchAddresses = useCallback(async () => {
+    try {
+      const token = localStorage.getItem("token")?.slice(1, -1);
 
-        if(!token || token===undefined || token===null){
-          showSnackbar("You need to login/signup to process the order", "info")
-          router.push("/login")
-        }
-       const headers = {
-         "Content-Type": "application/json", // Example content type
-         Authorization: `Bearer ${token}`, // Example authorization header
-       };
-         const resp = await fetch("https://localhost:8000/address", {
+      if (!token) {
+        showSnackbar("You need to login/signup to process the order", "info");
+        router.push("/login");
+        return;
+      }
+
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
+         const resp = await fetch("http://localhost:8000/address", {
            method:"GET",
            headers: headers
          })
          if(!resp.ok){
           throw new Error("Failedd to fetch address!");
-         }
+      }
 
-         const jsonData = await resp.json();
-         setAddresses(jsonData);
-       } catch (error) {
-         console.log(error)
-       }
+      const jsonData = await resp.json();
+      setAddresses(jsonData);
+    } catch (error) {
+      console.error(error);
     }
-    getAddress();
-  },[]);
-  let total = 0;
+  }, [router, showSnackbar]);
+
+  useEffect(() => {
+    fetchAddresses();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const totalCartValue = cart.reduce(
     (acc, item) => acc + item?.selling_price * item.qty,
     0
   );
-  const totalAmount = totalCartValue * 1.12;
-  const address = [
-    {
-      id: 1,
-      name: "Home",
-      address:
-        "B-304 Nisarg Nirmiti Pimple Saudagar Kokane Chowk , Pune 411027",
-    },
-    {
-      id: 2,
-      name: "Home 2",
-      address: "C2 - 501 Gagan Vihar Bibewadi Market yard Pune 411037",
-    },
-  ];
+  const totalAmount = (totalCartValue * 1.12)+20;
+  
 
   return (
     <CustomShippingMain>
@@ -129,7 +120,7 @@ const ShippingMain = () => {
           md={8}
           style={{ display: "flex", flexDirection: "column" }}
         >
-          <SelectAddress addresses={addresses} />
+          <SelectAddress addresses={addresses} fetchAddresses={fetchAddresses}/>
         </Grid>
 
         <Grid
@@ -144,6 +135,18 @@ const ShippingMain = () => {
             <ColumnItem key={item.id} item={item} />
           ))}
           <Divider sx={{ borderBottomWidth: "2px", background: "black" }} />
+          <Box
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <Typography style={{fontSize:"1.2rem"}}>
+              Shipping Charges:-
+            </Typography>
+            <Typography style={{fontSize:"1.2rem"}}>₹ {20}</Typography>
+          </Box>
           <Box
             style={{
               display: "flex",
