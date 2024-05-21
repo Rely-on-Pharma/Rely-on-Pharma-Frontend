@@ -20,7 +20,7 @@ const LowStockCard = () => {
     const fetchLowStock = async () => {
       //setLoading(true);
       try {
-        const response = await fetch("http://localhost:8000/lowstock", {
+        const response = await fetch("http://127.0.0.1:8000/lowstock", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

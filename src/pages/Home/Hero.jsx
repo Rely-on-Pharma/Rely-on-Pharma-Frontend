@@ -213,7 +213,7 @@ const Hero = () => {
   useEffect(() => {
     const fetchSimilarProducts = async () => {
       try {
-        const response = await fetch(`http:localhost:8000/reccomendation`);
+        const response = await fetch("http://127.0.0.1:8000/reccomendation");
         if (!response.ok) {
           throw new Error("Failed to fetch similar products");
         }
@@ -289,7 +289,12 @@ const Hero = () => {
                 Rs. {product?.selling_price}/-
               </Typography>
               <Box display="flex" justifyContent="center">
-                <MemoizedButton className={"btn"} content="View Product" style={{padding:"8px 12px"}} handleClick={()=> router.push(`/product/${product?.id}`)}/>
+                <MemoizedButton
+                  className={"btn"}
+                  content="View Product"
+                  style={{ padding: "8px 12px" }}
+                  handleClick={() => router.push(`/product/${product?.id}`)}
+                />
                 {/* <MemoizedButton
                   className={"btn"}
                   content={<FavoriteOutlined style={{ fontSize: "14px" }} />}
