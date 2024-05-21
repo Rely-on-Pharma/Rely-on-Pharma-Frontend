@@ -24,21 +24,21 @@ export const listingPageColumns = [
 ];
 
 export const inventoryPageColumns = [
-  { id: "name", label: "Product Information", minWidth: 200, align: "center" },
+  { id: "name", label: "Product Information", minWidth: 200, align: "left" },
   { id: "quantity", label: "Current Stock", minWidth: 150, align: "center" },
-  {
-    id: "selling_price",
-    label: "Current Stock",
-    minWidth: 150,
-    align: "center",
-  },
-  {
-    id: "sales_count",
-    label: "Sale rate/ Month",
-    minWidth: 170,
-    align: "center",
-    format: (value) => value.toLocaleString("en-US"),
-  },
+  // {
+  //   id: "selling_price",
+  //   label: "Current Stock",
+  //   minWidth: 150,
+  //   align: "center",
+  // },
+  // {
+  //   id: "sales_count",
+  //   label: "Sale rate/ Month",
+  //   minWidth: 170,
+  //   align: "center",
+  //   format: (value) => value.toLocaleString("en-US"),
+  // },
   {
     id: "action",
     label: "Action",
