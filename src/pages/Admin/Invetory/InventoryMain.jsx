@@ -5,14 +5,8 @@ import { Backdrop, Box, styled } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useContext, useEffect, useState } from "react";
 import Capsule from "../Listing/Capsule";
-import {
-  inventoryPageColumns,
-  listingPageColumns,
-} from "@/constants/data/AdminColumnData";
 import Heading from "../Listing/Heading";
 import InventoryTable from "./GenericTable";
-import AppContext from "@/constants/context/context";
-import CircularProgress from "@mui/material/CircularProgress";
 
 // const data = [
 //   { name: "All Inventory", sub: "52SKUs" },

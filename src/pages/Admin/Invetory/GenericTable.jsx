@@ -1,17 +1,5 @@
 // ColumnGroupingTable.js
 
-import { MemoizedIconButton } from "@/constants/SDK/CustomIconButton";
-import EditIcon from "@mui/icons-material/Edit";
-import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
-import React from "react";
-import CustomProductROw from "../Listing/CustomProductROw";
 import React, { useState } from "react";
 import {
   Paper,
@@ -78,11 +66,6 @@ export default function InventoryTable({ columns, rows, onActionClick }) {
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
-            <TableRow>
-              <TableCell align="center" colSpan={5}>
-                Country
-              </TableCell>
-            </TableRow>
             <TableRow>
               {columns.map((column) => (
                 <TableCell
@@ -168,10 +151,24 @@ export default function InventoryTable({ columns, rows, onActionClick }) {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleDialogClose} disabled={loading}>
+          <Button
+            sx={{
+              boxShadow: "none",
+              borderRadius: 2,
+            }}
+            onClick={handleDialogClose}
+            disabled={loading}
+          >
             Cancel
           </Button>
-          <Button onClick={handleDialogSubmit} disabled={loading}>
+          <Button
+            sx={{
+              boxShadow: "none",
+              borderRadius: 2,
+            }}
+            onClick={handleDialogSubmit}
+            disabled={loading}
+          >
             {loading ? <CircularProgress size={24} /> : "Update"}
           </Button>
         </DialogActions>
