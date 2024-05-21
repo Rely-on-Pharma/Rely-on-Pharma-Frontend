@@ -30,7 +30,7 @@ const ProductCard = ({ productData }) => {
   return (
     <CustomCard>
       {/*<Image src={productData?.image_url} alt={productData?.name} width={360} height={300}/> */}
-      <Image src={imageUrl} alt={productData?.name} width={360} height={300} />
+      <Image src={productData?.image_url[0] || imageUrl} alt={productData?.name} width={360} height={300} />
       <Stack className="details">
         <Link
           href={`/product/${productData?.id}`}

@@ -18,7 +18,9 @@ export const brandOptions = [
   export const verticalsOptions = [
     { value: "Face", label: "Face" },
     { value: "Hair", label: "Hair" },
-    { value: "6", label: "Child" },
+    { value: "Body", label: "Body" },
+    { value: "Face+Body", label: "Face+Body" },
+    { value: "Face+body+hair", label: "Face+body+hair" },
   ];
 
   export const  quantityOptions = [

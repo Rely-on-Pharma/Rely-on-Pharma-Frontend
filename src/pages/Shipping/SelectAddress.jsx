@@ -119,7 +119,7 @@ const CustomSelectAddress = styled(Box)(({ theme }) => ({
   },
 }));
 
-const SelectAddress = ({ addresses }) => {
+const SelectAddress = ({ addresses,fetchAddresses }) => {
   const [value, setValue] = React.useState(0 || null);
   const [open, setOpen] = React.useState(false);
   const {showSnackbar} = useContext(AppContext)
@@ -127,7 +127,8 @@ const SelectAddress = ({ addresses }) => {
   const [addressValue, setAddressValue]=  React.useState({
     user_tag:"",
     address_line:"",
-    pincode:null
+    pincode:null,
+    verified:false
   })
   const handleClickOpen = () => {
     setOpen(true);
@@ -172,6 +173,7 @@ const SelectAddress = ({ addresses }) => {
   
       showSnackbar("New Address Added successfully!", "success");
       setOpen(false);
+      fetchAddresses();
     } catch (error) {
       console.error("Error adding new address:", error);
       showSnackbar("Unable to add new address", "error");
@@ -179,6 +181,43 @@ const SelectAddress = ({ addresses }) => {
     }
   };
   
+  const checkAvailability = async()=>{
+    try{
+      const token = localStorage.getItem('token').slice(1,-1);
+      if (!token) {
+        showSnackbar("You need to login/signup to process the order", "info");
+        router.push("/login");
+        return;
+      }
+  
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
+      const pin = parseInt(addressValue?.pincode);
+      if(!pin){
+        showSnackbar("Pincode is empty!","error");
+        return;
+      }
+      const resp = await fetch(`http://localhost:8000/vendors/${1}/pincode/${pin}`,{
+        method:"GET",
+        headers:headers
+      })
+      if(!resp?.ok){
+        throw new Error("Unable to check availability!");
+      }
+      const data = await resp.json();
+      if(data){
+        setAddressValue((prevState) => ({ ...prevState, verified: true }));
+        showSnackbar("Pincode is available for deleivery", "info")
+      }else{
+        showSnackbar("Pincode is not available for deleivery", "info")
+      }
+    }catch(e){
+      console.log("yash", e)
+      showSnackbar(e?.message || "Unable to check availability", "error")
+    }
+  }
   return (
     <CustomSelectAddress>
       <Typography className="order-ov" mb={2}>
@@ -238,6 +277,7 @@ const SelectAddress = ({ addresses }) => {
             onChange={(e)=> setAddressValue({...addressValue, pincode: parseInt(e?.target?.value)})}
             variant="outlined"
           />
+          <MemoizedButton disabled={addressValue?.verified} style={{width:"100%", margin:"0.4rem auto", display:"block", borderRadius:"12px"}} content={addressValue?.verified ? "Verified" : "Verify"} handleClick={checkAvailability}/>
         </DialogContent>
         <DialogActions>
           <Button

@@ -69,9 +69,10 @@ const Profile = () => {
 
   useEffect(() => {
     // Function to fetch data from the API
-    const token = localStorage.getItem('token').slice(1,-1)
+    const token = localStorage.getItem('token')?.slice(1,-1)
     if(!token){
       showSnackbar("Not authenticated!", "error")
+      router.push("/login")
       return;
     } // the token string is "token". Hence stripping the 
     const headers = {

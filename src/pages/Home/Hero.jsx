@@ -213,7 +213,7 @@ const Hero = () => {
   useEffect(() => {
     const fetchSimilarProducts = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/reccomendation`);
+        const response = await fetch(`http:localhost:8000/reccomendation`);
         if (!response.ok) {
           throw new Error("Failed to fetch similar products");
         }

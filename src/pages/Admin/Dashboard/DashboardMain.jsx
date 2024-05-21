@@ -1,17 +1,16 @@
 "use client";
-import { useState } from "react";
-import { Line } from "react-chartjs-2";
 import {
   Box,
-  Grid,
-  Select,
-  styled,
-  Typography,
-  MenuItem,
   FormControl,
-  InputLabel,
+  Grid,
+  MenuItem,
+  Select,
+  Typography,
+  styled
 } from "@mui/material";
 import "chart.js/auto";
+import { useState } from "react";
+import { Line } from "react-chartjs-2";
 import LowStockCard from "./LowStockCard";
 import PendingOrderCard from "./PendingOrders";
 

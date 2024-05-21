@@ -242,11 +242,14 @@ const ProdDetails = ({ productData, productId }) => {
             </IconButton>
           </Box>
         )}
-        <FormControlLabel
+        { variants?.length>0 &&
+
+          <FormControlLabel
           value="pack"
           control={<Radio />}
           label="Select pack of"
-        />
+          />
+        }
         {selectedOption === "pack" && (
           <Box style={{ display: "flex", alignItems: "center", gap: "12px" }}>
             {/* Your pack options */}
