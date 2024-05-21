@@ -103,6 +103,7 @@ const AdminProductDetails = ({ productData, productId }) => {
     return () => {
       // Cleanup code, if needed
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleVariantUpdate = () => {
@@ -121,9 +122,9 @@ const AdminProductDetails = ({ productData, productId }) => {
   const handleOpenImageDialog = (item = null) => {
     setImageDialog(true);
   };
-  const handleCloseImageDialog = () => {
-    setImageDialog(false);
-  };
+  // const handleCloseImageDialog = () => {
+  //   setImageDialog(false);
+  // };
   if (loading) {
     return (
       <Backdrop

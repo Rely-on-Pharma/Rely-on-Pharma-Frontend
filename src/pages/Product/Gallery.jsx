@@ -54,13 +54,13 @@ const Gallery = ({imageGallery}) => {
     const [currImg, setCurrImg] = useState(0);
   return (
     <CustomGallery>
-        <Image src={imageGallery[currImg]?.url} alt='mainImage' width={360} height={360} className='mainImg'/>
+        <Image src={imageGallery[currImg]} alt='mainImage' width={360} height={360} className='mainImg'/>
         <Box className="subImg-container">
            {
             imageGallery?.map((item,ind)=>{
                 return (
-                    <Image key={item?.id} className={ind === currImg
-                    ? 'subImg active': 'subImg'} src={item?.url} alt='item1' onClick={()=> setCurrImg(ind)}  width={90} height={90}/>
+                    <Image key={ind} className={ind === currImg
+                    ? 'subImg active': 'subImg'} src={item} alt='item1' onClick={()=> setCurrImg(ind)}  width={90} height={90}/>
                 )
             })
            }

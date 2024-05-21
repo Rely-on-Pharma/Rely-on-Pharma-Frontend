@@ -82,10 +82,12 @@ const ProductRow = ({ item, onIncrement, onDecrement, onRemove }) => {
       <Box>
         <Image
           className="img-box"
-          src={item.image || "https://loremflickr.com/640/480?lock=6586178289532928"}
+          src={item?.image_url[0] || "https://loremflickr.com/640/480?lock=6586178289532928"}
           alt={item.name}
-          width={40}
-          height={40}
+          priority
+          width={160}
+          style={{width:"200px", height:"160px", objectFit:"contain"}}
+          height={160}
         />
       </Box>
       <Box

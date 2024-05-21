@@ -31,7 +31,7 @@ const CartMain = () => {
   const { cart, incrementQty, decrementQty, removeItem } =
     useContext(AppContext);
   // Calculate total price
-  const totalPrice = cart.reduce((acc, item) => acc + item.selling_price * item.qty, 0);
+  const totalPrice = cart?.reduce((acc, item) => acc + item.selling_price * item.qty, 0);
   return (
     <CustomCartMain>
       <Typography className="heading">Order Overview</Typography>

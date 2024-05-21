@@ -138,7 +138,7 @@ const SingleProdMain = () => {
       <Grid className="productContainer" container spacing={2}>
         {/* Gallery */}
         <Grid item xs={12} style={{ padding: "0" }} md={6}>
-          <Gallery imageGallery={ProductData?.imgs} />
+          <Gallery imageGallery={productData?.image_url} />
         </Grid>
         <Grid item xs={12} style={{ padding: "0" }} md={6}>
           <ProdDetails productId={id} productData={productData} />

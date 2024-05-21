@@ -79,7 +79,7 @@ const ShopPage = () => {
   
     // Filter by company
     if (filters.company.length > 0) {
-      filteredProducts = filteredProducts.filter(product => filters.company.includes(product.company));
+      filteredProducts = filteredProducts.filter(product => filters.company.includes(product?.brand));
     }
   
     // Sorting by price
