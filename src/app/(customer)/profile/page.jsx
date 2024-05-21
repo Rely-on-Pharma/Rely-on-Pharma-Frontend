@@ -1,5 +1,20 @@
 "use client";
-import { styled, Box, Avatar, Grid, Typography, Button } from "@mui/material";
+import {
+  styled,
+  Box,
+  Avatar,
+  Grid,
+  Typography,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  TextField,
+  IconButton,
+  InputAdornment,
+  DialogActions,
+} from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { colors } from "@/constants/colors";
 import Logout from "@mui/icons-material/LogoutOutlined";
 import CustomDropSection from "../../../constants/SDK/CustomDropSection";
@@ -8,7 +23,8 @@ import OrderBox from "../../../pages/Profile/OrderTileComponent";
 import { useEffect, useContext, useState } from "react";
 import AppContext from "@/constants/context/context";
 import { useRouter } from "next/navigation";
-import { showSnackbar } from "@/constants/context/contextFunctions";
+import { MemoizedButton } from "@/constants/SDK/CustomButton";
+//import { showSnackbar } from "@/constants/context/contextFunctions";
 
 const CustomProfile = styled(Box)(({ theme }) => ({
   ".user-avatar": {
@@ -66,15 +82,32 @@ const Profile = () => {
   const [error, setError] = useState(null);
   const [user, setUser] = useState(null);
   const { logOutUser } = useContext(AppContext);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [orders, setOrders] = useState([]);
+  const [ordersLoading, setOrdersLoading] = useState(true);
+  const [ordersError, setOrdersError] = useState(null);
+  const { showSnackbar } = useContext(AppContext);
+
+  const handleDialogOpen = () => {
+    setOpenDialog(true);
+  };
+
+  const handleDialogClose = () => {
+    setOpenDialog(false);
+  };
 
   useEffect(() => {
     // Function to fetch data from the API
-    const token = localStorage.getItem('token')?.slice(1,-1)
-    if(!token){
-      showSnackbar("Not authenticated!", "error")
-      router.push("/login")
+    const token = localStorage.getItem("token")?.slice(1, -1);
+    if (!token) {
+      showSnackbar("Not authenticated!", "error");
+      router.push("/login");
       return;
-    } // the token string is "token". Hence stripping the 
+    } // the token string is "token". Hence stripping the
     const headers = {
       "Content-Type": "application/json", // Example content type
       Authorization: `Bearer ${token}`, // Example authorization header
@@ -103,8 +136,27 @@ const Profile = () => {
       }
     };
 
+    const fetchOrders = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:8000/orders",
+          requestOptions
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch orders");
+        }
+        const ordersData = await response.json();
+        setOrders(ordersData);
+      } catch (error) {
+        setOrdersError(error.message);
+      } finally {
+        setOrdersLoading(false);
+      }
+    };
+
     // Call the fetchData function when the component mounts
     fetchData();
+    fetchOrders();
 
     // Cleanup function (optional)
     return () => {
@@ -119,6 +171,46 @@ const Profile = () => {
   if (error) {
     return <div>Error: {error}</div>;
   }
+
+  const handleChangePassword = async () => {
+    if (!newPassword || !confirmPassword) {
+      showSnackbar("Please fill in all fields", "error");
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      showSnackbar("Passwords do not match", "error");
+      return;
+    }
+    const token = localStorage.getItem("token")?.slice(1, -1);
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+    const requestOptions = {
+      method: "PUT",
+      headers: headers,
+      body: JSON.stringify({
+        first_name: user.first_name,
+        last_name: user.last_name,
+        email: user.email,
+        password: newPassword,
+      }),
+    };
+    try {
+      const response = await fetch(
+        "http://localhost:8000/users",
+        requestOptions
+      );
+      if (!response.ok) {
+        throw new Error("Failed to update password");
+      }
+      showSnackbar("Password updated successfully", "success");
+      handleDialogClose();
+    } catch (error) {
+      showSnackbar(error.message, "error");
+    }
+  };
 
   // const [products, setProducts] = useState([
   //   {
@@ -144,34 +236,34 @@ const Profile = () => {
     router.push("/");
   };
 
-  const order = [
-    {
-      orderId: "27245875",
-      trackId: "-",
-      status: "Placed",
-      orderDate: "March 23, 2023",
-      total: "₹4799",
-      titleImg: "https://loremflickr.com/640/480?lock=455919850749952",
-      qty: 3,
-      products: [
-        ["E-Dew Baby Soap", 1],
-        ["B-Glow vitamin C-Serum", 2],
-      ],
-    },
-    {
-      orderId: "27245875",
-      trackId: "-",
-      status: "Placed",
-      orderDate: "March 23, 2023",
-      total: "₹4799",
-      titleImg: "https://loremflickr.com/640/480?lock=455919850749952",
-      qty: 3,
-      products: [
-        ["E-Dew Baby Soap", 1],
-        ["B-Glow vitamin C-Serum", 2],
-      ],
-    },
-  ];
+  // const order = [
+  //   {
+  //     orderId: "27245875",
+  //     trackId: "-",
+  //     status: "Placed",
+  //     orderDate: "March 23, 2023",
+  //     total: "₹4799",
+  //     titleImg: "https://loremflickr.com/640/480?lock=455919850749952",
+  //     qty: 3,
+  //     products: [
+  //       ["E-Dew Baby Soap", 1],
+  //       ["B-Glow vitamin C-Serum", 2],
+  //     ],
+  //   },
+  //   {
+  //     orderId: "27245875",
+  //     trackId: "-",
+  //     status: "Placed",
+  //     orderDate: "March 23, 2023",
+  //     total: "₹4799",
+  //     titleImg: "https://loremflickr.com/640/480?lock=455919850749952",
+  //     qty: 3,
+  //     products: [
+  //       ["E-Dew Baby Soap", 1],
+  //       ["B-Glow vitamin C-Serum", 2],
+  //     ],
+  //   },
+  // ];
 
   return (
     <CustomProfile>
@@ -252,21 +344,45 @@ const Profile = () => {
           backgroundColor="#EEE2DF"
           childPadding={{ xs: "0.5rem", sm: "0.5rem", md: "2rem", lg: "2rem" }}
         >
-          <Box display="flex" flexDirection="row">
-            <Typography
-              color="rgba(77,32,38,0.4)"
-              mr={1}
-              fontSize={{ xs: "4vw", sm: "4vw", md: "1.5vw", lg: "1.5vw" }}
+          <Box
+            display="flex"
+            flexDirection="row"
+            justifyContent={"space-between"}
+          >
+            <Box display="flex" flexDirection="row">
+              <Typography
+                color="rgba(77,32,38,0.4)"
+                mr={1}
+                fontSize={{ xs: "4vw", sm: "4vw", md: "1.5vw", lg: "1.5vw" }}
+              >
+                Email:
+              </Typography>
+              <Typography
+                fontSize={{ xs: "4vw", sm: "4vw", md: "1.5vw", lg: "1.5vw" }}
+                color={colors?.primaryDark}
+                ml={1}
+              >
+                {user.email}
+              </Typography>
+            </Box>
+            <Button
+              className={"change-pass-btn"}
+              variant="outlined"
+              sx={{
+                display: "inline-block",
+                height: "fit-content",
+                width: "fit-content",
+              }}
+              onClick={handleDialogOpen}
             >
-              Email:
-            </Typography>
-            <Typography
-              fontSize={{ xs: "4vw", sm: "4vw", md: "1.5vw", lg: "1.5vw" }}
-              color={colors?.primaryDark}
-              ml={1}
-            >
-              {user.email}
-            </Typography>
+              <Typography
+                color={colors?.black}
+                fontWeight="bold"
+                fontSize={{ xs: "2vw", sm: "2vw", md: "4vw", lg: "1vw" }}
+              >
+                Change Password
+              </Typography>
+            </Button>
           </Box>
           {
             // <Box display="flex" flexDirection="row">
@@ -303,7 +419,7 @@ const Profile = () => {
             // </Box>
           }
           <Box display="flex" flexDirection="row" gap={2}>
-            <Button
+            {/* <Button
               className={"change-pass-btn"}
               variant="outlined"
               sx={{
@@ -311,6 +427,7 @@ const Profile = () => {
                 height: "fit-content",
                 width: "fit-content",
               }}
+              onClick={handleDialogOpen}
             >
               <Typography
                 color={colors?.black}
@@ -319,8 +436,8 @@ const Profile = () => {
               >
                 Change Password
               </Typography>
-            </Button>
-            <Button
+            </Button> */}
+            {/* <Button
               className={"change-pass-btn"}
               variant="outlined"
               sx={{
@@ -335,7 +452,7 @@ const Profile = () => {
               >
                 Edit
               </Typography>
-            </Button>
+            </Button> */}
           </Box>
         </CustomDropSection>
       </Box>
@@ -352,7 +469,7 @@ const Profile = () => {
         >
           <AddressBox></AddressBox>
         </CustomDropSection>
-        <CustomDropSection
+        {/* <CustomDropSection
           heading="Favourites"
           custPadding={"1rem"}
           childMargin={{ xs: "1rem", sm: "1rem", md: "2rem", lg: "2rem" }}
@@ -412,7 +529,7 @@ const Profile = () => {
             //   ))}
             // </Grid>
           }
-        </CustomDropSection>
+        </CustomDropSection> */}
       </Box>
       <Box
         marginX={"3rem"}
@@ -425,11 +542,80 @@ const Profile = () => {
           backgroundColor="#EEE2DF"
           childPadding={{ xs: "0.5rem", sm: "0.5rem", md: "2rem", lg: "2rem" }}
         >
-          {order?.map((item) => (
-            <OrderBox key={item.id} order={item} />
-          ))}
+          {ordersLoading ? (
+            <Typography>Loading orders...</Typography>
+          ) : ordersError ? (
+            <Typography>Error: {ordersError}</Typography>
+          ) : orders.length === 0 ? (
+            <Typography>No Orders placed till now.</Typography>
+          ) : (
+            orders.map((item) => <OrderBox key={item.id} order={item} />)
+          )}
         </CustomDropSection>
       </Box>
+      <Dialog open={openDialog} onClose={handleDialogClose}>
+        <DialogTitle>Change Password</DialogTitle>
+        <DialogContent>
+          <TextField
+            margin="dense"
+            label="New Password"
+            type={showNewPassword ? "text" : "password"}
+            fullWidth
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => setShowNewPassword(!showNewPassword)}
+                  >
+                    {showNewPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+          <TextField
+            margin="dense"
+            label="Confirm Password"
+            type={showConfirmPassword ? "text" : "password"}
+            fullWidth
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  >
+                    {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <MemoizedButton
+            className="logout-btn"
+            handleClick={handleDialogClose}
+            content={"Cancel"}
+            sx={{
+              boxShadow: "none",
+              borderRadius: 2,
+            }}
+          />
+          <MemoizedButton
+            className="logout-btn"
+            handleClick={handleChangePassword}
+            content={"Change Password"}
+            sx={{
+              boxShadow: "none",
+              borderRadius: 2,
+            }}
+          />
+        </DialogActions>
+      </Dialog>
     </CustomProfile>
   );
 };
