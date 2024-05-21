@@ -163,7 +163,9 @@ const OrderBox = ({ order }) => {
       <Grid container className="orderDetailBox">
         <Grid item xs={12} sm={6} md={2} display="flex" flexDirection="column">
           <Typography className="orderDetailHead">Order Date:</Typography>
-          <Typography className="orderDetailSub">{order.orderDate}</Typography>
+          <Typography className="orderDetailSub">
+            {new Date(order.date).toLocaleDateString()}
+          </Typography>
         </Grid>
         <Grid item xs={12} sm={6} md={2} display="flex" flexDirection="column">
           <Typography className="orderDetailHead">Status:</Typography>
@@ -171,15 +173,19 @@ const OrderBox = ({ order }) => {
         </Grid>
         <Grid item xs={12} sm={6} md={2} display="flex" flexDirection="column">
           <Typography className="orderDetailHead">Total Amount:</Typography>
-          <Typography className="orderDetailSub">{order.total}</Typography>
+          <Typography className="orderDetailSub">
+            {order.final_amount.toFixed(2)}
+          </Typography>
         </Grid>
         <Grid item xs={12} sm={6} md={2} display="flex" flexDirection="column">
           <Typography className="orderDetailHead">Order #:</Typography>
-          <Typography className="orderDetailSub">{order.orderId}</Typography>
+          <Typography className="orderDetailSub">{order.id}</Typography>
         </Grid>
         <Grid item xs={12} sm={6} md={2} display="flex" flexDirection="column">
           <Typography className="orderDetailHead">Tracking Id:</Typography>
-          <Typography className="orderDetailSub">{order.trackId}</Typography>
+          <Typography className="orderDetailSub">
+            {order.tracking_id}
+          </Typography>
         </Grid>
       </Grid>
       <Grid container padding={"2rem"}>
@@ -188,7 +194,7 @@ const OrderBox = ({ order }) => {
             width={200}
             height={300}
             className="img-box"
-            src={order.titleImg}
+            src={order.products[0].image_url[0]}
             alt={"Image"}
           />
         </Grid>
@@ -203,11 +209,13 @@ const OrderBox = ({ order }) => {
           alignItems={"left"}
           padding={"10px 0px"}
         >
-          <Typography className="orderId">ORDER : # {order.orderId}</Typography>
-          <Typography className="qty">QUANTITY :{order.qty}</Typography>
-          {order.products?.map((product) => (
+          <Typography className="orderId">ORDER : # {order.id}</Typography>
+          <Typography className="qty">
+            QUANTITY :{order.quantities.reduce((acc, qty) => acc + qty, 0)}
+          </Typography>
+          {order.products?.map((product, index) => (
             <Typography className="qty-break">
-              {product[1]} X {product[0]}
+              {product.name} X {order.quantities[index]}
             </Typography>
           ))}
         </Grid>
@@ -221,7 +229,7 @@ const OrderBox = ({ order }) => {
           justifyContent={"space-between"}
           alignItems={"left"}
         >
-          <Button className={"view-btn"}>View Order </Button>
+          {/* <Button className={"view-btn"}>View Order </Button> */}
           <Button className={"track-btn"}>Track Order</Button>
         </Grid>
       </Grid>
