@@ -43,10 +43,8 @@ const filterOptions = [
       "Itch Insta",
      " B-Glow",
      " NIA GLOW 10",
-    "SHYN ON",
       "S-BLOK",
       "SHYN ON",
-      "E-Dew",
       ],
     default: [],
   },
@@ -157,7 +155,7 @@ const FilterDrawer = (props) => {
                   </RadioGroup>
                 ) : option.type === "checkbox" ? (
                   <FormGroup>
-                    {option.choices.map((choice) => (
+                    {option?.choices?.map((choice) => (
                       <FormControlLabel
                         key={choice}
                         control={
