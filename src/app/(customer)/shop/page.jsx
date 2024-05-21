@@ -49,7 +49,6 @@ const ShopPage = () => {
           throw new Error('Failed to fetch data');
         }
         const jsonData = await response.json();
-        console.log("yash", jsonData)
         setProductData(jsonData);
       } catch (error) {
         setError(error.message);
@@ -68,8 +67,6 @@ const ShopPage = () => {
   }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
   const applyFilters = (filters) => {
-    console.log("Filters applied:", productData);
-  
     let filteredProducts = productData;
   
     // Filter by category

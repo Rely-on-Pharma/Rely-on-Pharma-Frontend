@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { colors } from "@/constants/colors";
 import { Box, Grid, styled, Typography } from "@mui/material";
 import AppContext from "@/constants/context/context";
@@ -16,6 +16,7 @@ const CustomStockCard = styled(Box)(({ theme }) => ({
 
 const LowStockCard = () => {
   const [lowStockItems, setLowStock] = useState([]);
+  const {showSnackbar} = useContext(AppContext)
   useEffect(() => {
     const fetchLowStock = async () => {
       //setLoading(true);

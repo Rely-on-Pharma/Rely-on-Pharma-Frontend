@@ -53,7 +53,6 @@ const UpdatePincodeDialog = ({ open, handleClose }) => {
         }
         const data = await response.json();
         setPincodes(data);
-        console.log("yash", data)
       } catch (error) {
         showSnackbar("Failed to fetch pincodes", "error");
       }

@@ -119,7 +119,7 @@ const CustomSelectAddress = styled(Box)(({ theme }) => ({
   },
 }));
 
-const SelectAddress = ({ addresses,fetchAddresses }) => {
+const SelectAddress = ({ addresses,fetchAddresses,onSelectAddress }) => {
   const [value, setValue] = React.useState(0 || null);
   const [open, setOpen] = React.useState(false);
   const {showSnackbar} = useContext(AppContext)
@@ -137,7 +137,11 @@ const SelectAddress = ({ addresses,fetchAddresses }) => {
   const handleClose = () => {
     setOpen(false);
   };
-
+  const handleContinue = () => {
+    let selectedAddress = addresses[value];
+    let updatedSelectedAddress = {...selectedAddress, id: addresses[value].id}
+    onSelectAddress(updatedSelectedAddress);
+  };
   const handleAddNewAddress = async () => {
     try {
       const token = localStorage.getItem('token').slice(1,-1);
@@ -214,7 +218,6 @@ const SelectAddress = ({ addresses,fetchAddresses }) => {
         showSnackbar("Pincode is not available for deleivery", "info")
       }
     }catch(e){
-      console.log("yash", e)
       showSnackbar(e?.message || "Unable to check availability", "error")
     }
   }
@@ -337,7 +340,7 @@ const SelectAddress = ({ addresses,fetchAddresses }) => {
           </Box>
         ))):(<Typography>No Saved Address</Typography>)}
       </RadioGroup>
-      <MemoizedButton className="btn" content={"Continue"} />
+      <MemoizedButton className="btn" content={"Continue"} handleClick={handleContinue} />
     </CustomSelectAddress>
   );
 };

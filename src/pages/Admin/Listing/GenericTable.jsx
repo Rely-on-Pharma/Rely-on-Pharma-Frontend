@@ -61,7 +61,7 @@ export default function ListingTable({ columns, rows }) {
                       if (column.id === "name") {
                         return (
                           <TableCell key={column.id} align={column.align}>
-                            <CustomProductROw name={row?.name} image={"https://loremflickr.com/640/480?lock=6586178289532928"}/>
+                            <CustomProductROw name={row?.name} image={row?.image_url[0]}/>
                           </TableCell>
                         );
                       } if (column.id === "action") {

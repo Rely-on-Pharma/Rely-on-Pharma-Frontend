@@ -33,7 +33,6 @@ const FeedBackMain = () => {
         }
         const textResponse = await response.text();
         const jsonResponse = JSON.parse(textResponse);
-        console.log("Type of jsonResponse:", typeof jsonResponse);
         setRowsData(jsonResponse);
       } catch (error) {
         showSnackbar(error.message || "Something went wrong!", "error");
