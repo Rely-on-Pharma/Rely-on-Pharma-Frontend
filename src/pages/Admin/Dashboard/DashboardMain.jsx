@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
+import AppContext from "@/constants/context/context";
 import { Line } from "react-chartjs-2";
 import {
   Box,
@@ -10,7 +11,9 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
+  Backdrop,
 } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 import "chart.js/auto";
 import LowStockCard from "./LowStockCard";
 import PendingOrderCard from "./PendingOrders";
@@ -23,8 +26,56 @@ const CustomDashboard = styled(Box)(({ theme }) => ({
 }));
 
 const Dashboard = () => {
-  // Sample chart data
+  const [years, setYears] = useState([]);
+  const [selectedYear, setSelectedYear] = useState("");
+  // const [loading, setLoading] = useState(false);
+  const { showSnackbar } = useContext(AppContext);
+  useEffect(() => {
+    const fetchYears = async () => {
+      //setLoading(true);
+      try {
+        const response = await fetch("http://localhost:8000/analytics", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
+        if (!response.ok) {
+          const errorMessage = await response.text();
+          throw new Error(errorMessage);
+        }
+
+        const jsonResponse = await response.json();
+        console.log;
+        setYears(jsonResponse);
+        if (years.length > 0) {
+          setSelectedYear(years[0]);
+        } else {
+          const currentYear = new Date().getFullYear().toString();
+          setYears([currentYear]);
+          setSelectedYear(currentYear);
+        }
+        //setLoading(false);
+      } catch (error) {
+        //setLoading(false);
+        showSnackbar(error.message || "Something went wrong!", "error");
+      }
+    };
+
+    fetchYears();
+  }, []);
+  // Sample chart data
+  // if (loading) {
+  //   return (
+  //     <Backdrop
+  //       sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+  //       open={loading}
+  //     >
+  //       <CircularProgress color="inherit" />
+  //     </Backdrop>
+  //   );
+  // }
   const [salesChartData, setSalesChartData] = useState({
     labels: [
       "Jan",
@@ -42,7 +93,7 @@ const Dashboard = () => {
     ],
     datasets: [
       {
-        data: [85, 114, 106, 106, 107, 111, 133, 12, 112, 59, 90, 18],
+        data: [],
         label: "Sales",
         borderColor: "#1f77b4",
         backgroundColor: "rgba(31, 119, 180, 0.2)",
@@ -68,7 +119,7 @@ const Dashboard = () => {
     ],
     datasets: [
       {
-        data: [43, 21, 140, 123, 12, 29, 82, 90, 11, 111, 124, 67],
+        data: [],
         label: "Unit",
         borderColor: "#2ca02c",
         backgroundColor: "rgba(44, 160, 44, 0.2)",
@@ -76,6 +127,54 @@ const Dashboard = () => {
       },
     ],
   });
+  useEffect(() => {
+    if (selectedYear) {
+      const fetchSalesData = async () => {
+        try {
+          const response = await fetch(
+            `http://localhost:8000/analytics/${selectedYear}/sales`
+          );
+          const data = await response.json();
+          const salesData = Object.keys(data).map((key) => data[key]);
+          setSalesChartData((prevData) => ({
+            ...prevData,
+            datasets: [
+              {
+                ...prevData.datasets[0],
+                data: salesData,
+              },
+            ],
+          }));
+        } catch (error) {
+          showSnackbar(error.message || "Something went wrong!", "error");
+        }
+      };
+
+      const fetchUnitData = async () => {
+        try {
+          const response = await fetch(
+            `http://localhost:8000/analytics/${selectedYear}/units`
+          );
+          const data = await response.json();
+          const unitData = Object.keys(data).map((key) => data[key]);
+          setUnitChartData((prevData) => ({
+            ...prevData,
+            datasets: [
+              {
+                ...prevData.datasets[0],
+                data: unitData,
+              },
+            ],
+          }));
+        } catch (error) {
+          showSnackbar(error.message || "Something went wrong!", "error");
+        }
+      };
+
+      fetchSalesData();
+      fetchUnitData();
+    }
+  }, [selectedYear]);
 
   // Sample chart options
   const chartOptions = {
@@ -88,7 +187,6 @@ const Dashboard = () => {
     },
   };
 
-  const [selectedYear, setSelectedYear] = useState();
   const handleYearChange = (event) => {
     setSelectedYear(event.target.value);
   };
@@ -114,8 +212,11 @@ const Dashboard = () => {
             onChange={handleYearChange}
             label="Year"
           >
-            <MenuItem value={"2023"}>2023</MenuItem>
-            <MenuItem value={"2024"}>2024</MenuItem>
+            {years.map((year) => (
+              <MenuItem key={year} value={year}>
+                {year}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
       </Box>

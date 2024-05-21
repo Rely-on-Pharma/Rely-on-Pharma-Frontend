@@ -1,7 +1,8 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { colors } from "@/constants/colors";
 import { Box, Grid, styled, Typography } from "@mui/material";
+import AppContext from "@/constants/context/context";
 
 const CustomStockCard = styled(Box)(({ theme }) => ({
   backgroundColor: "#888888",
@@ -14,12 +15,37 @@ const CustomStockCard = styled(Box)(({ theme }) => ({
 }));
 
 const LowStockCard = () => {
-  const lowStockItems = [
-    { name: "B-Glow Acne FaceWash", quantity: 12 },
-    { name: "C-Glow Brightening Serum", quantity: 8 },
-    { name: "D-Glow Night Cream", quantity: 5 },
-    { name: "E-Glow Sunscreen Lotion", quantity: 2 },
-  ];
+  const [lowStockItems, setLowStock] = useState([]);
+  useEffect(() => {
+    const fetchLowStock = async () => {
+      //setLoading(true);
+      try {
+        const response = await fetch("http://localhost:8000/lowstock", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (!response.ok) {
+          const errorMessage = await response.text();
+          throw new Error(errorMessage);
+        }
+
+        const jsonResponse = await response.json();
+        // Convert the array of tuples to an array of objects
+        const formattedResponse = jsonResponse.map(([name, quantity]) => ({
+          name,
+          quantity,
+        }));
+        setLowStock(formattedResponse);
+      } catch (error) {
+        showSnackbar(error.message || "Something went wrong!", "error");
+      }
+    };
+
+    fetchLowStock();
+  }, []);
 
   return (
     <CustomStockCard>
@@ -29,22 +55,35 @@ const LowStockCard = () => {
       >
         Low Stock
       </Typography>
-      {lowStockItems.map((item, index) => (
-        <Box
-          key={index}
-          display={"flex"}
-          flexDirection={"row"}
-          sx={{ paddingY: "1rem" }}
-          justifyContent={"space-between"}
+      {lowStockItems.length === 0 ? (
+        <Typography
+          variant="h6"
+          sx={{ color: "rgba(255, 255, 255, 0.6)", paddingY: "1rem" }}
         >
-          <Typography variant="h6" sx={{ color: "rgba(255, 255, 255, 0.6)" }}>
-            {item.name}
-          </Typography>
-          <Typography ml={4} variant="h6" sx={{ color: "rgb(255, 255, 255)" }}>
-            {item.quantity}
-          </Typography>
-        </Box>
-      ))}
+          Everything is Stocked Up!
+        </Typography>
+      ) : (
+        lowStockItems.map((item, index) => (
+          <Box
+            key={index}
+            display={"flex"}
+            flexDirection={"row"}
+            sx={{ paddingY: "1rem" }}
+            justifyContent={"space-between"}
+          >
+            <Typography variant="h6" sx={{ color: "rgba(255, 255, 255, 0.6)" }}>
+              {item.name}
+            </Typography>
+            <Typography
+              ml={4}
+              variant="h6"
+              sx={{ color: "rgb(255, 255, 255)" }}
+            >
+              {item.quantity}
+            </Typography>
+          </Box>
+        ))
+      )}
     </CustomStockCard>
   );
 };
