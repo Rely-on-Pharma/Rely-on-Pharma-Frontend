@@ -29,7 +29,6 @@ const useAddNewProductForm = (router) => {
     router.push("/admin/dashboard")
     } catch (error) {
       showSnackbar(error?.message || "Unable to save the product","error")
-      console.log("yash",error)
     }
   }
   const form = useFormik({

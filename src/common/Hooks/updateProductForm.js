@@ -69,7 +69,6 @@ const useUpdateProductForm = (productId, router) => {
         throw new Error("Unable to creta product");
       }
     } catch (error) {
-      console.log("yash", error)
       showSnackbar(error?.message || "Unable to update the product", "error");
     }
   }

@@ -90,12 +90,7 @@ export default function InventoryTable({ columns, rows, onActionClick }) {
                       if (column.id === "name") {
                         return (
                           <TableCell key={column.id} align={column.align}>
-                            <CustomProductRow
-                              name={row?.name}
-                              image={
-                                "https://loremflickr.com/640/480?lock=6586178289532928"
-                              }
-                            />
+                            <CustomProductRow name={row?.name} image={row?.image_url?.length>0 ? row?.image_url[0] : "https://loremflickr.com/640/480?lock=6586178289532928"}/>
                           </TableCell>
                         );
                       }
