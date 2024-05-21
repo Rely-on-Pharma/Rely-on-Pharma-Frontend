@@ -31,7 +31,7 @@ const CustomIconButton = ({
 
 CustomIconButton.propTypes = {
   ariaLabel: PropTypes.string.isRequired,
-  handleClick: PropTypes.func.isRequired,
+  handleClick: PropTypes.func,
   disabled: PropTypes.bool,
   icon: PropTypes.elementType,
   className: PropTypes.string,

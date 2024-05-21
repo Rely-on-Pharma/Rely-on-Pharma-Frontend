@@ -20,7 +20,7 @@ import Image from "next/image";
 import Link from "next/link";
 import PropTypes from "prop-types";
 import { useContext, useEffect, useState } from "react";
-import logo from '../../../../public/logo.svg'
+import logo from '../../../../public/logopng.png'
 import { MemoizedButton } from "@/constants/SDK/CustomButton";
 import { useRouter } from "next/navigation";
 const drawerWidth = 300;
@@ -31,7 +31,7 @@ function DrawerAppBar(props) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const container = window !== undefined ? () => window().document.body : undefined;
   // const router = useRouter();
-  const { cart, user, token } = useContext(AppContext); // Access the cart from your context
+  const { cart , token} = useContext(AppContext); // Access the cart from your context
   const [cartLength, setCartLength] = useState(cart.length);
 
   useEffect(() => {
@@ -39,8 +39,6 @@ function DrawerAppBar(props) {
     setCartLength(cart.length);
   }, [cart]);
 
-  useEffect(()=>{
-  },[user])
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
@@ -50,12 +48,12 @@ function DrawerAppBar(props) {
       <Image
         style={{
           marginInline: "8px",
-          width: "70px",
-          height: "60px",
+          width: "12rem",
+          height: "80px",
           objectFit: "contain",
         }}
-        width={72}
-        height={16}
+        width={100}
+        height={32}
         src={logo}
         alt="logo"
         />
@@ -102,11 +100,11 @@ function DrawerAppBar(props) {
           <Image
             style={{
               marginInline: "8px",
-              width: "60px",
-              height: "40px",
+              width: "120px",
+              height: "50px",
               objectFit: "contain",
             }}
-            width={50}
+            width={150}
             height={40}
             src={logo}
             alt="logo"

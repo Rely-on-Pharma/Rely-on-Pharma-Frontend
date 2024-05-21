@@ -111,26 +111,26 @@ const ProductRow = ({ item, onIncrement, onDecrement, onRemove }) => {
               marginRight: "1rem",
             }}
           >
-            <MemoizedIconButton
+            <MemoizedIconButton ariaLabel={"close"}
               className={"btn"}
               handleClick={onDecrement}
               icon={RemoveIcon}
             />
             <Typography>{item?.qty}</Typography>
-            <MemoizedIconButton
+            <MemoizedIconButton ariaLabel={"close"}
               className={"btn"}
               handleClick={onIncrement}
               icon={AddIcon}
             />
           </Box>
 
-          <MemoizedIconButton
+          <MemoizedIconButton ariaLabel={"close"}
             className={"btn"}
             handleClick={onRemove}
             icon={DeleteIcon}
             style={{ color: colors?.warning }}
           />
-          <MemoizedIconButton
+          <MemoizedIconButton ariaLabel={"close"}
             className={"btn"}
             handleClick={onIncrement}
             icon={FavoriteIcon}

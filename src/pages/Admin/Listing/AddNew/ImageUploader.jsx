@@ -100,6 +100,7 @@ const FileUploadComponent = ({
           />
           <MemoizedIconButton
             variant="contained"
+            ariaLabel={"close"}
             size="small"
             icon={CloseIcon}
             style={{

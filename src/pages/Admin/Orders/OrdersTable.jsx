@@ -37,6 +37,7 @@ const CustomOrdersTable = styled(Box)(({ theme }) => ({
   },
 }));
 export default function OrdersTable({ columns, rows }) {
+  console.log(rows);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [selectedOrder, setSelectedOrder] = useState(null); // State to track the selected order
@@ -96,8 +97,8 @@ export default function OrdersTable({ columns, rows }) {
                       role="checkbox"
                       tabIndex={-1}
                       key={row.code}
-                      onClick={() => handleClickTableRow(row)} 
-                      style={{cursor:"pointer"}}
+                      onClick={() => handleClickTableRow(row)}
+                      style={{ cursor: "pointer" }}
                     >
                       {columns.map((column) => {
                         const value = row[column.id];
@@ -108,19 +109,20 @@ export default function OrdersTable({ columns, rows }) {
                               <CustomOrderRow data={row?.products} />
                             </TableCell>
                           );
-                        }
-                        else if(column?.id=== "address"){
+                        } else if (column?.id === "address") {
                           return (
                             <TableCell key={column?.id} align={column?.align}>
-                              <AddressComponent address={row?.address}/>
+                              <AddressComponent address={row?.address} />
                             </TableCell>
-                          )
-                        }
-                        else if (column.id === "action") {
+                          );
+                        } else if (column.id === "action") {
                           // Render buttons for the "action" column
                           return (
                             <TableCell key={column.id} align={column.align}>
-                              <MemoizedIconButton icon={EditIcon} />
+                              <MemoizedIconButton
+                                ariaLabel={"close"}
+                                icon={EditIcon}
+                              />
                             </TableCell>
                           );
                         } else {
@@ -220,10 +222,9 @@ export default function OrdersTable({ columns, rows }) {
                   }}
                   className={"btn"}
                   content={"update order"}
-
-                  handleClick={(e)=>{
+                  handleClick={(e) => {
                     // api call
-                    setOpenDialog(false)
+                    setOpenDialog(false);
                   }}
                 />
               </Box>

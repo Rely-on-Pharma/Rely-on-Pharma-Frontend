@@ -12,13 +12,14 @@ import Image from "next/image";
 import Link from "next/link";
 import PropTypes from "prop-types";
 import { useContext } from "react";
-import logo from "../../../../public/logo.svg";
-import { Tooltip } from "@mui/material";
+import logo from "../../../../public/Logo_Seller.png";
+import { Tooltip, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 function AdminNavbar(props) {
   const { window } = props;
-  const { user ,logOutUser} = useContext(AppContext);
+  const { user ,logOutUser, token} = useContext(AppContext);
   const router = useRouter();
+  
 const handleLogout = ()=>{
   logOutUser();
   router.push("/admin-login")
@@ -36,11 +37,11 @@ const handleLogout = ()=>{
           <Image
             style={{
               marginInline: "8px",
-              width: "60px",
-              height: "40px",
+              width: "120px",
+              height: "60px",
               objectFit: "contain",
             }}
-            width={50}
+            width={150}
             height={40}
             src={logo}
             alt="logo"
@@ -71,11 +72,11 @@ const handleLogout = ()=>{
             ))}
           </Box>
           <Box sx={{ display: { xs: "flex" } }}>
-            <Tooltip title="Click to logout" placement="left">
+            {token ? <Tooltip title="Click to logout" placement="left">
               <IconButton size="large" edge="end" color={colors?.primaryDark} onClick={handleLogout}>
                 <AccountCircle style={{ color: `${colors?.primaryDark}` }} />
               </IconButton>
-            </Tooltip>
+            </Tooltip> : <Typography>jhh</Typography>}
           </Box>
         </Toolbar>
       </AppBar>
