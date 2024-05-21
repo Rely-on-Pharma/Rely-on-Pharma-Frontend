@@ -39,7 +39,7 @@ const SimilarProductCard = ({ productData }) => {
   return (
     <CustomSimilarCard>
       {/*<Image src={productData?.image_url} alt={productData?.name} width={360} height={300}/> */}
-      <Image src={imageUrl} alt={productData?.name} width={360} height={300} />
+      <Image src={productData?.image_url?.length>0 ? productData?.image_url[0]:imageUrl} alt={productData?.name} width={360} height={300} />
       <Stack className="details">
         <Link
           href={`/product/${productData?.id}`}

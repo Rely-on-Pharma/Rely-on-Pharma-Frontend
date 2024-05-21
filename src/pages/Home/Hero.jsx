@@ -278,7 +278,7 @@ const Hero = () => {
               <Image
                 width={300}
                 height={300}
-                src={imageUrl}
+                src={product?.image_url?.length>0 ? product?.image_url[0] : imageUrl}
                 alt={product?.name}
                 className="product--image"
               />
