@@ -94,7 +94,7 @@ const ShippingPolicy = () => {
             selected and the destination.
           </li>
           <li className="item">
-            Order Tracking - Once your order has shipped, your order's tracking
+            Order Tracking - Once your order has shipped, your order&apos;s tracking
             id will be updated on the website which can then be used to track
             your order on https://www.shreemaruti.com/track-your-shipment/
           </li>

@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
-const CustomCard = styled(Box)(({ theme }) => ({
+const CustomCard = styled(Box)(() => ({
   borderRadius: "4px",
   overflow: "hidden",
   ".details": {

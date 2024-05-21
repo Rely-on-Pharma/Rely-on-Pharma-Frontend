@@ -1,8 +1,6 @@
-import { useState } from "react";
-import { Box, Typography, Button, styled, Grid } from "@mui/material";
 import { colors } from "@/constants/colors";
+import { Box, Button, Grid, Typography, styled } from "@mui/material";
 import Image from "next/image";
-import { MemoizedButton } from "@/constants/SDK/CustomButton";
 
 const CustomOrderBox = styled(Box)(({ theme }) => ({
   borderRadius: 10,
@@ -120,7 +118,6 @@ const CustomOrderBox = styled(Box)(({ theme }) => ({
       borderRadius: "8px",
       borderColor: colors?.MonochromeDark,
       color: colors?.primaryDark,
-      borderRadius: "14px",
     },
   },
   ".track-btn": {
@@ -152,7 +149,6 @@ const CustomOrderBox = styled(Box)(({ theme }) => ({
       borderRadius: "8px",
       borderColor: colors?.MonochromeDark,
       color: colors?.white,
-      borderRadius: "14px",
     },
   },
 }));
@@ -205,8 +201,8 @@ const OrderBox = ({ order }) => {
         >
           <Typography className="orderId">ORDER : # {order.orderId}</Typography>
           <Typography className="qty">QUANTITY :{order.qty}</Typography>
-          {order.products?.map((product) => (
-            <Typography className="qty-break">
+          {order.products?.map((product, ind) => (
+            <Typography key={ind} className="qty-break">
               {product[1]} X {product[0]}
             </Typography>
           ))}

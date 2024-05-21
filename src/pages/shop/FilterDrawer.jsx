@@ -19,7 +19,7 @@ import React, { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { MemoizedButton } from "@/constants/SDK/CustomButton";
-const CustomFilterDrawer = styled(Box)(({theme})=>({
+const CustomFilterDrawer = styled(Box)(()=>({
   ".filterBtn":{
     display: "block", width: "100%", borderRadius: "4px", padding: "8px", boxShadow: "none"
   }
@@ -37,7 +37,17 @@ const filterOptions = [
     name: "company",
     label: "Company",
     type: "checkbox",
-    choices: ["Company A", "Company B", "Company C"],
+    choices: [
+      "E-Acne",
+      "E-Dew",
+      "Itch Insta",
+     " B-Glow",
+     " NIA GLOW 10",
+    "SHYN ON",
+      "S-BLOK",
+      "SHYN ON",
+      "E-Dew",
+      ],
     default: [],
   },
   {

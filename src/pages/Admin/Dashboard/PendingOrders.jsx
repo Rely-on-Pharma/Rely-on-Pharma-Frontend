@@ -1,7 +1,8 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { colors } from "@/constants/colors";
 import { Box, Grid, styled, Typography } from "@mui/material";
+import AppContext from "@/constants/context/context";
 
 const CustomPendingOrder = styled(Box)(({ theme }) => ({
   backgroundColor: "#888888",
@@ -21,6 +22,7 @@ const PendingOrderCard = () => {
   //   { orderId: "Order#12234" },
   // ];
   const [pendingOrders, setPendingOrders] = useState([]);
+  const {showSnackbar} = useContext(AppContext)
   useEffect(() => {
     const fetchPendingOrders = async () => {
       //setLoading(true);

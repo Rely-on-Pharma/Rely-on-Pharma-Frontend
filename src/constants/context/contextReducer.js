@@ -146,8 +146,6 @@ const AppReducer = (state, action) => {
             cart: [...state.cart, { ...action.payload.productData, qty: action.payload.qty }]
           };
         }
-
-        //here i want to call snackbar component after adding to cart
       }
     case cartActionTypes.REMOVE_FROM_CART: {
       return {

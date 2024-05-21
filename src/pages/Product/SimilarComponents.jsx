@@ -1,15 +1,13 @@
 "use client";
-import React from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import "swiper/css/pagination";
 import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { Swiper, SwiperSlide } from "swiper/react";
 
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import { Box, Grid, styled } from "@mui/material";
-import ProductCard from "../shop/products";
+import { Navigation, Pagination } from "swiper/modules";
 import SimilarProductCard from "./SimilarProductCard";
-const CustomSwiper = styled(Box)(({ theme }) => ({
+const CustomSwiper = styled(Box)(() => ({
   ".swiper": {
     width: "100%",
     height: "100%",

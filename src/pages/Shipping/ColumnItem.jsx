@@ -4,7 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { colors } from "@/constants/colors";
 
-const CustomColumnItem = styled(Box)(({ theme }) => ({
+const CustomColumnItem = styled(Box)(() => ({
   display: "flex",
   justifyContent: "flex-start",
   gap: "3rem",
@@ -35,10 +35,10 @@ const ColumnItem = ({ item }) => {
       <Box>
         <Image
           className="img-box"
-          src={item.image}
+          src={item?.image_url[0]}
           alt={item.name}
-          width={20}
-          height={20}
+          width={120}
+          height={120}
         />
       </Box>
       <Box

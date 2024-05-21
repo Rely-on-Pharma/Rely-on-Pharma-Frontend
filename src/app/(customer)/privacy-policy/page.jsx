@@ -424,7 +424,7 @@ const PrivacyPolicy = () => {
         We may store Personal Information using our own secure on-site servers
         or other internally hosted technology. Your Personal Information may
         also be stored by third parties, via cloud services or other technology,
-        with whom the Company has contracted, to support the Company's business
+        with whom the Company has contracted, to support the Company&apos;s business
         operations.
         <br />
         <br />
@@ -440,7 +440,7 @@ const PrivacyPolicy = () => {
         <ul className="list-items">
           <li>
             We may track your preferences and activities on the Platform. “
-            <b>Cookies</b>” are small data files transferred to your computer's
+            <b>Cookies</b>” are small data files transferred to your computer&apos;s
             hard-drive by a website, while using a web browser (if you allow).
             They keep a record of your activities on the Platform making your
             subsequent visits to the site more efficient. The Cookies may store
