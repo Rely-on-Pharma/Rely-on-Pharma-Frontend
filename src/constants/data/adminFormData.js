@@ -18,9 +18,8 @@ export const brandOptions = [
   export const verticalsOptions = [
     { value: "Face", label: "Face" },
     { value: "Hair", label: "Hair" },
-    { value: "Body", label: "Body" },
-    { value: "Face+Body", label: "Face+Body" },
-    { value: "Face+body+hair", label: "Face+body+hair" },
+    { value: "Face+Hair", label: "Face+Hair" },
+    { value: "Face+Hair+Body", label: "Face+Hair+Body" },
   ];
 
   export const  quantityOptions = [
@@ -30,7 +29,7 @@ export const brandOptions = [
   ];
   export const statusOptions = [
     { value: "Active", label: "Active" },
-    { value: "Inactive", label: "Child" },
+    { value: "InActive", label: "Inactive" },
   ];
   
   export const countryOptions = [
