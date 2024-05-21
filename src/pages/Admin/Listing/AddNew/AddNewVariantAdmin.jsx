@@ -2,7 +2,7 @@ import { MemoizedButton } from "@/constants/SDK/CustomButton";
 import { MemoizedInputField } from "@/constants/SDK/customInput";
 import { colors } from "@/constants/colors";
 import AppContext from "@/constants/context/context";
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { Box, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { useContext, useState } from 'react';
 
 

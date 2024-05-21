@@ -1,13 +1,12 @@
 "use client";
 import useAddNewProductForm from "@/common/Hooks/addnewForm";
+import { MemoizedButton } from "@/constants/SDK/CustomButton";
+import { colors } from "@/constants/colors";
 import { Box, Typography, styled } from "@mui/material";
+import { useRouter } from "next/navigation";
 import CategorySelection from "./CategorySelection";
 import PricingInfo from "./PricingInfo";
 import ProductDetails from "./ProductDetails";
-import FileUploadComponent from "./ImageUploader";
-import { MemoizedButton } from "@/constants/SDK/CustomButton";
-import { colors } from "@/constants/colors";
-import { useRouter } from "next/navigation";
 
 const CustomAddNewForm = styled(Box)(({ theme }) => ({
   ".categorySection": {

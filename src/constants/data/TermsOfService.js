@@ -16,12 +16,12 @@ export const termsOfService = [
         INCLUDING THE PERSONS WHO BROWSES OR THE PERSONS WHO ORDERS THE PRODUCT
         AGREE TO BE BOUND BY ALL OF THE T&C MENTIONED HEREUNDER.`,
 
-  `     \Users and/or transactions on the Website are restricted to individuals who are authorised under the Indian Contract Act, 1872 to enter into legally binding contracts. \
-        It is necessary for any minor who wants to use or access the Website to make such transactions \
+  `     Users and/or transactions on the Website are restricted to individuals who are authorised under the Indian Contract Act, 1872 to enter into legally binding contracts. \
+        It is necessary for any minor who wants to use or access the Website to make such transactions \
         through their parents or legal guardians. If you are acting on behalf of a company, partnership firm, \
         or sole proprietorship, you will only be permitted to access and use the Website to \
         carry out transactions on its behalf if you have received the necessary corporate \
-        action authorization, as may be specified by statute and/or under the legal paperwork of such entity. \n\ 
+        action authorization, as may be specified by statute and/or under the legal paperwork of such entity. \n
         The Company reserves the right to amend or revise the T&C at any time by uploading a revised or \
         amended T&C on the Website with or without prior notice. The amended T&C \
         will be effective immediately after it is uploaded on this Website. Your \

@@ -1,12 +1,12 @@
 "use client";
-import React, { useContext, useEffect, useState } from "react";
-import { Backdrop, Box, styled } from "@mui/material";
-import { inventoryPageColumns, listingPageColumns } from "@/constants/data/AdminColumnData";
-import Heading from "../Listing/Heading";
-import Capsule from "../Listing/Capsule";
-import InventoryTable from "./GenericTable";
 import AppContext from "@/constants/context/context";
+import { inventoryPageColumns } from "@/constants/data/AdminColumnData";
+import { Backdrop, Box, styled } from "@mui/material";
 import CircularProgress from '@mui/material/CircularProgress';
+import { useContext, useEffect, useState } from "react";
+import Capsule from "../Listing/Capsule";
+import Heading from "../Listing/Heading";
+import InventoryTable from "./GenericTable";
 
 const data = [
   { name: "All Inventory", sub: "52SKUs" },

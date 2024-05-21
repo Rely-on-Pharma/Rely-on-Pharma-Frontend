@@ -169,7 +169,7 @@ const TermsofService = () => {
           <li>
             not to do or attempt to do any action which is grossly harmful,
             harassing, blasphemous defamatory, obscene, pornographic,
-            paedophilic, libellous, invasive of another's privacy, hateful, or
+            paedophilic, libellous, invasive of another&apos;s privacy, hateful, or
             racially, ethnically objectionable, disparaging, relating or
             encouraging money laundering or gambling, trolling, propaganda or
             otherwise unlawful in any manner whatever.
@@ -226,8 +226,8 @@ const TermsofService = () => {
           <li>
             attempting to interfere with service to any other user, host or
             network, including, without limitation, via means of submitting a
-            virus to the Site, overloading, "flooding," "spamming," "mail
-            bombing" or "crashing"
+            virus to the Site, overloading, flooding, spamming, mail
+            bombing or crashing
           </li>
           <li>
             sending unsolicited email, including promotions and/or advertising
