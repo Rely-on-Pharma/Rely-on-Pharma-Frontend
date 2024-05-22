@@ -90,7 +90,7 @@ export default function InventoryTable({ columns, rows, onActionClick }) {
                       if (column.id === "name") {
                         return (
                           <TableCell key={column.id} align={column.align}>
-                            <CustomProductRow name={row?.name} image={row?.image_url?.length>0 ? row?.image_url[0] : "https://loremflickr.com/640/480?lock=6586178289532928"}/>
+                            <CustomProductRow name={row?.name} image={row?.image_url?.length>0 ? row?.image_url[0] : "https://plus.unsplash.com/premium_photo-1661769750859-64b5f1539aa8?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZHVjdCUyMGltYWdlfGVufDB8fDB8fHww"}/>
                           </TableCell>
                         );
                       }

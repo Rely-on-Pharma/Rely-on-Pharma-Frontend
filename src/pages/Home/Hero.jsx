@@ -316,7 +316,7 @@ const Hero = () => {
         >
           <Grid item md={6}>
             <Typography className="shop-now-text" mt={1} mb={1}>
-              SIGN UP & REQUEST FOR A PRODUCT SAMPLE NOW !!
+              SIGN UP & EXPERIENCE A RANGE OF LUXURIOUS SKIN CARE PRODUCTS!
             </Typography>
           </Grid>
           <Grid
@@ -328,9 +328,9 @@ const Hero = () => {
             alignItems={"center"}
           >
             <Avatar
+            style={{width:"10rem", height:"10rem", objectFit:"contain"}}
               alt="User Avatar"
-              src="https://loremflickr.com/640/480?lock=2391645746102272"
-              className="avatar"
+              src="https://plus.unsplash.com/premium_photo-1661769750859-64b5f1539aa8?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZHVjdCUyMGltYWdlfGVufDB8fDB8fHww"
             />
           </Grid>
           <Grid item md={12} justifyContent={"flex-start"}>
@@ -415,7 +415,7 @@ const Hero = () => {
         >
           <Avatar
             alt="User Avatar"
-            src="https://loremflickr.com/640/480?lock=2391645746102272"
+            src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cHJvZmlsZSUyMGltYWdlfGVufDB8fDB8fHww"
             className="cust-avatar"
           />
           <Rating

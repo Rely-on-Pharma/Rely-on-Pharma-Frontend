@@ -194,7 +194,7 @@ export default function OrdersTable({ columns, rows }) {
             <DialogContent>
               <Typography>
                 Tracking ID :-
-                {selectedOrder?.tracking_id && selectedOrder?.tracking_id}
+                {selectedOrder?.tracking_id===0 ?  "--":selectedOrder?.tracking_id}
               </Typography>
               <MemoizedInputField
                 type={"text"}

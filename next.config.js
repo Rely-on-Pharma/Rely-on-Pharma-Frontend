@@ -8,6 +8,7 @@ const nextConfig = {
       "picsum.photos",
       "images.unsplash.com",
       "relyonpharma.s3.ap-south-1.amazonaws.com",
+      "plus.unsplash.com",
       `${process.env.AWS_BUCKET}`,
     ], //make it 'your-domain.com'
   },

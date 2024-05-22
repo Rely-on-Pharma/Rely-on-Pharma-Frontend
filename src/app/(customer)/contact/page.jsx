@@ -276,7 +276,7 @@ const ContactUs = () => {
           >
             <Typography
               sx={{
-                fontSize: "0.6rem",
+                fontSize: "1.2rem",
                 fontStyle: "italic",
                 color: colors?.primaryLight,
                 fontWeight: "bold",
@@ -286,7 +286,7 @@ const ContactUs = () => {
             </Typography>
             <Typography
               sx={{
-                fontSize: "0.6rem",
+                fontSize: "1.2rem",
                 fontStyle: "italic",
                 color: colors?.white,
               }}
@@ -295,7 +295,7 @@ const ContactUs = () => {
             </Typography>
             <Typography
               sx={{
-                fontSize: "0.6rem",
+                fontSize: "1.2rem",
                 fontStyle: "italic",
                 color: colors?.white,
               }}
@@ -327,7 +327,7 @@ const ContactUs = () => {
           >
             <Typography
               sx={{
-                fontSize: "0.6rem",
+                fontSize: "1.4rem",
                 fontStyle: "italic",
                 color: colors?.primaryDark,
                 fontWeight: "bold",
@@ -337,7 +337,7 @@ const ContactUs = () => {
             </Typography>
             <Typography
               sx={{
-                fontSize: "0.6rem",
+                fontSize: "1.4rem",
                 fontStyle: "italic",
                 color: colors?.black,
                 fontWeight: 600,

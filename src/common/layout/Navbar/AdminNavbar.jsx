@@ -72,11 +72,11 @@ const handleLogout = ()=>{
             ))}
           </Box>
           <Box sx={{ display: { xs: "flex" } }}>
-            {token ? <Tooltip title="Click to logout" placement="left">
+            <Tooltip title="Click to logout" placement="left">
               <IconButton size="large" edge="end" color={colors?.primaryDark} onClick={handleLogout}>
                 <AccountCircle style={{ color: `${colors?.primaryDark}` }} />
               </IconButton>
-            </Tooltip> : <Typography>jhh</Typography>}
+            </Tooltip>
           </Box>
         </Toolbar>
       </AppBar>

@@ -213,9 +213,9 @@ const SelectAddress = ({ addresses,fetchAddresses,onSelectAddress }) => {
       const data = await resp.json();
       if(data){
         setAddressValue((prevState) => ({ ...prevState, verified: true }));
-        showSnackbar("Pincode is available for deleivery", "info")
+        showSnackbar("Pincode is available for delivery", "info")
       }else{
-        showSnackbar("Pincode is not available for deleivery", "info")
+        showSnackbar("Pincode is not available for delivery", "info")
       }
     }catch(e){
       showSnackbar(e?.message || "Unable to check availability", "error")

@@ -71,7 +71,7 @@ const PendingOrderCard = () => {
             width={"100%"} // Ensure it takes full width
           >
             <Typography variant="h6" sx={{ color: "rgba(255, 255, 255, 0.6)" }}>
-              {item.orderId}
+              Order #{item}
             </Typography>
           </Box>
         ))

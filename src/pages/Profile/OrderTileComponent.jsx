@@ -1,6 +1,8 @@
 import { colors } from "@/constants/colors";
 import { Box, Button, Grid, Typography, styled } from "@mui/material";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { Router } from "next/router";
 
 const CustomOrderBox = styled(Box)(({ theme }) => ({
   borderRadius: 10,
@@ -154,6 +156,7 @@ const CustomOrderBox = styled(Box)(({ theme }) => ({
 }));
 
 const OrderBox = ({ order }) => {
+  const router = useRouter()
   return (
     <CustomOrderBox>
       <Grid container className="orderDetailBox">
@@ -180,7 +183,7 @@ const OrderBox = ({ order }) => {
         <Grid item xs={12} sm={6} md={2} display="flex" flexDirection="column">
           <Typography className="orderDetailHead">Tracking Id:</Typography>
           <Typography className="orderDetailSub">
-            {order.tracking_id}
+            {order.tracking_id===0 ? "--": order?.tracking_id}
           </Typography>
         </Grid>
       </Grid>
@@ -226,7 +229,7 @@ const OrderBox = ({ order }) => {
           alignItems={"left"}
         >
           {/* <Button className={"view-btn"}>View Order </Button> */}
-          <Button className={"track-btn"}>Track Order</Button>
+          <Button className={"track-btn"} onClick={()=> order?.tracking_id!==0 && router.push("https://www.shreemaruti.com/track-your-shipment/")}>Track Order</Button>
         </Grid>
       </Grid>
     </CustomOrderBox>

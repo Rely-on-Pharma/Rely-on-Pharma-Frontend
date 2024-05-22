@@ -120,7 +120,7 @@ const SingleProduct = () => {
         {/* Gallery */}
         <Grid item xs={12} style={{ padding: "0" }} md={6}>
           {
-            productData?.length > 0 ? (<Gallery imageGallery={ProductData?.imgs} />):(<Typography style={{margin:"auto"}} variant="body">No images yet</Typography>)
+            productData?.image_url?.length > 0 ? (<Gallery imageGallery={productData?.image_url} />):(<Typography style={{margin:"auto"}} variant="body">No images yet</Typography>)
           }
           
 
