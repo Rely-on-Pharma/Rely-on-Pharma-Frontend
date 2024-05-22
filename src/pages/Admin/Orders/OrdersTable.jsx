@@ -10,7 +10,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import CustomOrderRow from "./CustomOrderRow";
 import {
   Dialog,
@@ -25,6 +25,7 @@ import { MemoizedInputField } from "@/constants/SDK/customInput";
 import { MemoizedButton } from "@/constants/SDK/CustomButton";
 import { colors } from "@/constants/colors";
 import AddressComponent from "./CustomAddress";
+import AppContext from "@/constants/context/context";
 
 const CustomOrdersTable = styled(Box)(({ theme }) => ({
   ".bold-title": {
@@ -37,13 +38,12 @@ const CustomOrdersTable = styled(Box)(({ theme }) => ({
   },
 }));
 export default function OrdersTable({ columns, rows }) {
-  console.log(rows);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [selectedOrder, setSelectedOrder] = useState(null); // State to track the selected order
   const [openDialog, setOpenDialog] = useState(false); // State to control dialog visibility
   const [trackId, setTrackId] = useState("");
-
+  const {showSnackbar} = useContext(AppContext)
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -64,17 +64,42 @@ export default function OrdersTable({ columns, rows }) {
     setOpenDialog(false);
   };
 
+  const handleUpdateOrder = async () => {
+    if (!selectedOrder) return;
+
+    const orderId = selectedOrder?.id;
+    const url = `http://localhost:8000/orders/${parseInt(orderId)}?tracking_id=${parseInt(trackId)}`;
+    const token = localStorage.getItem("token")?.slice(1, -1);
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+    try {
+      const response = await fetch(url, {
+        method: 'PUT',
+        headers: headers,
+      });
+
+      if (response.ok) {
+       showSnackbar("success", "success")
+        console.log('Order updated successfully');
+       
+        setOpenDialog(false);
+      } else {
+        showSnackbar("Failed to update order", "error")
+        console.error('Failed to update order');
+      }
+    } catch (error) {
+      showSnackbar("Error updating order:", "error")
+      console.error('Error updating order:', error);
+    }
+  };
   return (
     <CustomOrdersTable>
       <Paper sx={{ width: "100%" }}>
         <TableContainer sx={{ maxHeight: 440 }}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
-              <TableRow>
-                <TableCell align="center" colSpan={6}>
-                  Country
-                </TableCell>
-              </TableRow>
               <TableRow>
                 {columns.map((column) => (
                   <TableCell
@@ -169,7 +194,7 @@ export default function OrdersTable({ columns, rows }) {
             <DialogContent>
               <Typography>
                 Tracking ID :-
-                {selectedOrder?.transactionId && selectedOrder?.transactionId}
+                {selectedOrder?.tracking_id && selectedOrder?.tracking_id}
               </Typography>
               <MemoizedInputField
                 type={"text"}
@@ -201,7 +226,7 @@ export default function OrdersTable({ columns, rows }) {
                   <Typography className="bold-title">
                     Delivery Address
                   </Typography>
-                  <Typography>{selectedOrder?.customerAddress}</Typography>
+                 <AddressComponent address={selectedOrder?.address}/>
                 </Box>
               </Box>
               <Box
@@ -213,7 +238,7 @@ export default function OrdersTable({ columns, rows }) {
                 }}
               >
                 <Typography className="bold-title">
-                  Amount :- {selectedOrder?.totalPrice}
+                  Amount :- Rs.{selectedOrder?.final_amount}/-
                 </Typography>
                 <MemoizedButton
                   style={{
@@ -222,10 +247,7 @@ export default function OrdersTable({ columns, rows }) {
                   }}
                   className={"btn"}
                   content={"update order"}
-                  handleClick={(e) => {
-                    // api call
-                    setOpenDialog(false);
-                  }}
+                  handleClick={handleUpdateOrder}
                 />
               </Box>
             </DialogContent>

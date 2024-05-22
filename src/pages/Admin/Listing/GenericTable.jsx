@@ -31,12 +31,6 @@ export default function ListingTable({ columns, rows }) {
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
-          <TableRow>
-              <TableCell align="center" colSpan={5}>
-                Country
-              </TableCell>
-             
-            </TableRow>
             <TableRow>
               {columns.map((column) => (
                 <TableCell
